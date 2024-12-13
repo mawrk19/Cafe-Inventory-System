@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:kopilism/frontend/widgets/bottom_nav_bar.dart';
 import 'package:kopilism/backend/services/firestore.dart'; // Import the Firestore service
+import 'package:kopilism/frontend/widgets/category_card.dart'; // Import the CategoryCard widget
+import 'package:kopilism/frontend/screens/admin_products.dart'; // Import the AdminProducts screen
 
 class AdminCategory extends StatefulWidget {
   const AdminCategory({super.key});
@@ -41,24 +43,40 @@ class _AdminCategoryState extends State<AdminCategory> {
         },
         child: const Icon(Icons.add),
       ),
-      body: _categories.isEmpty
-          ? const Center(child: Text('No categories available'))
-          : ListView.builder(
-              itemCount: _categories.length,
-              itemBuilder: (context, index) {
-                final category = _categories[index];
-                return ListTile(
-                  title: Text(category['name'] ?? 'Unnamed'),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.delete, color: Colors.red),
-                    onPressed: () async {
-                      await _firestoreService.deleteCategory(category['id']);
-                      _fetchCategories();
+      body: Padding(
+        padding: const EdgeInsets.all(16.0), // Added padding around the grid
+        child: _categories.isEmpty
+            ? const Center(child: Text('No categories available'))
+            : GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, // Adjust the number of columns
+                  crossAxisSpacing: 16,
+                  mainAxisSpacing: 16,
+                ),
+                itemCount: _categories.length,
+                itemBuilder: (context, index) {
+                  final category = _categories[index];
+                  return GestureDetector(
+                    onTap: () {
+                      // Navigate to the AdminProducts screen of the selected category
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AdminProducts(
+                            categoryId: category['id'],
+                            categoryName: category['name'],
+                          ),
+                        ),
+                      );
                     },
-                  ),
-                );
-              },
-            ),
+                    child: CategoryCard(
+                      title: category['name'] ?? 'Unnamed',
+                      fontSize: 16, // Adjust the font size as needed
+                    ),
+                  );
+                },
+              ),
+      ),
       bottomNavigationBar: const BottomNavBar(), // Use your custom widget
     );
   }
