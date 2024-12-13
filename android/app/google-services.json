@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "984041287387",
+    "project_id": "kopilism-database",
+    "storage_bucket": "kopilism-database.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:984041287387:android:cfdec791e5e342424de6fe",
+        "android_client_info": {
+          "package_name": "com.example.kopilism"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDgn5IaUFsULkykJxRtWDt3pjYaPJyJb1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

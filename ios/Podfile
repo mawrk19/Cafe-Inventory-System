@@ -1,0 +1,8 @@
+platform :ios, '12.0'
+
+target 'Runner' do
+  use_frameworks!
+  
+  # Pods for Runner
+  pod 'Firebase/Core', '~> 10.0.0'  # Ensure this is the latest Firebase version
+end

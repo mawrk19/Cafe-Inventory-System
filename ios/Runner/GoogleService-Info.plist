@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>214928170889-nv96q2ee3qnr8ot19lths6qfolt0eed2.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.214928170889-nv96q2ee3qnr8ot19lths6qfolt0eed2</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>214928170889-bleolribmuk49138a3gsqkfca4o4sa4t.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyA6a-TZrDkUbPbwD87kpmTEFWqHCsOFU3Q</string>
+	<key>GCM_SENDER_ID</key>
+	<string>214928170889</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.kopilism</string>
+	<key>PROJECT_ID</key>
+	<string>kopilism-196ec</string>
+	<key>STORAGE_BUCKET</key>
+	<string>kopilism-196ec.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:214928170889:ios:6f96f068a21fa883cf8b58</string>
+	<key>DATABASE_URL</key>
+	<string>https://kopilism-196ec-default-rtdb.asia-southeast1.firebasedatabase.app</string>
+</dict>
+</plist>

@@ -1,0 +1,43 @@
+plugins {
+    id "com.android.application"
+    id 'com.google.gms.google-services' // Firebase
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+}
+android {
+    namespace = "com.example.kopilism"
+    compileSdk = flutter.compileSdkVersion
+    ndkVersion = flutter.ndkVersion
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_17.toString()
+    }
+    defaultConfig {
+        applicationId "com.example.kopilism"
+        minSdkVersion 23 // Adjust as needed
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            signingConfig = signingConfigs.debug
+            shrinkResources false
+            minifyEnabled false
+        }
+    }
+    packagingOptions {
+        exclude 'core-for-system-modules.jar'
+    }
+}
+flutter {
+    source = "../.." // Adjust if necessary
+}
+dependencies {
+    implementation 'com.google.android.gms:play-services-basement:18.2.0' // Base dependency
+    implementation 'com.google.firebase:firebase-auth:22.1.0' // Example Firebase dependency
+}
+apply plugin: 'com.google.gms.google-services'
