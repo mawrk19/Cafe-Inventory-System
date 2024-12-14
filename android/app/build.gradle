@@ -37,7 +37,8 @@ flutter {
     source = "../.." // Adjust if necessary
 }
 dependencies {
-    implementation 'com.google.android.gms:play-services-basement:18.2.0' // Base dependency
-    implementation 'com.google.firebase:firebase-auth:22.1.0' // Example Firebase dependency
+    implementation platform('com.google.firebase:firebase-bom:32.2.2') // Latest BOM version
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.firebase:firebase-firestore'// Example Firebase dependency
 }
 apply plugin: 'com.google.gms.google-services'
