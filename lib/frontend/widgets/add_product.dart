@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:kopilism/backend/services/firestore.dart';
+import 'package:kopilism/backend/services/firestore_service.dart';
 
 class AddProductModal extends StatefulWidget {
   final String categoryId;
   final VoidCallback onProductAdded;
 
   const AddProductModal({
-    Key? key,
+    super.key,
     required this.categoryId,
     required this.onProductAdded,
-  }) : super(key: key);
+  });
 
   @override
   _AddProductModalState createState() => _AddProductModalState();
@@ -30,18 +30,15 @@ class _AddProductModalState extends State<AddProductModal> {
   int shelfLife = 0;
   String storageConditions = '';
   String status = '';
-  String imageUrl = 'assets/images/ProductPhoto.png'; // Default image
+  String image = 'assets/images/ProductPhoto.png'; // Default image
 
   final TextEditingController _expirationDateController = TextEditingController();
   final TextEditingController _manufactureDateController = TextEditingController();
 
   // Function to handle image selection
-  Future<void> _pickImage() async {
-    // Implement image picker logic here
-    // If no image is selected, imageUrl will stay as the default
+  void _pickImage(String selectedImage) {
     setState(() {
-      // Example of setting a custom image URL
-      imageUrl = 'path_to_selected_image';
+      image = selectedImage;
     });
   }
 
@@ -64,7 +61,8 @@ class _AddProductModalState extends State<AddProductModal> {
         'shelfLife': shelfLife,
         'storageConditions': storageConditions,
         'status': status,
-        'imageUrl': imageUrl,
+        'image': image, // Changed from 'imageUrl' to 'image'
+        'categoryId': widget.categoryId,
       });
 
       widget.onProductAdded(); // Callback to refresh the product list
@@ -81,6 +79,20 @@ class _AddProductModalState extends State<AddProductModal> {
           key: _formKey,
           child: Column(
             children: [
+              // Image Preview Section
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: Image.asset(
+                  image,
+                  width: 100, // You can adjust the size
+                  height: 100,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Icon(Icons.broken_image, size: 50);
+                  },
+                ),
+              ),
+              // Product Name Input
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Product Name'),
                 validator: (value) {
@@ -91,10 +103,12 @@ class _AddProductModalState extends State<AddProductModal> {
                 },
                 onSaved: (value) => name = value!,
               ),
+              // Description Input
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Description'),
                 onSaved: (value) => description = value!,
               ),
+              // Price Input
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Price'),
                 keyboardType: TextInputType.number,
@@ -106,6 +120,7 @@ class _AddProductModalState extends State<AddProductModal> {
                 },
                 onSaved: (value) => price = double.parse(value!),
               ),
+              // Stock Quantity Input
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Stock Quantity'),
                 keyboardType: TextInputType.number,
@@ -117,10 +132,12 @@ class _AddProductModalState extends State<AddProductModal> {
                 },
                 onSaved: (value) => stockQuantity = int.parse(value!),
               ),
+              // Barcode Input
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Barcode'),
                 onSaved: (value) => barcode = value!,
               ),
+              // Expiration Date Input
               TextFormField(
                 controller: _expirationDateController,
                 decoration: const InputDecoration(labelText: 'Expiration Date'),
@@ -140,10 +157,12 @@ class _AddProductModalState extends State<AddProductModal> {
                 },
                 readOnly: true,
               ),
+              // Batch ID Input
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Batch ID'),
                 onSaved: (value) => batchId = value!,
               ),
+              // Manufacture Date Input
               TextFormField(
                 controller: _manufactureDateController,
                 decoration: const InputDecoration(labelText: 'Manufacture Date'),
@@ -163,23 +182,40 @@ class _AddProductModalState extends State<AddProductModal> {
                 },
                 readOnly: true,
               ),
+              // Shelf Life Input
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Shelf Life (in days)'),
                 keyboardType: TextInputType.number,
                 onSaved: (value) => shelfLife = int.parse(value!),
               ),
+              // Storage Conditions Input
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Storage Conditions'),
                 onSaved: (value) => storageConditions = value!,
               ),
+              // Status Input
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Status'),
                 onSaved: (value) => status = value!,
               ),
               const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: _pickImage,
-                child: const Text('Select Image'),
+              // Image Picker Row
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  GestureDetector(
+                    onTap: () => _pickImage('assets/images/milk.png'),
+                    child: Image.asset('assets/images/milk.png', width: 50, height: 50),
+                  ),
+                  GestureDetector(
+                    onTap: () => _pickImage('assets/images/cups.png'),
+                    child: Image.asset('assets/images/cups.png', width: 50, height: 50),
+                  ),
+                  GestureDetector(
+                    onTap: () => _pickImage('assets/images/ProductPhoto.png'),
+                    child: Image.asset('assets/images/ProductPhoto.png', width: 50, height: 50),
+                  ),
+                ],
               ),
               const SizedBox(height: 16),
               ElevatedButton(
