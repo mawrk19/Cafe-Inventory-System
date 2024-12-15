@@ -11,7 +11,7 @@ class RoundedContainer extends StatelessWidget {
       top: 0.35.sh, // 35% from the top of the screen
       child: Container(
         width: 337.w, // Scaled width
-        height: 0.4.sh, // Scaled height (50% of the screen height)
+        height: 0.31.sh, // Scaled height (50% of the screen height)
         decoration: ShapeDecoration(
           color: const Color(0xFFFFF4E6),
           shape: RoundedRectangleBorder(

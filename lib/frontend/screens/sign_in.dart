@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kopilism/frontend/widgets/sign in/logo_component.dart';
+import 'package:kopilism/frontend/widgets/sign%20in/logo.dart';
 import '../widgets/sign in/rounded_container.dart';
 import '../widgets/sign in/title_box.dart';
 import '../widgets/sign in/sign_in_buttons.dart';

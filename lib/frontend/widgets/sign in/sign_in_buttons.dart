@@ -9,15 +9,14 @@ class SignInButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const buttons = [
-      {'label': 'Admin', 'route': '/AdminLogIn'},
-      {'label': 'Employee', 'route': '/EmployeeLogIn'},
-      {'label': 'Branch Client', 'route': '/BranchLogIn'},
+      {'label': 'Associate', 'route': '/AdminLogIn'},
+      {'label': 'Branch Customer', 'route': '/BranchLogIn'},
     ];
 
     return Align(
       alignment: Alignment.center,  // Center align the Column
       child: Padding(
-        padding: EdgeInsets.only(top: 150.h),  // Add more top padding to push the buttons down
+        padding: EdgeInsets.only(top: 90.h),  // Add more top padding to push the buttons down
         child: Column(
           mainAxisSize: MainAxisSize.min,  // Minimize column height
           children: buttons.map((button) {
@@ -36,7 +35,7 @@ class SignInButtons extends StatelessWidget {
                 onPressed: () => Navigator.pushNamed(context, button['route']!),
                 child: Text(
                   button['label']!,
-                  style: AppTheme.textTheme.labelLarge,  // Use button text style from AppTheme
+                  style: AppTheme.textTheme.labelLarge?.copyWith(color: Colors.white),  // Set text color to white
                 ),
               ),
             );
