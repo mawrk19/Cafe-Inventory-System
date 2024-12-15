@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kopilism/frontend/widgets/bottom_nav_bar.dart';
+import 'package:kopilism/frontend/widgets/products/bottom_nav_bar.dart';
 
 class AdminBarcode extends StatelessWidget {
   const AdminBarcode({super.key});

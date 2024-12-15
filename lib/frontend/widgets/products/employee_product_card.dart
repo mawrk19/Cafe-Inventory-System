@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kopilism/frontend/screens/admin_product_details.dart'; // Import product detail screen
+import 'package:kopilism/frontend/screens/employee/products/employee_product_details.dart'; // Import product detail screen
 
-class AdminProductCard extends StatelessWidget {
+class EmployeeProductCard extends StatelessWidget {
   final String productId;
   final String categoryId; // Added categoryId
   final String productName;
@@ -9,7 +9,7 @@ class AdminProductCard extends StatelessWidget {
   final int productQuantity;
   final double productPrice;
 
-  const AdminProductCard({
+  const EmployeeProductCard({
     super.key,
     required this.productId,
     required this.categoryId, // Required argument
@@ -27,7 +27,7 @@ class AdminProductCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ProductDetailScreen(
+            builder: (context) => EmployeeProductDetailScreen(
               productId: productId,
               categoryId: categoryId, // Pass categoryId here
             ),

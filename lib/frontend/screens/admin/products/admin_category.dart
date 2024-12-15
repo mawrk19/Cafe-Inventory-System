@@ -1,8 +1,8 @@
 // Updated AdminCategory Screen
 import 'package:flutter/material.dart';
-import 'package:kopilism/frontend/widgets/bottom_nav_bar.dart';
+import 'package:kopilism/frontend/widgets/products/bottom_nav_bar.dart';
 import 'package:kopilism/backend/services/firestore_service.dart';
-import 'package:kopilism/frontend/screens/admin_products.dart';
+import 'package:kopilism/frontend/screens/admin/products/admin_products.dart';
 
 class AdminCategory extends StatefulWidget {
   const AdminCategory({super.key});

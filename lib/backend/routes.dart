@@ -1,16 +1,35 @@
 import 'package:flutter/material.dart';
-import '../frontend/screens/admin_category.dart';
-import '../frontend/screens/admin_barcode.dart';
-import '../frontend/screens/admin_customers.dart';
-import '../frontend/screens/admin_dashboard.dart';
-import '../frontend/screens/admin_orders.dart';
+import 'package:kopilism/frontend/screens/employee/employee_dashboard.dart';
+import 'package:kopilism/frontend/screens/employee/employee_barcode.dart';
+import 'package:kopilism/frontend/screens/employee/employee_customers.dart';
+import 'package:kopilism/frontend/screens/employee/employee_orders.dart';
+import '../frontend/screens/admin/products/admin_category.dart';
+import '../frontend/screens/admin/admin_barcode.dart';
+import '../frontend/screens/admin/admin_customers.dart';
+import '../frontend/screens/admin/admin_dashboard.dart';
+import '../frontend/screens/admin/admin_orders.dart';
+import '../frontend/screens/admin/admin_login.dart';
+import '../frontend/screens/branch_login.dart';
+import '../frontend/screens/registration.dart';
+import '../frontend/screens/employee/products/employee_category.dart';
 
 Map<String, WidgetBuilder> getAppRoutes() {
   return{
+    //bottom navigation bar for admins
     '/AdminCategory': (context) => const AdminCategory(),
     '/Customer': (context) => const AdminCustomers(),
     '/Barcode': (context) => const AdminBarcode(),
     '/Home': (context) => const AdminDashboard(),
     '/Orders': (context) => const AdminOrders(),  
+
+    '/EmployeeCategory': (context) => const EmployeeCategory(),
+    '/EmployeeCustomer': (context) => const EmployeeCustomers(),
+    '/EmployeeBarcode': (context) => const EmployeeBarcode(),
+    '/EmployeeHome': (context) => const EmployeeDashboard(),
+    '/EmployeeOrders': (context) => const EmployeeOrders(),
+    //login and registration
+    '/AdminLogIn': (context) => const AdminLogin(),
+    '/BranchLogIn': (context) => const BranchLogin(role: 'branch',),
+    '/Registration': (context) => const RegistrationForm(),
   };
 }

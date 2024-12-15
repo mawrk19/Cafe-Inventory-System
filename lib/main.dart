@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:kopilism/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:kopilism/frontend/screens/admin_dashboard.dart';
+import 'package:kopilism/frontend/screens/sign_in.dart';
 import 'package:kopilism/theme/app_theme.dart';
 import 'package:kopilism/backend/routes.dart';
 
@@ -15,7 +15,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  @override
+  @override 
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize:
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           title: 'Kopilism App',
           theme: AppTheme.lightTheme, // Use custom light theme
-          home: const DoubleBackToExitWrapper(child: AdminDashboard()),
+          home: const DoubleBackToExitWrapper(child: SignIn()),
           debugShowCheckedModeBanner: false,
           routes: getAppRoutes(),
           onUnknownRoute: (settings) {
