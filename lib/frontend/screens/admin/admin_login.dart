@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kopilism/backend/services/authentication.dart';
+import 'package:kopilism/frontend/widgets/sign in/logo.dart';
+import 'package:kopilism/frontend/widgets/login/associate.dart';
 import 'package:kopilism/frontend/screens/admin/admin_dashboard.dart';
 import 'package:kopilism/frontend/screens/employee/employee_dashboard.dart';
 
@@ -13,48 +13,53 @@ class AdminLogin extends StatefulWidget {
 }
 
 class _AdminLoginState extends State<AdminLogin> {
-  final _formKey = GlobalKey<FormState>();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
   final AuthenticationService _authService = AuthenticationService();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  bool _isLoading = false;
 
   Future<void> _login() async {
-    if (_formKey.currentState!.validate()) {
-      try {
-        User? user = await _authService.login(
-          _emailController.text,
-          _passwordController.text,
-        );
+    setState(() {
+      _isLoading = true;
+    });
 
-        if (user != null) {
-          DocumentSnapshot userDoc = await _authService.getUserData(user.uid);
-          var userData = userDoc.data() as Map<String, dynamic>;
+    final email = emailController.text.trim();
+    final password = passwordController.text.trim();
 
-          if (userData['role'] == 'admin' || userData['role'] == 'ownerAdmin') {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const AdminDashboard()),
-            );
-          } else if (userData['role'] == 'employee') {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const EmployeeDashboard()),
-            );
-          } else {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Access denied.')),
-            );
-          }
+    try {
+      final user = await _authService.login(email, password);
+      if (user != null) {
+        final userDoc = await _authService.getUserData(user.uid);
+        final userData = userDoc.data() as Map<String, dynamic>;
+
+        if (userData['role'] == 'admin' || userData['role'] == 'ownerAdmin') {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const AdminDashboard()),
+          );
+        } else if (userData['role'] == 'employee') {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const EmployeeDashboard()),
+          );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('User not found.')),
+            const SnackBar(content: Text("Access denied.")),
           );
         }
-      } catch (e) {
+      } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
+          const SnackBar(content: Text("Invalid username or password.")),
         );
       }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: $e")),
+      );
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
     }
   }
 
@@ -62,41 +67,86 @@ class _AdminLoginState extends State<AdminLogin> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Login'),
+        title: const Text('Associate Log In'),
+        backgroundColor: const Color(0xFF6F4E37), // Coffee theme color
+        foregroundColor: Color(0xFFF8F8FF), // Offwhite font color
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: <Widget>[
-              TextFormField(
-                controller: _emailController,
-                decoration: const InputDecoration(labelText: 'Email'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _passwordController,
-                decoration: const InputDecoration(labelText: 'Password'),
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  return null;
-                },
-              ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _login,
-                child: const Text('Login'),
-              ),
-            ],
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Container(
+            constraints: const BoxConstraints(maxWidth: 480),
+            padding: const EdgeInsets.symmetric(horizontal: 36),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // Logo and Header Section
+                const Column(
+                  children: [
+                    SizedBox(height: 40),
+                    LogoWidget(),
+                    SizedBox(height: 10),
+                     Associate(),
+                  ],
+                ),
+
+                const SizedBox(height: 20), // Add space between header and input section
+
+                // Input Section for Email and Password
+                Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFF4E6),
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.25),
+                        blurRadius: 4,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
+                  child: Column(
+                    children: [
+                      // Email input field
+                      TextField(
+                        controller: emailController,
+                        decoration: const InputDecoration(
+                          labelText: 'Email',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      // Password input field
+                      TextField(
+                        controller: passwordController,
+                        obscureText: true,
+                        decoration: const InputDecoration(
+                          labelText: 'Password',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 15),
+
+                // Login button
+                ElevatedButton(
+                  onPressed: _isLoading ? null : _login,
+                  style: ElevatedButton.styleFrom(
+                    foregroundColor: Colors.white, backgroundColor: const Color.fromARGB(255, 176, 129, 79), // Font color
+                  ),
+                  child: _isLoading
+                      ? const CircularProgressIndicator()
+                      : const Text('Login'),
+                ),
+
+                const SizedBox(height: 15),
+              ],
+            ),
           ),
         ),
       ),
