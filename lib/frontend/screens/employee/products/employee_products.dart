@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:kopilism/backend/services/firestore_service.dart';
-import 'package:kopilism/frontend/widgets/product_card.dart'; // Updated import
-import 'package:kopilism/frontend/widgets/add_product.dart'; // Import the AddProductModal
+import 'package:kopilism/frontend/widgets/products/product_card.dart'; // Updated import
 
-class AdminProducts extends StatefulWidget {
+class EmployeeProducts extends StatefulWidget {
   final String categoryId;
   final String categoryName;
 
-  const AdminProducts({
+  const EmployeeProducts({
     super.key,
     required this.categoryId,
     required this.categoryName,
   });
 
   @override
-  State<AdminProducts> createState() => _AdminProductsState();
+  State<EmployeeProducts> createState() => _EmployeeProductsState();
 }
 
-class _AdminProductsState extends State<AdminProducts> {
+class _EmployeeProductsState extends State<EmployeeProducts> {
   final FirestoreService _firestoreService = FirestoreService();
   List<Map<String, dynamic>> _products = [];
 
@@ -37,31 +36,13 @@ class _AdminProductsState extends State<AdminProducts> {
     }
   }
 
-  // Show AddProductModal to add a new product
-  void _showAddProductModal(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AddProductModal(
-          categoryId: widget.categoryId,  // Pass categoryId to modal
-          onProductAdded: _fetchProducts,  // Refresh product list after adding
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Products in ${widget.categoryName}'), // Display category name
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          _showAddProductModal(context); // Show the modal when pressed
-        },
-        child: const Icon(Icons.add),
-      ),
+      // Removed floatingActionButton
       body: _products.isEmpty
           ? const Center(child: Text('No products available')) // Show message if no products
           : ListView.builder(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kopilism/frontend/widgets/bottom_nav_bar.dart'; // Import your custom widget
+import 'package:kopilism/frontend/widgets/products/bottom_nav_bar.dart'; // Import your custom widget
 
 class AdminCustomers extends StatelessWidget {
   const AdminCustomers({super.key});
