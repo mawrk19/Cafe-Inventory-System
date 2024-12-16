@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kopilism/frontend/widgets/products/bottom_nav_bar.dart'; // Import your custom widget
+import 'package:kopilism/frontend/widgets/bottom_nav_bar.dart';
+import 'package:kopilism/frontend/widgets/sidebar.dart';
+import 'package:kopilism/frontend/widgets/top_nav_bar.dart'; // Import your custom widget
 
 class AdminDashboard extends StatelessWidget {
   const AdminDashboard({super.key});
@@ -7,9 +9,8 @@ class AdminDashboard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Dashboard Screens'),
-      ),
+      appBar: const TopNavBar(), // Use the custom TopNavBar
+      drawer: const Sidebar(), // Add the Sidebar as the drawer
       body: const Center(
         child: Text('This is the Dashboard Screen'),
       ),

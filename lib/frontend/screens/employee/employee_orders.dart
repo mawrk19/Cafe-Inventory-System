@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kopilism/frontend/widgets/order_list.dart';
-import 'package:kopilism/frontend/widgets/products/bottom_nav_bar.dart';
+import 'package:kopilism/frontend/widgets/orders/order_list.dart';
+import 'package:kopilism/frontend/widgets/bottom_nav_bar.dart';
 import 'package:kopilism/frontend/widgets/search_bar2.dart' as custom;
 
 class EmployeeOrders extends StatelessWidget {

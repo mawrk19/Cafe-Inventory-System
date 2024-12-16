@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:kopilism/backend/services/authentication.dart';
+import 'package:kopilism/frontend/widgets/sidebar.dart';
+import 'package:kopilism/frontend/widgets/top_nav_bar.dart';
 
 class RegistrationForm extends StatefulWidget {
   const RegistrationForm({super.key});
@@ -43,9 +45,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Registration Form'),
-      ),
+      appBar: const TopNavBar(), // Use the custom TopNavBar
+      drawer: const Sidebar(), // Add the Sidebar as the drawer
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Form(

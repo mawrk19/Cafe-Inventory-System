@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kopilism/frontend/widgets/order_container.dart';
+import 'package:kopilism/frontend/widgets/orders/order_container.dart';
 
 class OrderItemList extends StatelessWidget {
   const OrderItemList({super.key});
