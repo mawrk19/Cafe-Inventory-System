@@ -11,7 +11,7 @@ class EmployeeDashboard extends StatelessWidget {
     return _instance;
   }
 
-  EmployeeDashboard._internal({super.key});
+  const EmployeeDashboard._internal();
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +19,13 @@ class EmployeeDashboard extends StatelessWidget {
       onWillPop: () async {
         return await showExitPopup(context); // Call your exit confirmation function
       },
-      child: Scaffold(
-        appBar: const TopNavBar(), // Use the custom TopNavBar
-        drawer: const EmployeeSidebar(), // Add the Sidebar as the drawer
-        body: const Center(
+      child: const Scaffold(
+        appBar: TopNavBar(), // Use the custom TopNavBar
+        drawer: EmployeeSidebar(), // Add the Sidebar as the drawer
+        body: Center(
           child: Text('This is the Employee Dashboard Screen'),
         ),
-        bottomNavigationBar: const EmployeeBottomNavBar(), // Use your custom widget
+        bottomNavigationBar: EmployeeBottomNavBar(), // Use your custom widget
       ),
     );
   }

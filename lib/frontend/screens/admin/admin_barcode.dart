@@ -8,13 +8,13 @@ class AdminBarcode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const TopNavBar(), // Use the custom TopNavBar
-      drawer: const Sidebar(), // Add the Sidebar as the drawer
-      body: const Center(
+    return const Scaffold(
+      appBar: TopNavBar(), // Use the custom TopNavBar
+      drawer: Sidebar(), // Add the Sidebar as the drawer
+      body: Center(
         child: Text('This is the Barcode Screen'),
       ),
-      bottomNavigationBar: const BottomNavBar(), // Use your custom widget  
+      bottomNavigationBar: BottomNavBar(), // Use your custom widget  
     );
   }
 }

@@ -1,10 +1,12 @@
 // Updated AdminCategory Screen
 import 'package:flutter/material.dart';
+import 'package:kopilism/backend/services/shared_preference_service.dart';
 import 'package:kopilism/frontend/widgets/bottom_nav_bar.dart';
 import 'package:kopilism/backend/services/products_service.dart';
 import 'package:kopilism/frontend/screens/admin/products/admin_products.dart';
 import 'package:kopilism/frontend/widgets/sidebar.dart';
 import 'package:kopilism/frontend/widgets/top_nav_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AdminCategory extends StatefulWidget {
   const AdminCategory({super.key});
@@ -69,6 +71,15 @@ class _AdminCategoryState extends State<AdminCategory> {
                         ),
                       );
                     },
+                    onLongPress: () {
+                      _showCategoryDialog(
+                        context,
+                        id: category['id'],
+                        currentName: category['name'],
+                        currentImage: category['image'],
+                      );
+                      _showArchiveDialog(context, category['id']);
+                    },
                     child: CategoryCard(
                       title: category['name'] ?? 'Unnamed',
                       fontSize: 16,
@@ -82,11 +93,14 @@ class _AdminCategoryState extends State<AdminCategory> {
     );
   }
 
-  void _showCategoryDialog(BuildContext context, {String? id, String? currentName, String? currentImage}) {
-  final TextEditingController categoryController =
-      TextEditingController(text: currentName ?? '');
+  void _showCategoryDialog(BuildContext context, {String? id, String? currentName, String? currentImage}) async {
+  final TextEditingController categoryController = TextEditingController(text: currentName ?? '');
   final isEdit = id != null;
   String? selectedImage;
+
+  // Fetch admin details from shared preferences
+  final adminName = await SharedPreferencesService.getString('email') ?? 'Unknown';
+  final adminRole = await SharedPreferencesService.getString('userRole') ?? 'Unknown';
 
   showDialog(
     context: context,
@@ -162,6 +176,18 @@ class _AdminCategoryState extends State<AdminCategory> {
           ],
         ),
         actions: <Widget>[
+          if (isEdit)
+            TextButton(
+              onPressed: () async {
+                await _firestoreService.archiveCategory(id!);
+                Navigator.of(context).pop();
+                _fetchCategories();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Category archived')),
+                );
+              },
+              child: const Text('Archive'),
+            ),
           TextButton(
             onPressed: () async {
               final newName = categoryController.text.trim();
@@ -169,9 +195,38 @@ class _AdminCategoryState extends State<AdminCategory> {
 
               if (newName.isNotEmpty) {
                 final docId = isEdit ? id : DateTime.now().millisecondsSinceEpoch.toString();
-                await _firestoreService.addCategory(docId, {'id': docId, 'name': newName, 'image': imageUrl});
+                await _firestoreService.addCategory(docId, {
+                  'id': docId,
+                  'name': newName,
+                  'image': imageUrl,
+                  'createdByAdminName': adminName, // Add admin's name
+                  'createdByAdminRole': adminRole, // Add admin's role
+                });
                 Navigator.of(context).pop();
                 _fetchCategories();
+
+                // Create notification message
+                final notificationMessage = isEdit
+                    ? 'Category "$newName" edited by $adminName ($adminRole)'
+                    : 'Category "$newName" added by $adminName ($adminRole)';
+
+                // Save notification to Firestore
+                await FirebaseFirestore.instance
+                    .collection('notifications')
+                    .doc('users')
+                    .collection('admin')
+                    .add({
+                  'message': notificationMessage,
+                  'timestamp': FieldValue.serverTimestamp(),
+                  'header': isEdit ? 'Category Edited' : 'Category Added',
+                });
+
+                // Show Snackbar notification
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Admin notified: $notificationMessage'),
+                  ),
+                );
               }
             },
             child: Text(isEdit ? 'Save' : 'Add'),
@@ -187,8 +242,38 @@ class _AdminCategoryState extends State<AdminCategory> {
     },
   );
 }
-}
 
+  void _showArchiveDialog(BuildContext context, String categoryId) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Archive Category'),
+          content: const Text('Are you sure you want to archive this category?'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () async {
+                await _firestoreService.archiveCategory(categoryId);
+                Navigator.of(context).pop();
+                _fetchCategories();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Category archived')),
+                );
+              },
+              child: const Text('Archive'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
 // Updated CategoryCard Widget
 class CategoryCard extends StatelessWidget {
   final String title;

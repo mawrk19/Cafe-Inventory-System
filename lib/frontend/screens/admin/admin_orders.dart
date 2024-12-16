@@ -10,18 +10,18 @@ class AdminOrders extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const TopNavBar(), // Use the custom TopNavBar
-      drawer: const Sidebar(), // Add the Sidebar as the drawer
+    return const Scaffold(
+      appBar: TopNavBar(), // Use the custom TopNavBar
+      drawer: Sidebar(), // Add the Sidebar as the drawer
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
           child: Column(
             children: [
               // custom.SearchBar(),
               custom.SearchBar2(),
               Padding(
-                padding: const EdgeInsets.all(5.0),
+                padding: EdgeInsets.all(5.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -45,51 +45,51 @@ class AdminOrders extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(5.0),
+                padding: EdgeInsets.all(5.0),
                 child: OrderItemList(), // Add padding to OrderItemList
               ),
               Padding(
-                padding: const EdgeInsets.all(5.0),
+                padding: EdgeInsets.all(5.0),
                 child: OrderItemList(),
               ),
                Padding(
-                padding: const EdgeInsets.all(5.0),
+                padding: EdgeInsets.all(5.0),
                 child: OrderItemList(), // Add padding to OrderItemList
               ),
               Padding(
-                padding: const EdgeInsets.all(5.0),
+                padding: EdgeInsets.all(5.0),
                 child: OrderItemList(),
               ),
                Padding(
-                padding: const EdgeInsets.all(5.0),
+                padding: EdgeInsets.all(5.0),
                 child: OrderItemList(), // Add padding to OrderItemList
               ),
               Padding(
-                padding: const EdgeInsets.all(5.0),
+                padding: EdgeInsets.all(5.0),
                 child: OrderItemList(),
               ),
                Padding(
-                padding: const EdgeInsets.all(5.0),
+                padding: EdgeInsets.all(5.0),
                 child: OrderItemList(), // Add padding to OrderItemList
               ),
               Padding(
-                padding: const EdgeInsets.all(5.0),
+                padding: EdgeInsets.all(5.0),
                 child: OrderItemList(),
               ),
                Padding(
-                padding: const EdgeInsets.all(5.0),
+                padding: EdgeInsets.all(5.0),
                 child: OrderItemList(), // Add padding to OrderItemList
               ),
               Padding(
-                padding: const EdgeInsets.all(5.0),
+                padding: EdgeInsets.all(5.0),
                 child: OrderItemList(),
               ),
                Padding(
-                padding: const EdgeInsets.all(5.0),
+                padding: EdgeInsets.all(5.0),
                 child: OrderItemList(), // Add padding to OrderItemList
               ),
               Padding(
-                padding: const EdgeInsets.all(5.0),
+                padding: EdgeInsets.all(5.0),
                 child: OrderItemList(),
               ),
             ],

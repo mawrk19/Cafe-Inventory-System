@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kopilism/frontend/screens/admin/notifications/admin_notification.dart';
 
 class TopNavBar extends StatelessWidget implements PreferredSizeWidget {
   const TopNavBar({super.key});
@@ -23,7 +24,14 @@ class TopNavBar extends StatelessWidget implements PreferredSizeWidget {
           IconButton(
             icon: const Icon(Icons.notifications, color: Colors.black),
             onPressed: () {
-              // Handle notification button press
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AdminNotification(
+                    message: 'No new notifications',
+                  ),
+                ),
+              );
             },
           ),
         ],

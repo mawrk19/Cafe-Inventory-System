@@ -18,12 +18,12 @@ class SearchBar2 extends StatelessWidget {
           ),
           fillColor: Colors.white,
           filled: true,
-          suffixIcon: Align(  
+          suffixIcon: const Align(  
             widthFactor: 1,
             heightFactor: 1,
             child: Icon(
               Icons.search,
-              color: const Color(0xFFD9D9D9),
+              color: Color(0xFFD9D9D9),
             ),
           ),
         ),

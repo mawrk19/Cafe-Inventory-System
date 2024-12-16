@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kopilism/backend/services/shared_preference_service.dart';
+import 'package:kopilism/frontend/screens/admin/products/admin_archived_categories.dart';
 import 'package:kopilism/frontend/widgets/logout/logout_button.dart'; // Add this import
 import 'package:kopilism/backend/services/authentication.dart';
 
@@ -44,7 +45,7 @@ class Sidebar extends StatelessWidget {
       }
     } catch (e) {
       print('Error fetching user data: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -54,7 +55,7 @@ class Sidebar extends StatelessWidget {
       future: _fetchUserData(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else {
@@ -72,7 +73,7 @@ class Sidebar extends StatelessWidget {
                       backgroundColor: Colors.white,
                       child: Text(
                         userData['fullName'][0],
-                        style: TextStyle(fontSize: 40.0),
+                        style: const TextStyle(fontSize: 40.0),
                       ),
                     ),
                     decoration: const BoxDecoration(
@@ -122,11 +123,23 @@ class Sidebar extends StatelessWidget {
                     },
                   ),
                   ListTile(
+                    leading: const Icon(Icons.archive),
+                    title: const Text('Archived Categories'),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AdminArchivedCategories(),
+                        ),
+                      );
+                    },
+                  ),
+                  ListTile(
                     leading: const Icon(Icons.logout),
                     title: const Text('Log out'),
                     onTap: () {
                       // Show the logout confirmation dialog
-                      LogoutButton().showLogoutConfirmation(context);
+                      const LogoutButton().showLogoutConfirmation(context);
                     },
                   ),
                 ],

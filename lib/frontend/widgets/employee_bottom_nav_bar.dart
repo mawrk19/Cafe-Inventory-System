@@ -89,11 +89,11 @@ class EmployeeBottomNavBar extends StatelessWidget {
         child: Container(
           width: 70,
           height: 70,
-          decoration: BoxDecoration(
-            color: const Color(0xFFB0814F), // New color
+          decoration: const BoxDecoration(
+            color: Color(0xFFB0814F), // New color
             shape: BoxShape.circle,
             gradient: LinearGradient(
-              colors: [const Color(0xFFB0814F), const Color(0xFFB0814F)],
+              colors: [Color(0xFFB0814F), Color(0xFFB0814F)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),

@@ -12,19 +12,19 @@ class OrderItemList extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
+            const Text(
               'ORDER0001',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
               ),
             ),
-            Column(
+            const Column(
               children: [
                 Text('DEC 24,'),
                 Text('2024'),
               ],
             ),
-            Text(
+            const Text(
               'P5000',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -32,7 +32,7 @@ class OrderItemList extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {},
-              child: Text('STATUS'),
+              child: const Text('STATUS'),
             ),
           ],
         ),

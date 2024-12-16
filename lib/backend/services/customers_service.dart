@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
 import 'package:kopilism/backend/services/shared_preference_service.dart';
 import 'dart:convert';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CustomersService {
   final FirebaseAuth _auth = FirebaseAuth.instance;

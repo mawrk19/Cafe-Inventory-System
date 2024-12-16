@@ -4,7 +4,7 @@ import 'package:kopilism/frontend/widgets/sidebar.dart';
 import 'package:kopilism/frontend/widgets/top_nav_bar.dart';
 import 'package:kopilism/backend/services/customers_service.dart';
 import 'package:kopilism/frontend/widgets/customers_card.dart';
-import 'package:kopilism/backend/services/authentication.dart';
+import 'package:kopilism/frontend/screens/admin/customer_details.dart';
 
 class AdminCustomers extends StatefulWidget {
   const AdminCustomers({super.key});
@@ -49,10 +49,20 @@ class _AdminCustomersState extends State<AdminCustomers> {
                 itemCount: _customers.length,
                 itemBuilder: (context, index) {
                   final customer = _customers[index];
-                  return CustomersCard(
-                    branchNumber: customer['branchNumber'],
-                    city: customer['city'],
-                    region: customer['region'],
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CustomerDetailsScreen(customer: customer),
+                        ),
+                      );
+                    },
+                    child: CustomersCard(
+                      branchNumber: customer['branchNumber'],
+                      city: customer['city'],
+                      region: customer['region'],
+                    ),
                   );
                 },
               ),

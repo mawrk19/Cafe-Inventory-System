@@ -38,13 +38,13 @@ class RoundedBoxContainer extends StatelessWidget {
                 color: borderColor,
               )
             : null,
-        borderRadius: BorderRadius.all(Radius.circular(15)), 
+        borderRadius: const BorderRadius.all(Radius.circular(15)), 
         boxShadow: [
           BoxShadow(
             color: shadowColor.withOpacity(0.2),
             spreadRadius: -1,
             blurRadius: 5,
-            offset: Offset(0, 5), // changes position of shadow
+            offset: const Offset(0, 5), // changes position of shadow
           ),
         ],
       ),

@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:kopilism/frontend/screens/admin/admin_login.dart';
 
 class LogoutButton extends StatelessWidget {
-  const LogoutButton({Key? key}) : super(key: key);
+  const LogoutButton({super.key});
 
   Future<void> logout(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
