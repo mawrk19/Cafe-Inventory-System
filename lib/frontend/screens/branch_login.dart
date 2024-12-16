@@ -3,8 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kopilism/backend/services/authentication.dart';
 
-// ...existing code...
-
 class BranchLogin extends StatefulWidget {
   final String role;
 

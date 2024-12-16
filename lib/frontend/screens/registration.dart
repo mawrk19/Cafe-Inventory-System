@@ -53,79 +53,176 @@ class _RegistrationFormState extends State<RegistrationForm> {
           key: _formKey,
           child: Column(
             children: <Widget>[
-              TextFormField(
-                controller: _fullNameController,
-                decoration: const InputDecoration(labelText: 'Full Name'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your full name';
-                  }
-                  return null;
-                },
+              Text(
+                'Register an Associate',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.brown[800],
+                ),
               ),
-              TextFormField(
-                controller: _emailController,
-                decoration: const InputDecoration(labelText: 'Email'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your email';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _passwordController,
-                decoration: const InputDecoration(labelText: 'Password'),
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                controller: _contactNumberController,
-                decoration: const InputDecoration(labelText: 'Contact Number'),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter your contact number';
-                  }
-                  return null;
-                },
-              ),
-              DropdownButtonFormField<String>(
-                value: _role,
-                decoration: const InputDecoration(labelText: 'Role'),
-                items: ['admin', 'employee'].map((String role) {
-                  return DropdownMenuItem<String>(
-                    value: role,
-                    child: Text(role),
-                  );
-                }).toList(),
-                onChanged: (String? newValue) {
-                  setState(() {
-                    _role = newValue!;
-                  });
-                },
-              ),
-              if (_role == 'admin')
-                TextFormField(
-                  controller: _pinController,
-                  decoration: const InputDecoration(labelText: '6-digit PIN'),
+              const SizedBox(height: 20),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                decoration: BoxDecoration(
+                  color: Colors.brown[50],
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(color: Colors.brown[200]!),
+                ),
+                child: TextFormField(
+                  controller: _fullNameController,
+                  decoration: InputDecoration(
+                    labelText: 'Full Name',
+                    labelStyle: TextStyle(color: Colors.brown[800]),
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                  ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your 6-digit PIN';
-                    }
-                    if (value.length != 6) {
-                      return 'PIN must be 6 digits';
+                      return 'Please enter your full name';
                     }
                     return null;
                   },
                 ),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                decoration: BoxDecoration(
+                  color: Colors.brown[50],
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(color: Colors.brown[200]!),
+                ),
+                child: TextFormField(
+                  controller: _emailController,
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    labelStyle: TextStyle(color: Colors.brown[800]),
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                decoration: BoxDecoration(
+                  color: Colors.brown[50],
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(color: Colors.brown[200]!),
+                ),
+                child: TextFormField(
+                  controller: _passwordController,
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    labelStyle: TextStyle(color: Colors.brown[800]),
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                  ),
+                  obscureText: true,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your password';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                decoration: BoxDecoration(
+                  color: Colors.brown[50],
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(color: Colors.brown[200]!),
+                ),
+                child: TextFormField(
+                  controller: _contactNumberController,
+                  decoration: InputDecoration(
+                    labelText: 'Contact Number',
+                    labelStyle: TextStyle(color: Colors.brown[800]),
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your contact number';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                decoration: BoxDecoration(
+                  color: Colors.brown[50],
+                  borderRadius: BorderRadius.circular(8.0),
+                  border: Border.all(color: Colors.brown[200]!),
+                ),
+                child: DropdownButtonFormField<String>(
+                  value: _role,
+                  decoration: InputDecoration(
+                    labelText: 'Role',
+                    labelStyle: TextStyle(color: Colors.brown[800]),
+                    border: InputBorder.none,
+                    focusedBorder: InputBorder.none,
+                  ),
+                  items: ['admin', 'employee'].map((String role) {
+                    return DropdownMenuItem<String>(
+                      value: role,
+                      child: Text(role),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _role = newValue!;
+                    });
+                  },
+                ),
+              ),
+              if (_role == 'admin')
+                Container(
+                  margin: const EdgeInsets.symmetric(vertical: 8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                  decoration: BoxDecoration(
+                    color: Colors.brown[50],
+                    borderRadius: BorderRadius.circular(8.0),
+                    border: Border.all(color: Colors.brown[200]!),
+                  ),
+                  child: TextFormField(
+                    controller: _pinController,
+                    decoration: InputDecoration(
+                      labelText: '6-digit PIN',
+                      labelStyle: TextStyle(color: Colors.brown[800]),
+                      border: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your 6-digit PIN';
+                      }
+                      if (value.length != 6) {
+                        return 'PIN must be 6 digits';
+                      }
+                      return null;
+                    },
+                  ),
+                ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _register,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 78, 65, 62),
+                  foregroundColor: Colors.white, // Set the font color to white
+                ),
                 child: const Text('Register'),
               ),
             ],

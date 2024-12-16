@@ -5,7 +5,6 @@ import 'package:kopilism/frontend/widgets/login/associate.dart';
 import 'package:kopilism/frontend/screens/admin/admin_dashboard.dart';
 import 'package:kopilism/frontend/screens/employee/employee_dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:kopilism/frontend/widgets/logout/logout_button.dart'; // Add this import
 
 class AdminLogin extends StatefulWidget {
   const AdminLogin({super.key});
@@ -56,14 +55,14 @@ class _AdminLoginState extends State<AdminLogin> {
         final userData = userDoc.data() as Map<String, dynamic>;
 
         if (userData['role'] == 'admin' || userData['role'] == 'ownerAdmin') {
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const AdminDashboard()),
+            MaterialPageRoute(builder: (context) => AdminDashboard()),
           );
         } else if (userData['role'] == 'employee') {
-          Navigator.pushReplacement(
+          Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const EmployeeDashboard()),
+            MaterialPageRoute(builder: (context) => EmployeeDashboard()),
           );
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -92,7 +91,7 @@ class _AdminLoginState extends State<AdminLogin> {
       appBar: AppBar(
         title: const Text('Associate Log In'),
         backgroundColor: const Color(0xFF6F4E37), // Coffee theme color
-        foregroundColor: Color(0xFFF8F8FF), // Offwhite font color
+        foregroundColor: const Color(0xFFF8F8FF), // Offwhite font color
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(

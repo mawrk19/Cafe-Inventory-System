@@ -24,7 +24,7 @@ class BottomNavBar extends StatelessWidget {
           children: [
             _buildNavItem(context, 'Product', 'assets/images/product_icon.png', '/AdminCategory'),
             _buildNavItem(context, 'Customer', 'assets/images/customer_icon.png', '/Customer'),
-            _buildNavItem(context, 'Barcode', 'assets/images/barcode_scanner.png', '/Barcode'),
+            _buildBarcodeNavItem(context, 'Barcode', 'assets/images/barcode_scanner.png', '/Barcode'),
             _buildNavItem(context, 'Home', 'assets/images/home_icon.png', '/Home'),
             _buildNavItem(context, 'Orders', 'assets/images/orders_icon.png', '/Orders'),
           ],
@@ -38,11 +38,7 @@ class BottomNavBar extends StatelessWidget {
       onTap: () {
         // Check if the current route is already the desired route
         if (ModalRoute.of(context)?.settings.name != routeName) {
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            routeName,
-            (Route<dynamic> route) => false, // Remove all previous routes
-          );
+          Navigator.pushNamed(context, routeName); // Use pushNamed instead of pushNamedAndRemoveUntil
         }
       },
       child: Semantics(
@@ -66,6 +62,41 @@ class BottomNavBar extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBarcodeNavItem(BuildContext context, String label, String iconPath, String routeName) {
+    return GestureDetector(
+      onTap: () {
+        // Check if the current route is already the desired route
+        if (ModalRoute.of(context)?.settings.name != routeName) {
+          Navigator.pushNamed(context, routeName); // Use pushNamed instead of pushNamedAndRemoveUntil
+        }
+      },
+      child: Semantics(
+        button: true,
+        label: '$label navigation button',
+        child: Container(
+          width: 70,
+          height: 70,
+          decoration: BoxDecoration(
+            color: const Color(0xFFB0814F), // New color
+            shape: BoxShape.circle,
+            gradient: LinearGradient(
+              colors: [const Color(0xFFB0814F), const Color(0xFFB0814F)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: Center(
+            child: Image.asset(
+              iconPath,
+              width: 40, // Increased size
+              height: 40, // Increased size
+            ),
+          ),
         ),
       ),
     );

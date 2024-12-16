@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:kopilism/frontend/widgets/logout/logout_button.dart'; // Add this import
 import 'package:kopilism/backend/services/authentication.dart'; // Add this import
 
-class Sidebar extends StatelessWidget {
-  const Sidebar({super.key});
+class EmployeeSidebar extends StatelessWidget {
+  const EmployeeSidebar({super.key});
 
   Future<Map<String, dynamic>> _fetchUserData() async {
     AuthenticationService authService = AuthenticationService();
@@ -76,13 +76,6 @@ class Sidebar extends StatelessWidget {
                     title: const Text('Orders'),
                     onTap: () {
                       Navigator.pushReplacementNamed(context, '/Orders');
-                    },
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.person_add),
-                    title: const Text('Registration'),
-                    onTap: () {
-                      Navigator.pushReplacementNamed(context, '/Registration');
                     },
                   ),
                   ListTile(
