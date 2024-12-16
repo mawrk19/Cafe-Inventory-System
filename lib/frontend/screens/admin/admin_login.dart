@@ -4,6 +4,8 @@ import 'package:kopilism/frontend/widgets/sign in/logo.dart';
 import 'package:kopilism/frontend/widgets/login/associate.dart';
 import 'package:kopilism/frontend/screens/admin/admin_dashboard.dart';
 import 'package:kopilism/frontend/screens/employee/employee_dashboard.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:kopilism/frontend/widgets/logout/logout_button.dart'; // Add this import
 
 class AdminLogin extends StatefulWidget {
   const AdminLogin({super.key});
@@ -18,6 +20,23 @@ class _AdminLoginState extends State<AdminLogin> {
   final TextEditingController passwordController = TextEditingController();
   bool _isLoading = false;
 
+  @override
+  void initState() {
+    super.initState();
+    _checkLoginStatus();
+  }
+
+  Future<void> _checkLoginStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    final email = prefs.getString('email');
+    final password = prefs.getString('password');
+    if (email != null && password != null) {
+      emailController.text = email;
+      passwordController.text = password;
+      _login();
+    }
+  }
+
   Future<void> _login() async {
     setState(() {
       _isLoading = true;
@@ -29,6 +48,10 @@ class _AdminLoginState extends State<AdminLogin> {
     try {
       final user = await _authService.login(email, password);
       if (user != null) {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.setString('email', email);
+        await prefs.setString('password', password);
+
         final userDoc = await _authService.getUserData(user.uid);
         final userData = userDoc.data() as Map<String, dynamic>;
 
