@@ -115,7 +115,7 @@ class AdminProductCard extends StatelessWidget {
                         ),
                         const SizedBox(width: 4),
                         Text(
-                          '\$${productPrice.toStringAsFixed(2)}',
+                            '₱${productPrice.toStringAsFixed(2)}',
                           style: const TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,

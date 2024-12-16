@@ -24,7 +24,7 @@ class EmployeeBottomNavBar extends StatelessWidget {
           children: [
             _buildNavItem(context, 'Product', 'assets/images/product_icon.png', '/EmployeeCategory'),
             _buildNavItem(context, 'Customer', 'assets/images/customer_icon.png', '/EmployeeCustomer'),
-            _buildNavItem(context, 'Barcode', 'assets/images/barcode_scanner.png', '/EmployeeBarcode'),
+            _buildBarcodeNavItem(context, 'Barcode', 'assets/images/barcode_scanner.png', '/EmployeeBarcode'),
             _buildNavItem(context, 'Home', 'assets/images/home_icon.png', '/EmployeeHome'),
             _buildNavItem(context, 'Orders', 'assets/images/orders_icon.png', '/EmployeeOrders'),
           ],
@@ -66,6 +66,45 @@ class EmployeeBottomNavBar extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBarcodeNavItem(BuildContext context, String label, String iconPath, String routeName) {
+    return GestureDetector(
+      onTap: () {
+        // Check if the current route is already the desired route
+        if (ModalRoute.of(context)?.settings.name != routeName) {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            routeName,
+            (Route<dynamic> route) => false, // Remove all previous routes
+          );
+        }
+      },
+      child: Semantics(
+        button: true,
+        label: '$label navigation button',
+        child: Container(
+          width: 70,
+          height: 70,
+          decoration: BoxDecoration(
+            color: const Color(0xFFB0814F), // New color
+            shape: BoxShape.circle,
+            gradient: LinearGradient(
+              colors: [const Color(0xFFB0814F), const Color(0xFFB0814F)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: Center(
+            child: Image.asset(
+              iconPath,
+              width: 40, // Increased size
+              height: 40, // Increased size
+            ),
+          ),
         ),
       ),
     );

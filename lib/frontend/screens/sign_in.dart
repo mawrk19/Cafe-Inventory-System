@@ -3,7 +3,6 @@ import 'package:kopilism/frontend/widgets/sign%20in/logo.dart';
 import '../widgets/sign in/rounded_container.dart';
 import '../widgets/sign in/title_box.dart';
 import '../widgets/sign in/sign_in_buttons.dart';
-import '../widgets/sign in/register_prompt.dart';
 
 class SignIn extends StatelessWidget {
   const SignIn({super.key});
@@ -18,7 +17,6 @@ class SignIn extends StatelessWidget {
           const RoundedContainer(),
           const TitleBox(),
           const SignInButtons(),
-          const RegisterPrompt(),
         ],
       ),
     );

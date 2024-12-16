@@ -21,7 +21,7 @@ class AuthenticationService {
     } catch (e) {
       rethrow;
     }
-  }
+  } 
 
   Future<DocumentSnapshot> getUserData(String userId) async {
     DocumentSnapshot userDoc = await _firestore
@@ -41,6 +41,15 @@ class AuthenticationService {
     }
 
     return userDoc;
+  }
+
+  Future<DocumentSnapshot> getCurrentUserData() async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      return await getUserData(user.uid);
+    } else {
+      throw Exception('No user is currently signed in.');
+    }
   }
 
   Future<void> registerUser({

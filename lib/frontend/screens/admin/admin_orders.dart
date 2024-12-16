@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:kopilism/frontend/widgets/order_list.dart';
-import 'package:kopilism/frontend/widgets/products/bottom_nav_bar.dart';
+import 'package:kopilism/frontend/widgets/orders/order_list.dart';
+import 'package:kopilism/frontend/widgets/bottom_nav_bar.dart';
 import 'package:kopilism/frontend/widgets/search_bar2.dart' as custom;
+import 'package:kopilism/frontend/widgets/sidebar.dart';
+import 'package:kopilism/frontend/widgets/top_nav_bar.dart';
 
 class AdminOrders extends StatelessWidget {
   const AdminOrders({super.key});
@@ -9,25 +11,8 @@ class AdminOrders extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text('Order Tracking'),
-                IconButton(
-                  icon: Icon(Icons.filter_list),
-                  onPressed: () {
-                    // Add filter functionality here
-                  },
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
+      appBar: const TopNavBar(), // Use the custom TopNavBar
+      drawer: const Sidebar(), // Add the Sidebar as the drawer
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(8.0),

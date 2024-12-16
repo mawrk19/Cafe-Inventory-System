@@ -19,13 +19,13 @@ Map<String, WidgetBuilder> getAppRoutes() {
     '/AdminCategory': (context) => const AdminCategory(),
     '/Customer': (context) => const AdminCustomers(),
     '/Barcode': (context) => const AdminBarcode(),
-    '/Home': (context) => const AdminDashboard(),
+    '/Home': (context) => AdminDashboard(),
     '/Orders': (context) => const AdminOrders(),  
 
     '/EmployeeCategory': (context) => const EmployeeCategory(),
     '/EmployeeCustomer': (context) => const EmployeeCustomers(),
     '/EmployeeBarcode': (context) => const EmployeeBarcode(),
-    '/EmployeeHome': (context) => const EmployeeDashboard(),
+    '/EmployeeHome': (context) => EmployeeDashboard(),
     '/EmployeeOrders': (context) => const EmployeeOrders(),
     //login and registration
     '/AdminLogIn': (context) => const AdminLogin(),
