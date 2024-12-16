@@ -11,7 +11,7 @@ class AdminDashboard extends StatelessWidget {
     return _instance;
   }
 
-  AdminDashboard._internal({super.key});
+  const AdminDashboard._internal();
 
   @override
   Widget build(BuildContext context) {
@@ -19,13 +19,13 @@ class AdminDashboard extends StatelessWidget {
       onWillPop: () async {
         return await showExitPopup(context); // Call your exit confirmation function
       },
-      child: Scaffold(
-        appBar: const TopNavBar(), // Use the custom TopNavBar
-        drawer: const Sidebar(), // Add the Sidebar as the drawer
-        body: const Center(
+      child: const Scaffold(
+        appBar: TopNavBar(), // Use the custom TopNavBar
+        drawer: Sidebar(), // Add the Sidebar as the drawer
+        body: Center(
           child: Text('This is the Dashboard Screen'),
         ),
-        bottomNavigationBar: const BottomNavBar(), // Use your custom widget
+        bottomNavigationBar: BottomNavBar(), // Use your custom widget
       ),
     );
   }

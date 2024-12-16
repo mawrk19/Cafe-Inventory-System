@@ -18,7 +18,7 @@ class EmployeeSidebar extends StatelessWidget {
       future: _fetchUserData(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
+          return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
           return Center(child: Text('Error: ${snapshot.error}'));
         } else {
@@ -36,7 +36,7 @@ class EmployeeSidebar extends StatelessWidget {
                       backgroundColor: Colors.white,
                       child: Text(
                         userData['fullName'][0],
-                        style: TextStyle(fontSize: 40.0),
+                        style: const TextStyle(fontSize: 40.0),
                       ),
                     ),
                     decoration: const BoxDecoration(
@@ -83,7 +83,7 @@ class EmployeeSidebar extends StatelessWidget {
                     title: const Text('Log out'),
                     onTap: () {
                       // Show the logout confirmation dialog
-                      LogoutButton().showLogoutConfirmation(context);
+                      const LogoutButton().showLogoutConfirmation(context);
                     },
                   ),
                 ],

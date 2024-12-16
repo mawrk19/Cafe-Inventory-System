@@ -29,6 +29,21 @@ class FirestoreService {
     }
   }
 
+  // Get archived categories
+  Future<List<Map<String, dynamic>>> getArchivedCategories() async {
+    try {
+      QuerySnapshot snapshot = await _db.collection('categories').where('archived', isEqualTo: true).get();
+      return snapshot.docs.map((doc) {
+        return {
+          ...doc.data() as Map<String, dynamic>,
+          'id': doc.id, // Add document ID for easy reference
+        };
+      }).toList();
+    } catch (e) {
+      throw Exception('Failed to fetch archived categories: $e');
+    }
+  }
+
   // Edit a category
   Future<void> editCategory(String id, Map<String, dynamic> data) async {
     try {
@@ -44,6 +59,15 @@ class FirestoreService {
       await _db.collection('categories').doc(id).delete();
     } catch (e) {
       throw Exception('Failed to delete category: $e');
+    }
+  }
+
+  // Archive a category
+  Future<void> archiveCategory(String categoryId) async {
+    try {
+      await _db.collection('categories').doc(categoryId).update({'archived': true});
+    } catch (e) {
+      throw Exception('Failed to archive category: $e');
     }
   }
 
@@ -123,4 +147,6 @@ class FirestoreService {
   String getImageUrl(String? imageUrl) {
     return imageUrl ?? 'assets/images/ProductPhoto.png'; // Default image if no URL is provided
   }
+
+  
 }

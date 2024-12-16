@@ -8,13 +8,13 @@ class EmployeeBarcode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const TopNavBar(), // Use the custom TopNavBar
-        drawer: const EmployeeSidebar(), 
-      body: const Center(
+    return const Scaffold(
+      appBar: TopNavBar(), // Use the custom TopNavBar
+        drawer: EmployeeSidebar(), 
+      body: Center(
         child: Text('This is the Employee Barcode Screen'),
       ),
-      bottomNavigationBar: const EmployeeBottomNavBar(), // Use your custom widget  
+      bottomNavigationBar: EmployeeBottomNavBar(), // Use your custom widget  
     );
   }
 }

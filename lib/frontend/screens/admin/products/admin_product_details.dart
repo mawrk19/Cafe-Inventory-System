@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kopilism/backend/services/firestore_service.dart'; // Firestore service to fetch product details
+import 'package:kopilism/backend/services/products_service.dart'; // Firestore service to fetch product details
 import 'package:cloud_firestore/cloud_firestore.dart'; // Import Firestore package for Timestamp
 
 class ProductDetailScreen extends StatefulWidget {

@@ -1,7 +1,7 @@
 // Updated AdminCategory Screen
 import 'package:flutter/material.dart';
 import 'package:kopilism/frontend/widgets/employee_bottom_nav_bar.dart';
-import 'package:kopilism/backend/services/firestore_service.dart';
+import 'package:kopilism/backend/services/products_service.dart';
 import 'package:kopilism/frontend/screens/employee/products/employee_products.dart';
 
 class EmployeeCategory extends StatefulWidget {
