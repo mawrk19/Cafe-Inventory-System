@@ -1,15 +1,51 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:kopilism/backend/services/shared_preference_service.dart';
 import 'package:kopilism/frontend/widgets/logout/logout_button.dart'; // Add this import
-import 'package:kopilism/backend/services/authentication.dart'; // Add this import
+import 'package:kopilism/backend/services/authentication.dart';
 
 class Sidebar extends StatelessWidget {
   const Sidebar({super.key});
 
   Future<Map<String, dynamic>> _fetchUserData() async {
-    AuthenticationService authService = AuthenticationService();
-    DocumentSnapshot userDoc = await authService.getCurrentUserData();
-    return userDoc.data() as Map<String, dynamic>;
+    try {
+      // Check SharedPreferences for stored data using SharedPreferencesService
+      final prefsData = await SharedPreferencesService.getMultiple(['fullName', 'email', 'userRole']);
+      String? fullName = prefsData['fullName'];
+      String? email = prefsData['email'];
+      String? role = prefsData['userRole'];
+
+      // If all data is available in SharedPreferences, use it
+      if (fullName != null && email != null && role != null) {
+        return {
+          'fullName': fullName,
+          'email': email,
+          'role': role,
+        };
+      }
+
+      // If not, fetch from Firestore
+      AuthenticationService authService = AuthenticationService();
+      DocumentSnapshot userDoc = await authService.getCurrentUserData();
+
+      if (userDoc.data() != null) {
+        Map<String, dynamic> userData = userDoc.data() as Map<String, dynamic>;
+
+        // Save the fetched data to SharedPreferences
+        await SharedPreferencesService.saveMultiple({
+          'fullName': userData['fullName'],
+          'email': userData['email'],
+          'userRole': userData['role'],
+        });
+
+        return userData;
+      } else {
+        throw Exception('User data is null');
+      }
+    } catch (e) {
+      print('Error fetching user data: $e');
+      throw e;
+    }
   }
 
   @override

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kopilism/backend/services/firestore_service.dart';
+import 'package:kopilism/backend/services/products_service.dart';
 
 class AddProductModal extends StatefulWidget {
   final String categoryId;

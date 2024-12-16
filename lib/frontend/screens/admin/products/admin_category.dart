@@ -1,7 +1,7 @@
 // Updated AdminCategory Screen
 import 'package:flutter/material.dart';
 import 'package:kopilism/frontend/widgets/bottom_nav_bar.dart';
-import 'package:kopilism/backend/services/firestore_service.dart';
+import 'package:kopilism/backend/services/products_service.dart';
 import 'package:kopilism/frontend/screens/admin/products/admin_products.dart';
 import 'package:kopilism/frontend/widgets/sidebar.dart';
 import 'package:kopilism/frontend/widgets/top_nav_bar.dart';

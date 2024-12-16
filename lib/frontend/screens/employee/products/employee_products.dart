@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kopilism/backend/services/firestore_service.dart';
+import 'package:kopilism/backend/services/products_service.dart';
 import 'package:kopilism/frontend/widgets/products/product_card.dart'; // Updated import
 
 class EmployeeProducts extends StatefulWidget {

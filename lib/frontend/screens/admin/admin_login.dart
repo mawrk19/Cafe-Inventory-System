@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:kopilism/backend/services/authentication.dart';
+import 'package:kopilism/backend/services/shared_preference_service.dart';
 import 'package:kopilism/frontend/widgets/sign in/logo.dart';
 import 'package:kopilism/frontend/widgets/login/associate.dart';
 import 'package:kopilism/frontend/screens/admin/admin_dashboard.dart';
@@ -37,53 +38,66 @@ class _AdminLoginState extends State<AdminLogin> {
   }
 
   Future<void> _login() async {
-    setState(() {
-      _isLoading = true;
-    });
+  setState(() {
+    _isLoading = true;
+  });
 
-    final email = emailController.text.trim();
-    final password = passwordController.text.trim();
+  final email = emailController.text.trim();
+  final password = passwordController.text.trim();
 
-    try {
-      final user = await _authService.login(email, password);
-      if (user != null) {
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString('email', email);
-        await prefs.setString('password', password);
+  try {
+    final user = await _authService.login(email, password);
+    if (user != null) {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('email', email);
+      await prefs.setString('password', password);
 
-        final userDoc = await _authService.getUserData(user.uid);
-        final userData = userDoc.data() as Map<String, dynamic>;
+      final userDoc = await _authService.getUserData(user.uid);
+      final userData = userDoc.data() as Map<String, dynamic>;
 
-        if (userData['role'] == 'admin' || userData['role'] == 'ownerAdmin') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => AdminDashboard()),
-          );
-        } else if (userData['role'] == 'employee') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => EmployeeDashboard()),
-          );
-        } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text("Access denied.")),
-          );
-        }
+      // Prepare a map to store multiple values at once
+      Map<String, String> dataToStore = {
+        'userId': user.uid,
+        'userRole': userData['role'],
+        'fullName': userData['fullName'],
+        'email': userData['email'],
+        // Add any other fields you need
+      };
+
+      // Store all data using the service
+      await SharedPreferencesService.saveMultiple(dataToStore);
+
+      if (userData['role'] == 'admin' || userData['role'] == 'ownerAdmin') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => AdminDashboard()),
+        );
+      } else if (userData['role'] == 'employee') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => EmployeeDashboard()),
+        );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Invalid username or password.")),
+          const SnackBar(content: Text("Access denied.")),
         );
       }
-    } catch (e) {
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error: $e")),
+        const SnackBar(content: Text("Invalid username or password.")),
       );
-    } finally {
-      setState(() {
-        _isLoading = false;
-      });
     }
+  } catch (e) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text("Error: $e")),
+    );
+  } finally {
+    setState(() {
+      _isLoading = false;
+    });
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
