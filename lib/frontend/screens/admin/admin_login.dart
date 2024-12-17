@@ -49,30 +49,38 @@ class _AdminLoginState extends State<AdminLogin> {
     final user = await _authService.login(email, password);
     if (user != null) {
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('email', email);
-      await prefs.setString('password', password);
 
-      final userDoc = await _authService.getUserData(user.uid);
-      final userData = userDoc.data() as Map<String, dynamic>;
+      // Check if session data already exists
+      final existingEmail = prefs.getString('email');
+      if (existingEmail != email) {
+        // Store session data only if it does not exist for the current user
+        await prefs.setString('email', email);
+        await prefs.setString('password', password);
 
-      // Prepare a map to store multiple values at once
-      Map<String, String> dataToStore = {
-        'userId': user.uid,
-        'userRole': userData['role'],
-        'fullName': userData['fullName'],
-        'email': userData['email'],
-        // Add any other fields you need
-      };
+        final userDoc = await _authService.getUserData(user.uid);
+        final userData = userDoc.data() as Map<String, dynamic>;
 
-      // Store all data using the service
-      await SharedPreferencesService.saveMultiple(dataToStore);
+        // Prepare a map to store multiple values at once
+        Map<String, String> dataToStore = {
+          'userId': user.uid,
+          'userRole': userData['role'],
+          'fullName': userData['fullName'],
+          'email': userData['email'],
+          // Add any other fields you need
+        };
 
-      if (userData['role'] == 'admin' || userData['role'] == 'ownerAdmin') {
+        // Store all data using the service
+        await SharedPreferencesService.saveMultiple(dataToStore);
+      }
+
+      // Redirect based on role
+      final userRole = prefs.getString('userRole') ?? '';
+      if (userRole == 'admin' || userRole == 'ownerAdmin') {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => AdminDashboard()),
         );
-      } else if (userData['role'] == 'employee') {
+      } else if (userRole == 'employee') {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => EmployeeDashboard()),
@@ -97,6 +105,8 @@ class _AdminLoginState extends State<AdminLogin> {
     });
   }
 }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,19 +125,15 @@ class _AdminLoginState extends State<AdminLogin> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                // Logo and Header Section
                 const Column(
                   children: [
                     SizedBox(height: 40),
                     LogoWidget(),
                     SizedBox(height: 10),
-                     Associate(),
+                    Associate(),
                   ],
                 ),
-
-                const SizedBox(height: 20), // Add space between header and input section
-
-                // Input Section for Email and Password
+                const SizedBox(height: 20),
                 Container(
                   decoration: BoxDecoration(
                     color: const Color(0xFFFFF4E6),
@@ -143,7 +149,6 @@ class _AdminLoginState extends State<AdminLogin> {
                   padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 20),
                   child: Column(
                     children: [
-                      // Email input field
                       TextField(
                         controller: emailController,
                         decoration: const InputDecoration(
@@ -152,7 +157,6 @@ class _AdminLoginState extends State<AdminLogin> {
                         ),
                       ),
                       const SizedBox(height: 12),
-                      // Password input field
                       TextField(
                         controller: passwordController,
                         obscureText: true,
@@ -164,20 +168,17 @@ class _AdminLoginState extends State<AdminLogin> {
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 15),
-
-                // Login button
                 ElevatedButton(
                   onPressed: _isLoading ? null : _login,
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.white, backgroundColor: const Color.fromARGB(255, 176, 129, 79), // Font color
+                    foregroundColor: Colors.white,
+                    backgroundColor: const Color.fromARGB(255, 176, 129, 79),
                   ),
                   child: _isLoading
                       ? const CircularProgressIndicator()
                       : const Text('Login'),
                 ),
-
                 const SizedBox(height: 15),
               ],
             ),

@@ -40,8 +40,12 @@ class _AdminArchivedCategoriesState extends State<AdminArchivedCategories> {
       final productDoc = await FirebaseFirestore.instance
           .doc('/categories/$categoryId/products/$productId')
           .get();
-      final productStatus = productDoc['status'];
-      product['status'] = productStatus;
+      if (productDoc.exists && productDoc.data() != null) {
+        final productStatus = productDoc['status'];
+        product['status'] = productStatus;
+      } else {
+        product['status'] = 'unknown'; // or handle the null case as needed
+      }
     }
     setState(() {
       _archivedProducts = products;
