@@ -12,6 +12,7 @@ import '../frontend/screens/admin/admin_login.dart';
 import '../frontend/screens/branch_login.dart';
 import '../frontend/screens/registration.dart';
 import '../frontend/screens/employee/products/employee_category.dart';
+import '../frontend/screens/branch/order_history.dart';
 
 Map<String, WidgetBuilder> getAppRoutes() {
   return{
@@ -31,5 +32,8 @@ Map<String, WidgetBuilder> getAppRoutes() {
     '/AdminLogIn': (context) => const AdminLogin(),
     '/BranchLogIn': (context) => const BranchLogin(role: 'branch',),
     '/Registration': (context) => const RegistrationForm(),
+
+    //branch
+    '/OrderHistory': (context) => const OrderHistoryScreen(),
   };
 }
