@@ -1,5 +1,6 @@
 // Updated AdminCategory Screen
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kopilism/backend/services/shared_preference_service.dart';
 import 'package:kopilism/frontend/widgets/bottom_nav_bar.dart';
 import 'package:kopilism/backend/services/products_service.dart';
@@ -34,6 +35,67 @@ class _AdminCategoryState extends State<AdminCategory> {
     });
   }
 
+  void _showCategoryOptions(String categoryId) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Wrap(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.archive),
+              title: const Text('Archive'),
+              onTap: () {
+                Navigator.pop(context);
+                _archiveCategory(categoryId);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.edit),
+              title: const Text('Edit'),
+              onTap: () {
+                Navigator.pop(context);
+                _editCategory(categoryId);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.cancel),
+              title: const Text('Cancel'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _archiveCategory(String categoryId) async {
+    await _firestoreService.updateCategory(categoryId, {'status': 'archived'});
+    _fetchCategories();
+    Fluttertoast.showToast(msg: 'Category archived successfully');
+    _createNotification('Archive', 'Category archived successfully');
+  }
+
+  void _editCategory(String categoryId) async {
+    final category = _categories.firstWhere((category) => category['id'] == categoryId);
+    _showCategoryDialog(
+      context,
+      id: categoryId,
+      currentName: category['name'],
+      currentImage: category['image'],
+    );
+  }
+
+  Future<void> _createNotification(String header, String message) async {
+    await FirebaseFirestore.instance.collection('notifications').doc('users').collection('admin').add({
+      'header': header,
+      'message': message,
+      'timestamp': FieldValue.serverTimestamp(),
+      'read': false,
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,38 +111,46 @@ class _AdminCategoryState extends State<AdminCategory> {
         padding: const EdgeInsets.all(16.0),
         child: _categories.isEmpty
             ? const Center(child: Text('No categories available'))
-            : GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                  childAspectRatio: 3 / 4, // Adjust this ratio as needed
-                ),
-                itemCount: _categories.length,
-                itemBuilder: (context, index) {
-                  final category = _categories[index];
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => AdminProducts(
-                            categoryId: category['id'],
-                            categoryName: category['name'],
+            : SingleChildScrollView(
+                child: Column(
+                  children: [
+                    GridView.builder(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        crossAxisSpacing: 16,
+                        mainAxisSpacing: 16,
+                        childAspectRatio: 3 / 4, // Adjust this ratio as needed
+                      ),
+                      itemCount: _categories.length,
+                      itemBuilder: (context, index) {
+                        final category = _categories[index];
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => AdminProducts(
+                                  categoryId: category['id'],
+                                  categoryName: category['name'],
+                                ),
+                              ),
+                            );
+                          },
+                          onLongPress: () {
+                            _showCategoryOptions(category['id']);
+                          },
+                          child: CategoryCard(
+                            title: category['name'] ?? 'Unnamed',
+                            fontSize: 16,
+                            imageUrl: _firestoreService.getImageUrl(category['image']),
                           ),
-                        ),
-                      );
-                    },
-                    onLongPress: () {
-                      _showArchiveDialog(context, category['id']);
-                    },
-                    child: CategoryCard(
-                      title: category['name'] ?? 'Unnamed',
-                      fontSize: 16,
-                      imageUrl: _firestoreService.getImageUrl(category['image']),
+                        );
+                      },
                     ),
-                  );
-                },
+                  ],
+                ),
               ),
       ),
       bottomNavigationBar: const BottomNavBar(),
@@ -90,7 +160,7 @@ class _AdminCategoryState extends State<AdminCategory> {
   void _showCategoryDialog(BuildContext context, {String? id, String? currentName, String? currentImage}) async {
   final TextEditingController categoryController = TextEditingController(text: currentName ?? '');
   final isEdit = id != null;
-  String? selectedImage;
+  String? selectedImage = currentImage;
 
   // Fetch admin details from shared preferences
   final adminName = await SharedPreferencesService.getString('email') ?? 'Unknown';
@@ -99,146 +169,134 @@ class _AdminCategoryState extends State<AdminCategory> {
   showDialog(
     context: context,
     builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text(isEdit ? 'Edit Category' : 'Add Category'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: categoryController,
-              decoration: const InputDecoration(hintText: 'Enter category name'),
-            ),
-            const SizedBox(height: 16),
-            DropdownButton<String>(
-              value: selectedImage,
-              hint: const Text('Select an image'),
-              items: [
-                'assets/images/milk.png',
-                'assets/images/cups.png',
-                'assets/images/ProductPhoto.png'
-              ].map((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 40, // Image thumbnail width
-                        height: 40, // Image thumbnail height
-                        margin: const EdgeInsets.only(right: 8.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.0),
-                          border: selectedImage == value
-                              ? Border.all(color: Colors.blue, width: 2) // Highlight selected image
-                              : null,
-                        ),
-                        child: Image.asset(
-                          value,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      Text(value.split('/').last),
-                    ],
-                  ),
-                );
-              }).toList(),
-              onChanged: (String? newValue) {
-                setState(() {
-                  selectedImage = newValue;
-                });
-              },
-            ),
-            if (selectedImage != null)
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: Column(
-                  children: [
-                    const Text('Selected Image Preview'),
-                    SizedBox(
-                      width: 100, // Adjust size for preview
-                      height: 100, // Adjust size for preview
-                      child: Image.asset(
-                        selectedImage!,
-                        fit: BoxFit.cover,
-                        errorBuilder: (context, error, stackTrace) {
-                          return const Icon(Icons.broken_image, size: 50);
-                        },
-                      ),
-                    ),
-                  ],
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return AlertDialog(
+            title: Text(isEdit ? 'Edit Category' : 'Add Category'),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: categoryController,
+                  decoration: const InputDecoration(hintText: 'Enter category name'),
                 ),
-              ),
-          ],
-        ),
-        actions: <Widget>[
-          if (isEdit)
-            TextButton(
-              onPressed: () async {
-                await _firestoreService.archiveCategory(id!);
-                Navigator.of(context).pop();
-                setState(() {
-                  _categories.removeWhere((category) => category['id'] == id);
-                });
-                if (mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Category archived')),
-                  );
-                }
-              },
-              child: const Text('Archive'),
-            ),
-          TextButton(
-            onPressed: () async {
-              final newName = categoryController.text.trim();
-              final imageUrl = selectedImage ?? currentImage ?? 'assets/images/ProductPhoto.png';
-
-              if (newName.isNotEmpty) {
-                final docId = isEdit ? id : DateTime.now().millisecondsSinceEpoch.toString();
-                await _firestoreService.addCategory(docId, {
-                  'id': docId,
-                  'name': newName,
-                  'image': imageUrl,
-                  'status': 'active', // Set status to active
-                  'createdByAdminName': adminName, // Add admin's name
-                  'createdByAdminRole': adminRole, // Add admin's role
-                });
-                Navigator.of(context).pop();
-                _fetchCategories();
-
-                // Create notification message
-                final notificationMessage = isEdit
-                    ? 'Category "$newName" edited by $adminName ($adminRole)'
-                    : 'Category "$newName" added by $adminName ($adminRole)';
-
-                // Save notification to Firestore
-                await FirebaseFirestore.instance
-                    .collection('notifications')
-                    .doc('users')
-                    .collection('admin')
-                    .add({
-                  'message': notificationMessage,
-                  'timestamp': FieldValue.serverTimestamp(),
-                  'header': isEdit ? 'Category Edited' : 'Category Added',
-                });
-
-                // Show Snackbar notification
-                if (mounted) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Admin notified: $notificationMessage'),
+                const SizedBox(height: 16),
+                DropdownButton<String>(
+                  value: selectedImage,
+                  hint: const Text('Select an image'),
+                  items: [
+                    'assets/images/milk.png',
+                    'assets/images/cups.png',
+                    'assets/images/ProductPhoto.png'
+                  ].map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 40, // Image thumbnail width
+                            height: 40, // Image thumbnail height
+                            margin: const EdgeInsets.only(right: 8.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.0),
+                              border: selectedImage == value
+                                  ? Border.all(color: Colors.blue, width: 2) // Highlight selected image
+                                  : null,
+                            ),
+                            child: Image.asset(
+                              value,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Text(value.split('/').last),
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      selectedImage = newValue;
+                    });
+                  },
+                ),
+                if (selectedImage != null)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Column(
+                      children: [
+                        const Text('Selected Image Preview'),
+                        SizedBox(
+                          width: 100, // Adjust size for preview
+                          height: 100, // Adjust size for preview
+                          child: Image.asset(
+                            selectedImage!,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return const Icon(Icons.broken_image, size: 50);
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                  );
-                }
-              }
-            },
-            child: Text(isEdit ? 'Save' : 'Add'),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: const Text('Cancel'),
-          ),
-        ],
+                  ),
+              ],
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () async {
+                  final newName = categoryController.text.trim();
+                  final imageUrl = selectedImage ?? currentImage ?? 'assets/images/ProductPhoto.png';
+
+                  if (newName.isNotEmpty) {
+                    final docId = isEdit ? id : DateTime.now().millisecondsSinceEpoch.toString();
+                    await _firestoreService.addCategory(docId, {
+                      'id': docId,
+                      'name': newName,
+                      'image': imageUrl,
+                      'status': 'active', // Set status to active
+                      'createdByAdminName': adminName, // Add admin's name
+                      'createdByAdminRole': adminRole, // Add admin's role
+                    });
+                    Navigator.of(context).pop();
+                    _fetchCategories();
+
+                    // Create notification message
+                    final notificationMessage = isEdit
+                        ? 'Category "$newName" edited by $adminName ($adminRole)'
+                        : 'Category "$newName" added by $adminName ($adminRole)';
+
+                    // Save notification to Firestore
+                    await FirebaseFirestore.instance
+                        .collection('notifications')
+                        .doc('users')
+                        .collection('admin')
+                        .add({
+                      'message': notificationMessage,
+                      'timestamp': FieldValue.serverTimestamp(),
+                      'header': isEdit ? 'Category Edited' : 'Category Added',
+                    });
+
+                    // Show Snackbar notification
+                    if (mounted) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Admin notified: $notificationMessage'),
+                        ),
+                      );
+                    }
+                  }
+                },
+                child: Text(isEdit ? 'Save' : 'Add'),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Cancel'),
+              ),
+            ],
+          );
+        },
       );
     },
   );

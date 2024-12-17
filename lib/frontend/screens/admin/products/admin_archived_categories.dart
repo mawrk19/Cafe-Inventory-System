@@ -3,6 +3,8 @@ import 'package:kopilism/backend/services/products_service.dart';
 import 'package:kopilism/frontend/widgets/sidebar.dart';
 import 'package:kopilism/frontend/widgets/top_nav_bar.dart';
 import 'package:kopilism/frontend/widgets/bottom_nav_bar.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AdminArchivedCategories extends StatefulWidget {
   const AdminArchivedCategories({super.key});
@@ -57,6 +59,8 @@ class _AdminArchivedCategoriesState extends State<AdminArchivedCategories> {
     }
     _fetchArchivedCategories();
     _deselectAll();
+    Fluttertoast.showToast(msg: 'Selected categories retrieved successfully');
+    _createNotification('Retrieve', 'Selected categories retrieved successfully');
   }
 
   Future<void> _deleteSelected() async {
@@ -65,6 +69,64 @@ class _AdminArchivedCategoriesState extends State<AdminArchivedCategories> {
     }
     _fetchArchivedCategories();
     _deselectAll();
+    Fluttertoast.showToast(msg: 'Selected categories deleted successfully');
+    _createNotification('Delete', 'Selected categories deleted successfully');
+  }
+
+  Future<void> _createNotification(String header, String message) async {
+    await FirebaseFirestore.instance.collection('notifications').doc('users').collection('admin').add({
+      'header': header,
+      'message': message,
+      'timestamp': FieldValue.serverTimestamp(),
+      'read': false,
+    });
+  }
+
+  void _showCategoryOptions(String categoryId) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Wrap(
+          children: [
+            ListTile(
+              leading: const Icon(Icons.archive),
+              title: const Text('Archive'),
+              onTap: () {
+                Navigator.pop(context);
+                _archiveCategory(categoryId);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.edit),
+              title: const Text('Edit'),
+              onTap: () {
+                Navigator.pop(context);
+                _editCategory(categoryId);
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.cancel),
+              title: const Text('Cancel'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _archiveCategory(String categoryId) async {
+    await _firestoreService.updateCategory(categoryId, {'status': 'archived'});
+    _fetchArchivedCategories();
+    Fluttertoast.showToast(msg: 'Category archived successfully');
+    _createNotification('Archive', 'Category archived successfully');
+  }
+
+  void _editCategory(String categoryId) {
+    // Navigate to the edit category screen
+    Navigator.pushNamed(context, '/edit-category', arguments: categoryId);
   }
 
   @override
@@ -84,24 +146,29 @@ class _AdminArchivedCategoriesState extends State<AdminArchivedCategories> {
                       itemBuilder: (context, index) {
                         final category = _archivedCategories[index];
                         final isSelected = _selectedCategories.contains(category['id']);
-                        return ListTile(
-                          title: Text(category['name'] ?? 'Unnamed'),
-                          subtitle: const Text('Archived'),
-                          leading: Image.asset(
-                            _firestoreService.getImageUrl(category['image']),
-                            width: 50,
-                            height: 50,
-                            fit: BoxFit.cover,
-                          ),
-                          trailing: Checkbox(
-                            value: isSelected,
-                            onChanged: (bool? value) {
+                        return GestureDetector(
+                          onLongPress: () {
+                            _showCategoryOptions(category['id']);
+                          },
+                          child: ListTile(
+                            title: Text(category['name'] ?? 'Unnamed'),
+                            subtitle: const Text('Archived'),
+                            leading: Image.asset(
+                              _firestoreService.getImageUrl(category['image']),
+                              width: 50,
+                              height: 50,
+                              fit: BoxFit.cover,
+                            ),
+                            trailing: Checkbox(
+                              value: isSelected,
+                              onChanged: (bool? value) {
+                                _toggleSelection(category['id']);
+                              },
+                            ),
+                            onTap: () {
                               _toggleSelection(category['id']);
                             },
                           ),
-                          onTap: () {
-                            _toggleSelection(category['id']);
-                          },
                         );
                       },
                     ),
