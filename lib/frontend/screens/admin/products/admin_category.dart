@@ -1,4 +1,3 @@
-// Updated AdminCategory Screen
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kopilism/backend/services/shared_preference_service.dart';

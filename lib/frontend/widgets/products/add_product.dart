@@ -29,7 +29,7 @@ class _AddProductModalState extends State<AddProductModal> {
   DateTime manufactureDate = DateTime.now();
   int shelfLife = 0;
   String storageConditions = '';
-  String status = '';
+  String status = 'available'; // Default status
   String image = 'assets/images/ProductPhoto.png'; // Default image
 
   final TextEditingController _expirationDateController = TextEditingController();
@@ -60,7 +60,7 @@ class _AddProductModalState extends State<AddProductModal> {
         'manufactureDate': manufactureDate,
         'shelfLife': shelfLife,
         'storageConditions': storageConditions,
-        'status': status,
+        'status': status, // Ensure status is set to 'available'
         'image': image, // Changed from 'imageUrl' to 'image'
         'categoryId': widget.categoryId,
       });
@@ -79,19 +79,6 @@ class _AddProductModalState extends State<AddProductModal> {
           key: _formKey,
           child: Column(
             children: [
-              // Image Preview Section
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Image.asset(
-                  image,
-                  width: 100, // You can adjust the size
-                  height: 100,
-                  fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Icon(Icons.broken_image, size: 50);
-                  },
-                ),
-              ),
               // Product Name Input
               TextFormField(
                 decoration: const InputDecoration(labelText: 'Product Name'),
@@ -193,11 +180,6 @@ class _AddProductModalState extends State<AddProductModal> {
                 decoration: const InputDecoration(labelText: 'Storage Conditions'),
                 onSaved: (value) => storageConditions = value!,
               ),
-              // Status Input
-              TextFormField(
-                decoration: const InputDecoration(labelText: 'Status'),
-                onSaved: (value) => status = value!,
-              ),
               const SizedBox(height: 16),
               // Image Picker Row
               Row(
@@ -218,6 +200,19 @@ class _AddProductModalState extends State<AddProductModal> {
                 ],
               ),
               const SizedBox(height: 16),
+              // Image Preview Section
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: Image.asset(
+                  image,
+                  width: 100, // You can adjust the size
+                  height: 100,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Icon(Icons.broken_image, size: 50);
+                  },
+                ),
+              ),
               ElevatedButton(
                 onPressed: _submitForm,
                 child: const Text('Add Product'),
