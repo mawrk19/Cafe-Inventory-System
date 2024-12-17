@@ -23,7 +23,7 @@ class NotificationCard extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Row(
           children: [
-            Icon(Icons.notifications, size: 40, color: Colors.blue),
+            const Icon(Icons.notifications, size: 40, color: Colors.blue),
             const SizedBox(width: 8),
             Expanded(
               child: Column(

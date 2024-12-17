@@ -19,11 +19,11 @@ class CustomerDetailsScreen extends StatelessWidget {
           decoration: BoxDecoration(
             color: const Color(0xFFB0814F),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
-                color: const Color(0xFFFFF4E6),
+                color: Color(0xFFFFF4E6),
                 blurRadius: 4,
-                offset: const Offset(0, 4),
+                offset: Offset(0, 4),
               ),
             ],
           ),

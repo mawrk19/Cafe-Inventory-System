@@ -5,7 +5,7 @@ import 'package:kopilism/frontend/widgets/exit.dart';
 import 'package:kopilism/frontend/widgets/top_nav_bar.dart'; // Import your exit confirmation function
 
 class EmployeeDashboard extends StatelessWidget {
-  static final EmployeeDashboard _instance = EmployeeDashboard._internal();
+  static final EmployeeDashboard _instance = const EmployeeDashboard._internal();
 
   factory EmployeeDashboard() {
     return _instance;

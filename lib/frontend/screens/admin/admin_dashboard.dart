@@ -5,7 +5,7 @@ import 'package:kopilism/frontend/widgets/top_nav_bar.dart'; // Import your cust
 import 'package:kopilism/frontend/widgets/exit.dart'; // Import your exit confirmation function
 
 class AdminDashboard extends StatelessWidget {
-  static final AdminDashboard _instance = AdminDashboard._internal();
+  static final AdminDashboard _instance = const AdminDashboard._internal();
 
   factory AdminDashboard() {
     return _instance;

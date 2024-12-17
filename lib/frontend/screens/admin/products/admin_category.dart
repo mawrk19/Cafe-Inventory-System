@@ -30,7 +30,7 @@ class _AdminCategoryState extends State<AdminCategory> {
   Future<void> _fetchCategories() async {
     final categories = await _firestoreService.getAllCategories();
     setState(() {
-      _categories = categories;
+      _categories = categories.where((category) => category['status'] == 'active').toList();
     });
   }
 
@@ -72,12 +72,6 @@ class _AdminCategoryState extends State<AdminCategory> {
                       );
                     },
                     onLongPress: () {
-                      _showCategoryDialog(
-                        context,
-                        id: category['id'],
-                        currentName: category['name'],
-                        currentImage: category['image'],
-                      );
                       _showArchiveDialog(context, category['id']);
                     },
                     child: CategoryCard(
@@ -181,10 +175,14 @@ class _AdminCategoryState extends State<AdminCategory> {
               onPressed: () async {
                 await _firestoreService.archiveCategory(id!);
                 Navigator.of(context).pop();
-                _fetchCategories();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Category archived')),
-                );
+                setState(() {
+                  _categories.removeWhere((category) => category['id'] == id);
+                });
+                if (mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Category archived')),
+                  );
+                }
               },
               child: const Text('Archive'),
             ),
@@ -199,6 +197,7 @@ class _AdminCategoryState extends State<AdminCategory> {
                   'id': docId,
                   'name': newName,
                   'image': imageUrl,
+                  'status': 'active', // Set status to active
                   'createdByAdminName': adminName, // Add admin's name
                   'createdByAdminRole': adminRole, // Add admin's role
                 });
@@ -222,11 +221,13 @@ class _AdminCategoryState extends State<AdminCategory> {
                 });
 
                 // Show Snackbar notification
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Admin notified: $notificationMessage'),
-                  ),
-                );
+                if (mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('Admin notified: $notificationMessage'),
+                    ),
+                  );
+                }
               }
             },
             child: Text(isEdit ? 'Save' : 'Add'),
@@ -255,10 +256,14 @@ class _AdminCategoryState extends State<AdminCategory> {
               onPressed: () async {
                 await _firestoreService.archiveCategory(categoryId);
                 Navigator.of(context).pop();
-                _fetchCategories();
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Category archived')),
-                );
+                setState(() {
+                  _categories.removeWhere((category) => category['id'] == categoryId);
+                });
+                if (mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Category archived')),
+                  );
+                }
               },
               child: const Text('Archive'),
             ),
