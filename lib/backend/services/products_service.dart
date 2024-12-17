@@ -32,7 +32,7 @@ class FirestoreService {
   // Get archived categories
   Future<List<Map<String, dynamic>>> getArchivedCategories() async {
     try {
-      QuerySnapshot snapshot = await _db.collection('categories').where('archived', isEqualTo: true).get();
+      QuerySnapshot snapshot = await _db.collection('categories').where('status', isEqualTo: 'archived').get();
       return snapshot.docs.map((doc) {
         return {
           ...doc.data() as Map<String, dynamic>,
@@ -53,6 +53,15 @@ class FirestoreService {
     }
   }
 
+  // Update a category
+  Future<void> updateCategory(String id, Map<String, dynamic> data) async {
+    try {
+      await _db.collection('categories').doc(id).update(data);
+    } catch (e) {
+      throw Exception('Failed to update category: $e');
+    }
+  }
+
   // Delete a category
   Future<void> deleteCategory(String id) async {
     try {
@@ -65,7 +74,7 @@ class FirestoreService {
   // Archive a category
   Future<void> archiveCategory(String categoryId) async {
     try {
-      await _db.collection('categories').doc(categoryId).update({'archived': true});
+      await _db.collection('categories').doc(categoryId).update({'status': 'archived'});
     } catch (e) {
       throw Exception('Failed to archive category: $e');
     }
