@@ -44,9 +44,9 @@ class AdminNotification extends StatelessWidget {
                         minWidth: 12,
                         minHeight: 12,
                       ),
-                      child: const Text(
-                        '',
-                        style: TextStyle(
+                      child: Text(
+                        '${snapshot.data!.docs.length}',
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 8,
                         ),
