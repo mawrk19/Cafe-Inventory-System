@@ -16,6 +16,7 @@ class AdminArchivedCategories extends StatefulWidget {
 class _AdminArchivedCategoriesState extends State<AdminArchivedCategories> {
   final FirestoreService _firestoreService = FirestoreService();
   List<Map<String, dynamic>> _archivedCategories = [];
+  List<Map<String, dynamic>> _archivedProducts = [];
   List<String> _selectedCategories = [];
 
   @override
@@ -28,6 +29,26 @@ class _AdminArchivedCategoriesState extends State<AdminArchivedCategories> {
     final categories = await _firestoreService.getArchivedCategories();
     setState(() {
       _archivedCategories = categories;
+    });
+  }
+
+  Future<void> _fetchArchivedProducts() async {
+    final products = await _firestoreService.getAllArchivedProducts();
+    for (var product in products) {
+      final categoryId = product['categoryId'];
+      final productId = product['id'];
+      final productDoc = await FirebaseFirestore.instance
+          .doc('/categories/$categoryId/products/$productId')
+          .get();
+      if (productDoc.exists && productDoc.data() != null) {
+        final productStatus = productDoc['status'];
+        product['status'] = productStatus;
+      } else {
+        product['status'] = 'unknown'; // or handle the null case as needed
+      }
+    }
+    setState(() {
+      _archivedProducts = products;
     });
   }
 
@@ -138,23 +159,39 @@ class _AdminArchivedCategoriesState extends State<AdminArchivedCategories> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            DropdownButton<String>(
+              hint: const Text('Select Filter'),
+              items: <String>['Categories', 'Products'].map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                if (newValue == 'Categories') {
+                  _fetchArchivedCategories();
+                } else if (newValue == 'Products') {
+                  _fetchArchivedProducts();
+                }
+              },
+            ),
             Expanded(
-              child: _archivedCategories.isEmpty
-                  ? const Center(child: Text('No archived categories available'))
+              child: _archivedCategories.isEmpty && _archivedProducts.isEmpty
+                  ? const Center(child: Text('No archived items available'))
                   : ListView.builder(
-                      itemCount: _archivedCategories.length,
+                      itemCount: _archivedCategories.isNotEmpty ? _archivedCategories.length : _archivedProducts.length,
                       itemBuilder: (context, index) {
-                        final category = _archivedCategories[index];
-                        final isSelected = _selectedCategories.contains(category['id']);
+                        final item = _archivedCategories.isNotEmpty ? _archivedCategories[index] : _archivedProducts[index];
+                        final isSelected = _selectedCategories.contains(item['id']);
                         return GestureDetector(
                           onLongPress: () {
-                            _showCategoryOptions(category['id']);
+                            _showCategoryOptions(item['id']);
                           },
                           child: ListTile(
-                            title: Text(category['name'] ?? 'Unnamed'),
+                            title: Text(item['name'] ?? 'Unnamed'),
                             subtitle: const Text('Archived'),
                             leading: Image.asset(
-                              _firestoreService.getImageUrl(category['image']),
+                              _firestoreService.getImageUrl(item['image']),
                               width: 50,
                               height: 50,
                               fit: BoxFit.cover,
@@ -162,11 +199,11 @@ class _AdminArchivedCategoriesState extends State<AdminArchivedCategories> {
                             trailing: Checkbox(
                               value: isSelected,
                               onChanged: (bool? value) {
-                                _toggleSelection(category['id']);
+                                _toggleSelection(item['id']);
                               },
                             ),
                             onTap: () {
-                              _toggleSelection(category['id']);
+                              _toggleSelection(item['id']);
                             },
                           ),
                         );
