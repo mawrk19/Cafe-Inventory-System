@@ -9,7 +9,7 @@ import '../frontend/screens/admin/admin_customers.dart';
 import '../frontend/screens/admin/admin_dashboard.dart';
 import '../frontend/screens/admin/admin_orders.dart';
 import '../frontend/screens/admin/admin_login.dart';
-import '../frontend/screens/branch_login.dart';
+import '../frontend/screens/branch/branch_login.dart';
 import '../frontend/screens/registration.dart';
 import '../frontend/screens/employee/products/employee_category.dart';
 
