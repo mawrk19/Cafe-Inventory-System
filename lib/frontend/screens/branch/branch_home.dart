@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:kopilism/frontend/widgets/bottom_nav_bar.dart';
 import 'package:kopilism/frontend/widgets/branchHome/menu_carousel.dart';
 import 'package:kopilism/frontend/widgets/branchHome/recent_orders.dart';
+import 'package:kopilism/frontend/widgets/branch_nav_bar.dart';
 
 class BranchHome extends StatelessWidget {
   @override
@@ -27,7 +27,7 @@ class BranchHome extends StatelessWidget {
                 SizedBox(height: screenHeight * 0.02),
                 RecentOrders(),
                 SizedBox(height: screenHeight * 0.02),
-                BottomNavBar(),
+                BranchNavBar(),
               ],
             ),
           ),

@@ -23,8 +23,8 @@ class BranchNavBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             _buildNavItem(context, 'Notifications', 'assets/images/notification.png', '/BranchNotifications'),
-            _buildNavItem(context, 'History', 'assets/images/history.png', '/History'),
-            _buildBarcodeNavItem(context, 'Home', 'assets/images/home_icon.png', '/Home'),
+            _buildNavItem(context, 'History', 'assets/images/history.png', '/BranchHistory'),
+            _buildBarcodeNavItem(context, 'Home', 'assets/images/home_icon.png', '/BranchHome'),
             _buildNavItem(context, 'Category', 'assets/images/home_icon.png', '/BranchCategory'),
             _buildNavItem(context, 'Orders', 'assets/images/orders_icon.png', '/BranchOrders'),
           ],
