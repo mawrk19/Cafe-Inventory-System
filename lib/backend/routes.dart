@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kopilism/frontend/screens/branch/order_history.dart';
 import 'package:kopilism/frontend/screens/employee/employee_dashboard.dart';
 import 'package:kopilism/frontend/screens/employee/employee_barcode.dart';
 import 'package:kopilism/frontend/screens/employee/employee_customers.dart';
@@ -13,7 +14,6 @@ import '../frontend/screens/branch/branch_login.dart';
 import '../frontend/screens/registration.dart';
 import '../frontend/screens/employee/products/employee_category.dart';
 import '../frontend/screens/branch/branch_notifications.dart';
-import '../frontend/screens/branch/branch_history.dart';
 import '../frontend/screens/branch/branch_home.dart';
 import '../frontend/screens/branch/branch_category.dart';
 import '../frontend/screens/branch/branch_orders.dart';
@@ -40,7 +40,7 @@ Map<String, WidgetBuilder> getAppRoutes() {
     '/Registration': (context) => const RegistrationForm(),
     //branch routes
     '/BranchNotifications': (context) => const BranchNotifications(),
-    '/BranchHistory': (context) => const BranchHistory(),
+    '/BranchHistory': (context) => const OrderHistoryScreen(),
     '/BranchHome': (context) => BranchHome(),
     '/BranchCategory': (context) => const BranchCategory(),
     '/BranchOrders': (context) => const BranchOrders(),
