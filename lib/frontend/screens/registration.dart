@@ -35,6 +35,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           const SnackBar(content: Text('Registration successful!')),
         );
       } catch (e) {
+        debugPrint('Error in _register: $e');
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text('Error: $e')),
         );

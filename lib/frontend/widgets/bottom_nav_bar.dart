@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kopilism/frontend/widgets/barcode_scanner.dart'; // Import the BarcodeScanner widget
 
 class BottomNavBar extends StatelessWidget {
   const BottomNavBar({super.key});
@@ -24,7 +25,7 @@ class BottomNavBar extends StatelessWidget {
           children: [
             _buildNavItem(context, 'Product', 'assets/images/product_icon.png', '/AdminCategory'),
             _buildNavItem(context, 'Customer', 'assets/images/customer_icon.png', '/Customer'),
-            _buildBarcodeNavItem(context, 'Barcode', 'assets/images/barcode_scanner.png', '/Barcode'),
+            _buildBarcodeNavItem(context, 'Barcode', 'assets/images/barcode_scanner.png'),
             _buildNavItem(context, 'Home', 'assets/images/home_icon.png', '/Home'),
             _buildNavItem(context, 'Orders', 'assets/images/orders_icon.png', '/Orders'),
           ],
@@ -67,13 +68,13 @@ class BottomNavBar extends StatelessWidget {
     );
   }
 
-  Widget _buildBarcodeNavItem(BuildContext context, String label, String iconPath, String routeName) {
+  Widget _buildBarcodeNavItem(BuildContext context, String label, String iconPath) {
     return GestureDetector(
       onTap: () {
-        // Check if the current route is already the desired route
-        if (ModalRoute.of(context)?.settings.name != routeName) {
-          Navigator.pushNamed(context, routeName); // Use pushNamed instead of pushNamedAndRemoveUntil
-        }
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const BarcodeScanner()), // Navigate to BarcodeScanner
+        );
       },
       child: Semantics(
         button: true,

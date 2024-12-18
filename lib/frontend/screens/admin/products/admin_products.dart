@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kopilism/backend/services/products_service.dart';
 import 'package:kopilism/frontend/widgets/products/product_card.dart'; // Updated import
 import 'package:kopilism/frontend/widgets/products/add_product.dart'; // Import the AddProductModal
+import 'package:fluttertoast/fluttertoast.dart'; // Import for notifications
 
 class AdminProducts extends StatefulWidget {
   final String categoryId;
@@ -27,12 +28,12 @@ class _AdminProductsState extends State<AdminProducts> {
     _fetchProducts();
   }
 
-  // Fetch products using the categoryId
+  // Fetch products and filter by status
   Future<void> _fetchProducts() async {
     final products = await _firestoreService.getProductsByCategory(widget.categoryId);
     if (mounted) {
       setState(() {
-        _products = products;
+        _products = products.where((product) => product['status'] == 'active').toList();
       });
     }
   }
@@ -48,6 +49,45 @@ class _AdminProductsState extends State<AdminProducts> {
         );
       },
     );
+  }
+
+  // Show options dialog on long press
+  void _showOptionsDialog(BuildContext context, String productId) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Product Options'),
+          content: const Text('Choose an action for this product:'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+                _archiveProduct(productId);
+              },
+              child: const Text('Archive'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Cancel'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // Archive a product
+  Future<void> _archiveProduct(String productId) async {
+    try {
+      await _firestoreService.archiveProduct(widget.categoryId, productId);
+      Fluttertoast.showToast(msg: 'Product archived successfully');
+      _fetchProducts(); // Refresh product list after archiving
+    } catch (e) {
+      Fluttertoast.showToast(msg: 'Failed to archive product: $e');
+    }
   }
 
   @override
@@ -68,13 +108,16 @@ class _AdminProductsState extends State<AdminProducts> {
               itemCount: _products.length,
               itemBuilder: (context, index) {
                 final product = _products[index];
-                return AdminProductCard(
-                  productId: product['id'],
-                  categoryId: widget.categoryId,  // Pass categoryId here
-                  productName: product['name'] ?? 'Unnamed Product',
-                  productImage: product['image'] ?? 'assets/images/ProductPhoto.png',  // Use 'image' field
-                  productQuantity: product['stockQuantity'] ?? 0,
-                  productPrice: product['price'] ?? 0.0,
+                return GestureDetector(
+                  onLongPress: () => _showOptionsDialog(context, product['id']),
+                  child: AdminProductCard(
+                    productId: product['id'],
+                    categoryId: widget.categoryId,  // Pass categoryId here
+                    productName: product['name'] ?? 'Unnamed Product',
+                    productImage: product['image'] ?? 'assets/images/ProductPhoto.png',  // Use 'image' field
+                    productQuantity: product['stockQuantity'] ?? 0,
+                    productPrice: product['price'] ?? 0.0,
+                  ),
                 );
               },
             ),

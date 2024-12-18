@@ -95,6 +95,21 @@ class FirestoreService {
     }
   }
 
+  //Set SKU to a product
+  Future<void> setSku(String categoryId, String productId, Map<String, dynamic> data, String sku) async {     
+  try {       
+    data['sku'] = sku;
+
+    await _db.collection('categories')       
+    .doc(categoryId)       
+    .collection('products')       
+    .doc(productId)       
+    .set(data);     
+  } catch (e) {       
+    throw Exception('Failed to add product: $e');     
+  }   
+}
+
   // Get a product by ID
   Future<Map<String, dynamic>?> getProductById(String categoryId, String productId) async {
     try {
@@ -147,6 +162,19 @@ class FirestoreService {
       await _db.collection('categories').doc(categoryId).collection('products').doc(productId).delete();
     } catch (e) {
       throw Exception('Failed to delete product: $e');
+    }
+  }
+
+  // Archive a product
+  Future<void> archiveProduct(String categoryId, String productId) async {
+    try {
+      await _db.collection('categories')
+        .doc(categoryId)
+        .collection('products')
+        .doc(productId)
+        .update({'status': 'archived'});
+    } catch (e) {
+      throw Exception('Failed to archive product: $e');
     }
   }
 

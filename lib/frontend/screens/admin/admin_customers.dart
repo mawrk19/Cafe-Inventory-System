@@ -267,13 +267,13 @@ class _AdminCustomersState extends State<AdminCustomers> {
                     },
                   );
                 } catch (e) {
-                  print("Error: $e"); // Log the error message
+                  debugPrint('Error in _showRegisterCustomerDialog: $e');
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
                         title: const Text('Error'),
-                        content: const Text('Error fetching admin data or registering customer'),
+                        content: Text('Error: $e'),
                         actions: <Widget>[
                           TextButton(
                             onPressed: () {

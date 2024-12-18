@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kopilism/frontend/widgets/products/deleted_product.dart';
 import 'package:kopilism/frontend/widgets/top_nav_bar.dart'; // Import your custom widget
 import 'package:kopilism/frontend/widgets/bottom_nav_bar.dart'; // Import the BottomNavBar
+import 'package:kopilism/frontend/widgets/sidebar.dart'; // Import your custom Sidebar
 
 class ArchiveProductsScreen extends StatelessWidget {
   const ArchiveProductsScreen({super.key});
@@ -9,6 +10,11 @@ class ArchiveProductsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false, // Remove the back button
+        title: const TopNavBar(), // Add the TopNavBar to the appBar
+      ),
+      drawer: const Sidebar(), // Use your custom Sidebar
       body: SingleChildScrollView(
         child: Center( // Center content for small screens
           child: Container(
@@ -18,8 +24,6 @@ class ArchiveProductsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Top Navigation Bar
-                const TopNavBar(), // Add the TopNavBar at the top of the screen
                 const SizedBox(height: 20),
                 // Search Bar with Filter Icon beside it
                 Row(

@@ -48,18 +48,22 @@ class _MyAppState extends State<MyApp> {
     return ScreenUtilInit(
       designSize: const Size(414, 896), // Set base design size for iPhone Pro/Pro Max
       builder: (context, child) {
-        return MaterialApp(
-          title: 'Kopilism App',
-          theme: AppTheme.lightTheme,
-          home: WillPopScope(
-            onWillPop: _handleBackButton,
-            child: const SignIn(),
-          ),
-          debugShowCheckedModeBanner: false,
-          routes: getAppRoutes(),
-          onUnknownRoute: (settings) {
-            return MaterialPageRoute(
-              builder: (context) => const NotFoundScreen(),
+        return Builder(
+          builder: (context) {
+            return MaterialApp(
+              title: 'Kopilism App',
+              theme: AppTheme.lightTheme,
+              home: WillPopScope(
+                onWillPop: _handleBackButton,
+                child: const SignIn(),
+              ),
+              debugShowCheckedModeBanner: false,
+              routes: getAppRoutes(),
+              onUnknownRoute: (settings) {
+                return MaterialPageRoute(
+                  builder: (context) => const NotFoundScreen(),
+                );
+              },
             );
           },
         );

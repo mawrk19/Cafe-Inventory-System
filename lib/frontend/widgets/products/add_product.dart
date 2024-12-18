@@ -29,8 +29,8 @@ class _AddProductModalState extends State<AddProductModal> {
   DateTime manufactureDate = DateTime.now();
   int shelfLife = 0;
   String storageConditions = '';
-  String status = '';
   String image = 'assets/images/ProductPhoto.png'; // Default image
+  String sku = ''; // Add SKU field
 
   final TextEditingController _expirationDateController = TextEditingController();
   final TextEditingController _manufactureDateController = TextEditingController();
@@ -60,9 +60,10 @@ class _AddProductModalState extends State<AddProductModal> {
         'manufactureDate': manufactureDate,
         'shelfLife': shelfLife,
         'storageConditions': storageConditions,
-        'status': status,
+        'status': 'active', // Set status to active
         'image': image, // Changed from 'imageUrl' to 'image'
         'categoryId': widget.categoryId,
+        'sku': sku, // Add SKU field
       });
 
       widget.onProductAdded(); // Callback to refresh the product list
@@ -193,10 +194,10 @@ class _AddProductModalState extends State<AddProductModal> {
                 decoration: const InputDecoration(labelText: 'Storage Conditions'),
                 onSaved: (value) => storageConditions = value!,
               ),
-              // Status Input
+              // SKU Input
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Status'),
-                onSaved: (value) => status = value!,
+                decoration: const InputDecoration(labelText: 'SKU'),
+                onSaved: (value) => sku = value!,
               ),
               const SizedBox(height: 16),
               // Image Picker Row
