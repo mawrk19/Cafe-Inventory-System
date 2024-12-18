@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kopilism/backend/services/shared_preference_service.dart';
-import 'package:kopilism/frontend/screens/admin/products/admin_archived_categories.dart';
+import 'package:kopilism/frontend/screens/admin/products/archived_products.dart'; // Import the correct screen
 import 'package:kopilism/frontend/widgets/logout/logout_button.dart'; // Add this import
 import 'package:kopilism/backend/services/authentication.dart';
 
@@ -129,7 +129,7 @@ class Sidebar extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const AdminArchivedCategories(),
+                          builder: (context) => const ArchiveProductsScreen(), // Navigate to ArchivedProducts
                         ),
                       );
                     },
