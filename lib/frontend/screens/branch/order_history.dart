@@ -3,9 +3,14 @@ import 'package:kopilism/frontend/widgets/orderHistory/order_card.dart';
 import 'package:kopilism/frontend/widgets/bottom_nav_bar.dart';
 import 'package:kopilism/frontend/widgets/top_nav_bar.dart'; // Import your custom widget
 
-class OrderHistoryScreen extends StatelessWidget {
+class OrderHistoryScreen extends StatefulWidget {
   const OrderHistoryScreen({super.key});
 
+  @override
+  _OrderHistoryScreenState createState() => _OrderHistoryScreenState();
+}
+
+class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

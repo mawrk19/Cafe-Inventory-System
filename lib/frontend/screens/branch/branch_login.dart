@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kopilism/backend/services/authentication.dart';
+import 'package:kopilism/frontend/screens/branch/branch_home.dart';
 
 class BranchLogin extends StatefulWidget {
   final String role;
@@ -56,7 +57,7 @@ class _BranchLoginState extends State<BranchLogin> {
   @override
   Widget build(BuildContext context) {
     if (widget.role == 'branch') {
-      return const BranchDashboard();
+      return BranchHome();
     } else {
       return Scaffold(
         appBar: AppBar(
@@ -98,13 +99,16 @@ class _BranchLoginState extends State<BranchLogin> {
                 TextButton(
                   onPressed: () async {
                     if (_emailController.text.isNotEmpty) {
-                      await _authService.sendPasswordResetEmail(_emailController.text);
+                      await _authService
+                          .sendPasswordResetEmail(_emailController.text);
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Password reset email sent')),
+                        const SnackBar(
+                            content: Text('Password reset email sent')),
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Please enter your email')),
+                        const SnackBar(
+                            content: Text('Please enter your email')),
                       );
                     }
                   },
