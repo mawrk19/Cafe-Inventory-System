@@ -169,16 +169,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                     ),
 
-                    const SizedBox(height: 8),
-                    Text('${_productDetails!['sku']}'),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'SKU: ',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
 
                     const SizedBox(height: 8),
                     Text('${_productDetails!['stockQuantity']} units'),
@@ -190,9 +180,20 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    
+
                     const SizedBox(height: 8),
                     Text(_productDetails!['storageConditions'] ?? 'No storage conditions available.'),
+                    
+                    const SizedBox(height: 8),
+                    const SizedBox(height: 8),
+                    const Text(
+                      'SKU: ',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text('${_productDetails!['sku']}'),
                   ],
                 ),
               ),
