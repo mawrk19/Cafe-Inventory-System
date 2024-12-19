@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:kopilism/backend/services/products_service.dart';
 import 'package:kopilism/frontend/widgets/products/product_card.dart'; // Updated import
 import 'package:kopilism/frontend/widgets/products/add_product.dart'; // Import the AddProductModal

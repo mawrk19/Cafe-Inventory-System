@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:kopilism/frontend/screens/admin/admin_login.dart';
+import 'dart:io'; // Add this import
 
 class LogoutButton extends StatelessWidget {
   const LogoutButton({super.key});
@@ -18,6 +19,9 @@ class LogoutButton extends StatelessWidget {
       context,
       MaterialPageRoute(builder: (context) => const AdminLogin()),
     );
+
+    // Exit the app
+    exit(0);
   }
 
   void showLogoutConfirmation(BuildContext context) {

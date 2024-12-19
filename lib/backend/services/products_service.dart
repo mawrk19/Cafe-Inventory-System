@@ -85,6 +85,7 @@ class FirestoreService {
   // Add a product
   Future<void> addProduct(String categoryId, String productId, Map<String, dynamic> data) async {
     try {
+      data['status'] = 'available'; // Set status to 'available'
       await _db.collection('categories')
       .doc(categoryId)
       .collection('products')
@@ -147,6 +148,44 @@ class FirestoreService {
     }
   }
 
+  // Get archived products by category
+  Future<List<Map<String, dynamic>>> getArchivedProductsByCategory(String categoryId) async {
+    try {
+      QuerySnapshot snapshot = await _db
+          .collection('categories')
+          .doc(categoryId)
+          .collection('products')
+          .where('status', isEqualTo: 'archived')
+          .get();
+      return snapshot.docs.map((doc) {
+        return {
+          ...doc.data() as Map<String, dynamic>,
+          'id': doc.id, // Add product ID for easy reference
+        };
+      }).toList();
+    } catch (e) {
+      throw Exception('Failed to fetch archived products for category $categoryId: $e');
+    }
+  }
+
+  // Get all archived products
+  Future<List<Map<String, dynamic>>> getAllArchivedProducts() async {
+    try {
+      QuerySnapshot snapshot = await _db
+          .collectionGroup('products')
+          .where('status', isEqualTo: 'archived')
+          .get();
+      return snapshot.docs.map((doc) {
+        return {
+          ...doc.data() as Map<String, dynamic>,
+          'id': doc.id, // Add product ID for easy reference
+        };
+      }).toList();
+    } catch (e) {
+      throw Exception('Failed to fetch archived products: $e');
+    }
+  }
+
   // Edit a product
   Future<void> editProduct(String categoryId, String productId, Map<String, dynamic> data) async {
     try {
@@ -185,5 +224,4 @@ class FirestoreService {
     return imageUrl ?? 'assets/images/ProductPhoto.png'; // Default image if no URL is provided
   }
 
-  
 }

@@ -12,41 +12,19 @@ void main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  DateTime? _lastBackPressTime;
-
   Future<bool> _handleBackButton() async {
-    final currentTime = DateTime.now();
-    final backButtonHasNotBeenPressedOrSnackBarHasBeenClosed =
-        _lastBackPressTime == null ||
-            currentTime.difference(_lastBackPressTime!) > const Duration(seconds: 2);
-
-    if (backButtonHasNotBeenPressedOrSnackBarHasBeenClosed) {
-      _lastBackPressTime = currentTime;
-      // Show a snackbar to inform the user
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Press back again to exit'),
-          duration: Duration(seconds: 2),
-        ),
-      );
-      return Future.value(false);
-    } else {
-      return Future.value(true);
-    }
+    // Add your back button handling logic here
+    return true;
   }
 
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(414, 896), // Set base design size for iPhone Pro/Pro Max
+      designSize:
+          const Size(414, 896), // Set base design size for iPhone Pro/Pro Max
       builder: (context, child) {
         return Builder(
           builder: (context) {

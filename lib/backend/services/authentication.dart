@@ -67,47 +67,57 @@ class AuthenticationService {
   }
 
   Future<void> registerUser({
-    required String fullName,
-    required String email,
-    required String password,
-    required String contactNumber,
-    required String role,
-    String? pin,
-  }) async {
-    try {
-      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+  required String fullName,
+  required String email,
+  required String password,
+  required String contactNumber,
+  required String role,
+  String? pin,
+}) async {
+  try {
+    // Create the user in Firebase Authentication
+    UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+      email: email,
+      password: password,
+    );
 
-      String hashedPassword = sha256.convert(utf8.encode(password)).toString();
+    // Hash the password for security
+    String hashedPassword = sha256.convert(utf8.encode(password)).toString();
 
-      // Fetch current admin data
-      DocumentSnapshot adminData = await getCurrentUserData();
-      String createdByAdminName = adminData['fullName'];
-      String createdByAdminEmail = adminData['email'];
+    // Retrieve the current admin's details from SharedPreferences
+    Map<String, String?> adminDetails = await SharedPreferencesService.getMultiple([
+      'fullName',
+      'email',
+    ]);
 
-      String collectionPath = role == 'employee' ? 'employee' : 'admin';
+    String? createdByAdminName = adminDetails['fullName'];
+    String? createdByAdminEmail = adminDetails['email'];
 
-      await _firestore.collection('users').doc(collectionPath).collection('users').doc(userCredential.user!.uid).set({
-        'fullName': fullName,
-        'email': email,
-        'password': hashedPassword,
-        'contactNumber': contactNumber,
-        'role': role,
-        'pin': pin,
-        'createdByAdminName': createdByAdminName, // Save admin name
-        'createdByAdminEmail': createdByAdminEmail, // Save admin email
-      });
-
-      // After registration, save user data in SharedPreferences
-      final userData = await getUserData(userCredential.user!.uid);
-      _saveUserDataToSharedPreferences(userData);
-
-    } catch (e) {
-      rethrow;
+    if (createdByAdminName == null || createdByAdminEmail == null) {
+      throw Exception('Admin details not found in SharedPreferences');
     }
+
+    // Determine the collection path based on the role
+    String collectionPath = role == 'employee' ? 'employee' : 'admin';
+
+    // Save the new user's data in Firestore
+    await _firestore.collection('users').doc(collectionPath).collection('users').doc(userCredential.user!.uid).set({
+      'fullName': fullName,
+      'email': email,
+      'password': hashedPassword,
+      'contactNumber': contactNumber,
+      'role': role,
+      'pin': pin,
+      'createdByAdminName': createdByAdminName, // Save admin name
+      'createdByAdminEmail': createdByAdminEmail, // Save admin email
+    });
+
+    // Do not save the registered user's data into SharedPreferences
+  } catch (e) {
+    print('Registration error: $e'); // Logging for debugging
+    rethrow;
   }
+}
 
   // Helper method to save user data in SharedPreferences
   Future<void> _saveUserDataToSharedPreferences(DocumentSnapshot userData) async {
@@ -127,6 +137,4 @@ class AuthenticationService {
     // Save user data to SharedPreferences
     await SharedPreferencesService.saveMultiple(dataToStore);
   }
-
-  // Add other authentication and Firestore methods here
 }

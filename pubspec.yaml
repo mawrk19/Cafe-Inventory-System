@@ -48,6 +48,7 @@ dependencies:
   shared_preferences: ^2.0.6
   crypto: ^3.0.6
   mobile_scanner: ^6.0.2
+  carousel_slider: ^5.0.0 
 
 dev_dependencies:
   flutter_test:

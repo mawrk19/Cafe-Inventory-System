@@ -19,26 +19,57 @@ class _RegistrationFormState extends State<RegistrationForm> {
   final _pinController = TextEditingController();
   String _role = 'employee';
   final AuthenticationService _authService = AuthenticationService();
+  bool _isLoading = false;
+
+  // Email validation regex
+  final RegExp _emailRegex = RegExp(r'^[a-zA-Z0-9._%-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$');
 
   Future<void> _register() async {
     if (_formKey.currentState!.validate()) {
+      setState(() {
+        _isLoading = true;
+      });
       try {
         await _authService.registerUser(
-          fullName: _fullNameController.text,
-          email: _emailController.text,
-          password: _passwordController.text,
-          contactNumber: _contactNumberController.text,
+          fullName: _fullNameController.text.trim(),
+          email: _emailController.text.trim(),
+          password: _passwordController.text.trim(),
+          contactNumber: _contactNumberController.text.trim(),
           role: _role,
-          pin: _role == 'admin' ? _pinController.text : null,
+          pin: _role == 'admin' ? _pinController.text.trim() : null,
         );
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Registration successful!')),
+
+        // Clear all fields
+        _fullNameController.clear();
+        _emailController.clear();
+        _passwordController.clear();
+        _contactNumberController.clear();
+        _pinController.clear();
+
+        // Show success dialog
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: const Text('Registration Successful'),
+            content: const Text('The associate account has been registered.'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text('OK'),
+              ),
+            ],
+          ),
         );
       } catch (e) {
         debugPrint('Error in _register: $e');
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
+          SnackBar(content: Text('Error during registration: $e')),
         );
+        debugPrint('Registration error: $e'); // Debug log for error
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
       }
     }
   }
@@ -46,39 +77,27 @@ class _RegistrationFormState extends State<RegistrationForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const TopNavBar(), // Use the custom TopNavBar
-      drawer: const Sidebar(), // Add the Sidebar as the drawer
+      appBar: const TopNavBar(),
+      drawer: const Sidebar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            children: <Widget>[
-              Text(
-                'Register an Associate',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.brown[800],
-                ),
-              ),
-              const SizedBox(height: 20),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8.0),
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                decoration: BoxDecoration(
-                  color: Colors.brown[50],
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.brown[200]!),
-                ),
-                child: TextFormField(
-                  controller: _fullNameController,
-                  decoration: InputDecoration(
-                    labelText: 'Full Name',
-                    labelStyle: TextStyle(color: Colors.brown[800]),
-                    border: InputBorder.none,
-                    focusedBorder: InputBorder.none,
+        child: SingleChildScrollView(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                Text(
+                  'Register an Associate',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.brown[800],
                   ),
+                ),
+                const SizedBox(height: 20),
+                _buildTextField(
+                  controller: _fullNameController,
+                  labelText: 'Full Name',
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your full name';
@@ -86,126 +105,53 @@ class _RegistrationFormState extends State<RegistrationForm> {
                     return null;
                   },
                 ),
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8.0),
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                decoration: BoxDecoration(
-                  color: Colors.brown[50],
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.brown[200]!),
-                ),
-                child: TextFormField(
+                _buildTextField(
                   controller: _emailController,
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                    labelStyle: TextStyle(color: Colors.brown[800]),
-                    border: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                  ),
+                  labelText: 'Email',
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your email';
                     }
+                    if (!_emailRegex.hasMatch(value)) {
+                      return 'Please enter a valid email';
+                    }
                     return null;
                   },
                 ),
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8.0),
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                decoration: BoxDecoration(
-                  color: Colors.brown[50],
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.brown[200]!),
-                ),
-                child: TextFormField(
+                _buildTextField(
                   controller: _passwordController,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                    labelStyle: TextStyle(color: Colors.brown[800]),
-                    border: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                  ),
+                  labelText: 'Password',
                   obscureText: true,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
                     }
-                    return null;
-                  },
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8.0),
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                decoration: BoxDecoration(
-                  color: Colors.brown[50],
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.brown[200]!),
-                ),
-                child: TextFormField(
-                  controller: _contactNumberController,
-                  decoration: InputDecoration(
-                    labelText: 'Contact Number',
-                    labelStyle: TextStyle(color: Colors.brown[800]),
-                    border: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return 'Please enter your contact number';
+                    if (value.length < 6) {
+                      return 'Password must be at least 6 characters long';
                     }
                     return null;
                   },
                 ),
-              ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 8.0),
-                padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                decoration: BoxDecoration(
-                  color: Colors.brown[50],
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(color: Colors.brown[200]!),
-                ),
-                child: DropdownButtonFormField<String>(
-                  value: _role,
-                  decoration: InputDecoration(
-                    labelText: 'Role',
-                    labelStyle: TextStyle(color: Colors.brown[800]),
-                    border: InputBorder.none,
-                    focusedBorder: InputBorder.none,
-                  ),
-                  items: ['admin', 'employee'].map((String role) {
-                    return DropdownMenuItem<String>(
-                      value: role,
-                      child: Text(role),
-                    );
-                  }).toList(),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _role = newValue!;
-                    });
+                _buildTextField(
+                  controller: _contactNumberController,
+                  labelText: 'Contact Number',
+                  keyboardType: TextInputType.number,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your contact number';
+                    }
+                    if (value.length < 10 || value.length > 15) {
+                      return 'Enter a valid contact number';
+                    }
+                    return null;
                   },
                 ),
-              ),
-              if (_role == 'admin')
-                Container(
-                  margin: const EdgeInsets.symmetric(vertical: 8.0),
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  decoration: BoxDecoration(
-                    color: Colors.brown[50],
-                    borderRadius: BorderRadius.circular(8.0),
-                    border: Border.all(color: Colors.brown[200]!),
-                  ),
-                  child: TextFormField(
+                _buildRoleDropdown(),
+                if (_role == 'admin')
+                  _buildTextField(
                     controller: _pinController,
-                    decoration: InputDecoration(
-                      labelText: '6-digit PIN',
-                      labelStyle: TextStyle(color: Colors.brown[800]),
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                    ),
+                    labelText: '6-digit PIN',
+                    keyboardType: TextInputType.number,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please enter your 6-digit PIN';
@@ -216,19 +162,83 @@ class _RegistrationFormState extends State<RegistrationForm> {
                       return null;
                     },
                   ),
-                ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: _register,
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color.fromARGB(255, 78, 65, 62),
-                  foregroundColor: Colors.white, // Set the font color to white
-                ),
-                child: const Text('Register'),
-              ),
-            ],
+                const SizedBox(height: 20),
+                _isLoading
+                    ? const CircularProgressIndicator()
+                    : ElevatedButton(
+                        onPressed: _register,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color.fromARGB(255, 78, 65, 62),
+                          foregroundColor: Colors.white,
+                        ),
+                        child: const Text('Register'),
+                      ),
+              ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String labelText,
+    String? Function(String?)? validator,
+    bool obscureText = false,
+    TextInputType keyboardType = TextInputType.text,
+  }) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      decoration: BoxDecoration(
+        color: Colors.brown[50],
+        borderRadius: BorderRadius.circular(8.0),
+        border: Border.all(color: Colors.brown[200]!),
+      ),
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(
+          labelText: labelText,
+          labelStyle: TextStyle(color: Colors.brown[800]),
+          border: InputBorder.none,
+          focusedBorder: InputBorder.none,
+        ),
+        obscureText: obscureText,
+        validator: validator,
+        keyboardType: keyboardType,
+      ),
+    );
+  }
+
+  Widget _buildRoleDropdown() {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      decoration: BoxDecoration(
+        color: Colors.brown[50],
+        borderRadius: BorderRadius.circular(8.0),
+        border: Border.all(color: Colors.brown[200]!),
+      ),
+      child: DropdownButtonFormField<String>(
+        value: _role,
+        decoration: InputDecoration(
+          labelText: 'Role',
+          labelStyle: TextStyle(color: Colors.brown[800]),
+          border: InputBorder.none,
+          focusedBorder: InputBorder.none,
+        ),
+        items: ['admin', 'employee'].map((String role) {
+          return DropdownMenuItem<String>(
+            value: role,
+            child: Text(role),
+          );
+        }).toList(),
+        onChanged: (String? newValue) {
+          setState(() {
+            _role = newValue!;
+          });
+        },
       ),
     );
   }

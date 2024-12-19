@@ -14,8 +14,9 @@ class SharedPreferencesService {
   static Future<void> saveMultiple(Map<String, String> data) async {
     final prefs = await SharedPreferences.getInstance();
     for (var entry in data.entries) {
-      await prefs.setString(entry.key, entry.value);
-      print('Stored ${entry.key}: ${entry.value}');
+      if (prefs.getString(entry.key) == null || prefs.getString(entry.key) != entry.value) {
+        await prefs.setString(entry.key, entry.value);
+      }
     }
   }
 
