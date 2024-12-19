@@ -177,7 +177,14 @@ class _AdminCategoryState extends State<AdminCategory> {
               children: [
                 TextField(
                   controller: categoryController,
-                  decoration: const InputDecoration(hintText: 'Enter category name'),
+                  decoration: InputDecoration(
+                    hintText: 'Enter category name',
+                    filled: true,
+                    fillColor: Color(0xFFFFFDD0), // Cream color
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0), // Pill-shaped
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 16),
                 DropdownButton<String>(

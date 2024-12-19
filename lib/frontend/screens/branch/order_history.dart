@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:kopilism/frontend/widgets/orderHistory/order_card.dart';
 import 'package:kopilism/frontend/widgets/bottom_nav_bar.dart';
 import 'package:kopilism/frontend/widgets/top_nav_bar.dart'; // Import your custom widget
+import 'package:kopilism/frontend/widgets/branch_nav_bar.dart'; // Import BranchNavBar
+import 'package:kopilism/frontend/widgets/branch_top_nav_bar.dart'; // Import BranchTopNavBar
+import 'package:kopilism/frontend/widgets/branch_sidebar.dart'; // Import BranchSidebar
 
 class OrderHistoryScreen extends StatefulWidget {
   const OrderHistoryScreen({super.key});
@@ -15,6 +18,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      drawer: const BranchSidebar(), // Add the BranchSidebar here
       body: SingleChildScrollView(
         child: Container(
           constraints: const BoxConstraints(maxWidth: 480),
@@ -23,7 +27,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
             children: [
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 29),
-                child: TopNavBar(), // Use the TopNavBar component
+                child: BranchTopNavBar(), // Use the BranchTopNavBar component
               ),
               const SizedBox(height: 16),
               Padding(
@@ -117,6 +121,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
               ),
               const SizedBox(height: 130),
               const BottomNavBar(),
+              const BranchNavBar(), // Add BranchNavBar here
             ],
           ),
         ),

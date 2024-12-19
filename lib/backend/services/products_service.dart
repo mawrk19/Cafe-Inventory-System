@@ -214,6 +214,20 @@ class FirestoreService {
     }
   }
 
+  // Add a notification
+  Future<void> addNotification(String header, String message) async {
+    try {
+      await _db.collection('notifications').doc('users').collection('admin').add({
+        'header': header,
+        'message': message,
+        'timestamp': FieldValue.serverTimestamp(),
+        'read': false,
+      });
+    } catch (e) {
+      throw Exception('Failed to add notification: $e');
+    }
+  }
+
   // --- Helper Functions ---
 
   // Provide a default image if none is provided

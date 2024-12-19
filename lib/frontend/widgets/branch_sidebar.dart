@@ -50,97 +50,38 @@ class BranchSidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Map<String, dynamic>>(
-      future: _fetchUserData(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
-        } else {
-          var userData = snapshot.data!;
-          return SizedBox(
-            width: 250, // Adjust the width as needed
-            child: Drawer(
-              child: ListView(
-                padding: EdgeInsets.zero,
-                children: [
-                  UserAccountsDrawerHeader(
-                    accountName: Text(userData['fullName']),
-                    accountEmail: Text(userData['email']),
-                    currentAccountPicture: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child: Text(
-                        userData['fullName'][0],
-                        style: const TextStyle(fontSize: 40.0),
-                      ),
-                    ),
-                    decoration: const BoxDecoration(
-                      color: Color.fromARGB(255, 117, 90, 79),
-                    ),
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.category),
-                    title: const Text('Home'),
-                    onTap: () {
-                      Navigator.pushReplacementNamed(context, '/BranchHome');
-                    },
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.people),
-                    title: const Text('Orders'),
-                    onTap: () {
-                      Navigator.pushReplacementNamed(context, '/BranchOrders');
-                    },
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.qr_code),
-                    title: const Text('Category'),
-                    onTap: () {
-                      Navigator.pushReplacementNamed(
-                          context, '/BranchCategory');
-                    },
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.home),
-                    title: const Text('History'),
-                    onTap: () {
-                      Navigator.pushReplacementNamed(context, '/BranchHistory');
-                    },
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.shopping_cart),
-                    title: const Text('Notifications'),
-                    onTap: () {
-                      Navigator.pushReplacementNamed(
-                          context, '/BranchNotifications');
-                    },
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.archive),
-                    title: const Text('Sales Report'),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const AdminArchivedCategories(),
-                        ),
-                      );
-                    },
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.logout),
-                    title: const Text('Log out'),
-                    onTap: () {
-                      // Show the logout confirmation dialog
-                      const LogoutButton().showLogoutConfirmation(context);
-                    },
-                  ),
-                ],
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.brown,
+            ),
+            child: Text(
+              'Branch Name', // You can replace this with the actual branch name
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
               ),
             ),
-          );
-        }
+          ),
+          _buildDrawerItem(context, Icons.notifications, 'Notifications', '/BranchNotifications'),
+          _buildDrawerItem(context, Icons.history, 'Order History', '/BranchHistory'),
+          _buildDrawerItem(context, Icons.home, 'Home', '/BranchHome'),
+          _buildDrawerItem(context, Icons.category, 'Categories', '/BranchCategory'),
+          _buildDrawerItem(context, Icons.list, 'Orders', '/BranchOrders'),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDrawerItem(BuildContext context, IconData icon, String title, String routeName) {
+    return ListTile(
+      leading: Icon(icon),
+      title: Text(title),
+      onTap: () {
+        Navigator.pushNamed(context, routeName);
       },
     );
   }

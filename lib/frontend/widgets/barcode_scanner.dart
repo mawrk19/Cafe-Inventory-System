@@ -6,10 +6,10 @@ class BarcodeScanner extends StatefulWidget {
   const BarcodeScanner({super.key});
 
   @override
-  State<BarcodeScanner> createState() => _EmployeeBarcodeScannerState();
+  State<BarcodeScanner> createState() => _BarcodeScannerState(); // Fixed state class name
 }
 
-class _EmployeeBarcodeScannerState extends State<BarcodeScanner> {
+class _BarcodeScannerState extends State<BarcodeScanner> { // Fixed state class name
   bool _isProcessing = false;
 
   @override
@@ -28,9 +28,7 @@ class _EmployeeBarcodeScannerState extends State<BarcodeScanner> {
                 returnImage: true,
                 formats: [BarcodeFormat.all],
               ),
-
-
-               onDetect: (capture) async {
+              onDetect: (capture) async {
                 if (_isProcessing) return;
 
                 setState(() {

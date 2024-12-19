@@ -101,50 +101,127 @@ class _AdminCustomersState extends State<AdminCustomers> {
               children: [
                 TextField(
                   controller: fullNameController,
-                  decoration: const InputDecoration(labelText: 'Full Name'),
+                  decoration: InputDecoration(
+                    labelText: 'Full Name',
+                    filled: true,
+                    fillColor: Color(0xFFFFFDD0), // Cream color
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0), // Pill-shaped
+                    ),
+                  ),
                 ),
                 TextField(
                   controller: emailController,
-                  decoration: const InputDecoration(labelText: 'Email'),
+                  decoration: InputDecoration(
+                    labelText: 'Email',
+                    filled: true,
+                    fillColor: Color(0xFFFFFDD0), // Cream color
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0), // Pill-shaped
+                    ),
+                  ),
                 ),
                 TextField(
                   controller: passwordController,
-                  decoration: const InputDecoration(labelText: 'Password'),
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    filled: true,
+                    fillColor: Color(0xFFFFFDD0), // Cream color
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0), // Pill-shaped
+                    ),
+                  ),
                   obscureText: true,
                 ),
                 TextField(
                   controller: contactNumberController,
-                  decoration: const InputDecoration(labelText: 'Contact Number'),
+                  decoration: InputDecoration(
+                    labelText: 'Contact Number',
+                    filled: true,
+                    fillColor: Color(0xFFFFFDD0), // Cream color
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0), // Pill-shaped
+                    ),
+                  ),
                   keyboardType: TextInputType.number,
                 ),
                 TextField(
                   controller: branchNumberController,
-                  decoration: const InputDecoration(labelText: 'Branch Number'),
+                  decoration: InputDecoration(
+                    labelText: 'Branch Number',
+                    filled: true,
+                    fillColor: Color(0xFFFFFDD0), // Cream color
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0), // Pill-shaped
+                    ),
+                  ),
                   keyboardType: TextInputType.number,
                 ),
                 TextField(
                   controller: regionController,
-                  decoration: const InputDecoration(labelText: 'Region'),
+                  decoration: InputDecoration(
+                    labelText: 'Region',
+                    filled: true,
+                    fillColor: Color(0xFFFFFDD0), // Cream color
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0), // Pill-shaped
+                    ),
+                  ),
                 ),
                 TextField(
                   controller: provinceController,
-                  decoration: const InputDecoration(labelText: 'Province'),
+                  decoration: InputDecoration(
+                    labelText: 'Province',
+                    filled: true,
+                    fillColor: Color(0xFFFFFDD0), // Cream color
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0), // Pill-shaped
+                    ),
+                  ),
                 ),
                 TextField(
                   controller: cityController,
-                  decoration: const InputDecoration(labelText: 'City'),
+                  decoration: InputDecoration(
+                    labelText: 'City',
+                    filled: true,
+                    fillColor: Color(0xFFFFFDD0), // Cream color
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0), // Pill-shaped
+                    ),
+                  ),
                 ),
                 TextField(
                   controller: baranggayController,
-                  decoration: const InputDecoration(labelText: 'Baranggay'),
+                  decoration: InputDecoration(
+                    labelText: 'Baranggay',
+                    filled: true,
+                    fillColor: Color(0xFFFFFDD0), // Cream color
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0), // Pill-shaped
+                    ),
+                  ),
                 ),
                 TextField(
                   controller: addressController,
-                  decoration: const InputDecoration(labelText: 'Address'),
+                  decoration: InputDecoration(
+                    labelText: 'Address',
+                    filled: true,
+                    fillColor: Color(0xFFFFFDD0), // Cream color
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0), // Pill-shaped
+                    ),
+                  ),
                 ),
                 TextField(
                   controller: ownerInformationController,
-                  decoration: const InputDecoration(labelText: 'Owner Information'),
+                  decoration: InputDecoration(
+                    labelText: 'Owner Information',
+                    filled: true,
+                    fillColor: Color(0xFFFFFDD0), // Cream color
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(30.0), // Pill-shaped
+                    ),
+                  ),
                 ),
               ],
             ),
