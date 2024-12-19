@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
                 child: const SignIn(),
               ),
               debugShowCheckedModeBanner: false,
-              routes: getAppRoutes(),
+              routes: getAppRoutes(), // Set the routes here
               onUnknownRoute: (settings) {
                 return MaterialPageRoute(
                   builder: (context) => const NotFoundScreen(),

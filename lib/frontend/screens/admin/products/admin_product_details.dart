@@ -19,6 +19,7 @@ class ProductDetailScreen extends StatefulWidget {
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   final FirestoreService _firestoreService = FirestoreService();
   Map<String, dynamic>? _productDetails;
+  final TextEditingController _controller = TextEditingController();
 
   @override
   void initState() {
@@ -31,6 +32,43 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     setState(() {
       _productDetails = product ?? {};
     });
+  }
+
+  Future<void> _updateProductField(String field, String value) async {
+    await _firestoreService.editProduct(widget.categoryId, widget.productId, {field: value});
+    await _firestoreService.addNotification('Product Updated', 'The $field of the product has been updated.');
+    _fetchProductDetails();
+  }
+
+  Future<void> _showEditDialog(String field, String currentValue) async {
+    _controller.text = currentValue;
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Edit $field'),
+          content: TextField(
+            controller: _controller,
+            decoration: InputDecoration(hintText: 'Enter new $field'),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () async {
+                await _updateProductField(field, _controller.text);
+                Navigator.of(context).pop();
+              },
+              child: const Text('Save'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   String _formatTimestamp(Timestamp? timestamp) {
@@ -74,21 +112,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                             ),
                     ),
                     const SizedBox(height: 16),
-                    Text(
-                      'Price: ₱${_productDetails!['price']}',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+                    _buildEditableField('Price', '₱${_productDetails!['price']}'),
                     const SizedBox(height: 8),
-                    Text(
-                      'Quantity: ${_productDetails!['stockQuantity']}',
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Colors.grey,
-                      ),
-                    ),
+                    _buildEditableField('Quantity', '${_productDetails!['stockQuantity']}'),
                     const SizedBox(height: 16),
                     const Text(
                       'Description:',
@@ -98,8 +124,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text(_productDetails!['description'] ??
-                        'No description available.'),
+                    _buildEditableField('Description', _productDetails!['description'] ?? 'No description available.'),
                     const SizedBox(height: 16),
                     const Text(
                       'Barcode:',
@@ -109,7 +134,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text(_productDetails!['barcode'] ?? 'No barcode available.'),
+                    _buildEditableField('Barcode', _productDetails!['barcode'] ?? 'No barcode available.'),
                     const SizedBox(height: 16),
                     const Text(
                       'Batch ID:',
@@ -119,7 +144,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text(_productDetails!['batchId'] ?? 'No batch ID available.'),
+                    _buildEditableField('Batch ID', _productDetails!['batchId'] ?? 'No batch ID available.'),
                     const SizedBox(height: 16),
                     const Text(
                       'Expiration Date:',
@@ -129,7 +154,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text(_formatTimestamp(_productDetails!['expirationDate'])),
+                    _buildEditableField('Expiration Date', _formatTimestamp(_productDetails!['expirationDate'])),
                     const SizedBox(height: 16),
                     const Text(
                       'Manufacture Date:',
@@ -139,7 +164,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text(_formatTimestamp(_productDetails!['manufactureDate'])),
+                    _buildEditableField('Manufacture Date', _formatTimestamp(_productDetails!['manufactureDate'])),
                     const SizedBox(height: 16),
                     const Text(
                       'Shelf Life:',
@@ -149,17 +174,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text('${_productDetails!['shelfLife']} days'),
-                    const SizedBox(height: 16),
-                    const Text(
-                      'Status:',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Text(_productDetails!['status'] ?? 'No status available.'),
+                    _buildEditableField('Shelf Life', '${_productDetails!['shelfLife']} days'),
                     const SizedBox(height: 16),
                     const Text(
                       'Stock Quantity:',
@@ -168,20 +183,18 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
                     const SizedBox(height: 8),
-                    Text('${_productDetails!['sku']}'),
+                    _buildEditableField('Stock Quantity', '${_productDetails!['stockQuantity']} units'),
                     const SizedBox(height: 16),
                     const Text(
-                      'SKU: ',
+                      'SKU:',
                       style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
                     const SizedBox(height: 8),
-                    Text('${_productDetails!['stockQuantity']} units'),
+                    _buildEditableField('SKU', '${_productDetails!['sku']}'),
                     const SizedBox(height: 16),
                     const Text(
                       'Storage Conditions:',
@@ -190,13 +203,35 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    
                     const SizedBox(height: 8),
-                    Text(_productDetails!['storageConditions'] ?? 'No storage conditions available.'),
+                    _buildEditableField('Storage Conditions', _productDetails!['storageConditions'] ?? 'No storage conditions available.'),
                   ],
                 ),
               ),
             ),
+    );
+  }
+
+  Widget _buildEditableField(String field, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: Text(
+            '$field: $value',
+            style: const TextStyle(
+              fontSize: 16,
+              color: Colors.grey,
+            ),
+          ),
+        ),
+        IconButton(
+          icon: const Icon(Icons.edit),
+          onPressed: () {
+            _showEditDialog(field, value);
+          },
+        ),
+      ],
     );
   }
 }

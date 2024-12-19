@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:kopilism/frontend/widgets/branchHome/menu_carousel.dart';
 import 'package:kopilism/frontend/widgets/branchHome/recent_orders.dart';
 import 'package:kopilism/frontend/widgets/branch_nav_bar.dart';
+import 'package:kopilism/frontend/widgets/branch_top_nav_bar.dart'; // Import BranchTopNavBar
+import 'package:kopilism/frontend/widgets/branch_sidebar.dart'; // Import BranchSidebar
 
 class BranchHome extends StatelessWidget {
   @override
@@ -13,13 +15,15 @@ class BranchHome extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.white,
+        drawer: const BranchSidebar(), // Add the BranchSidebar here
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(
                 horizontal: screenWidth * 0.05, vertical: screenHeight * 0.02),
             child: Column(
               children: [
-                SearchBar(screenWidth: screenWidth),
+                const BranchTopNavBar(), // Add BranchTopNavBar here
+                // SearchBar(screenWidth: screenWidth),
                 SizedBox(height: screenHeight * 0.02),
                 CategoryTabs(screenWidth: screenWidth),
                 SizedBox(height: screenHeight * 0.02),
@@ -37,51 +41,51 @@ class BranchHome extends StatelessWidget {
   }
 }
 
-class SearchBar extends StatelessWidget {
-  final double screenWidth;
+// class SearchBar extends StatelessWidget {
+//   final double screenWidth;
 
-  SearchBar({required this.screenWidth});
+//   SearchBar({required this.screenWidth});
 
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Image.asset(
-          'assets/images/hamburgerIcon.png',
-          width: screenWidth * 0.07,
-          errorBuilder: (context, error, stackTrace) {
-            return Icon(Icons.menu);
-          },
-        ),
-        SizedBox(width: screenWidth * 0.03),
-        Image.asset(
-          'assets/images/SearchBar.png',
-          width: 227.69,
-          height: 49.63,
-          errorBuilder: (context, error, stackTrace) {
-            return Icon(Icons.search);
-          },
-        ),
-        SizedBox(width: screenWidth * 0.03),
-        Image.asset(
-          'assets/filterIcon.png',
-          width: screenWidth * 0.1,
-          errorBuilder: (context, error, stackTrace) {
-            return Icon(Icons.filter_alt);
-          },
-        ),
-        SizedBox(width: screenWidth * 0.03),
-        Image.asset(
-          'assets/images/notifications.png',
-          width: screenWidth * 0.1,
-          errorBuilder: (context, error, stackTrace) {
-            return Icon(Icons.notifications);
-          },
-        ),
-      ],
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       children: [
+//         Image.asset(
+//           'assets/images/hamburgerIcon.png',
+//           width: screenWidth * 0.07,
+//           errorBuilder: (context, error, stackTrace) {
+//             return Icon(Icons.menu);
+//           },
+//         ),
+//         SizedBox(width: screenWidth * 0.03),
+//         Image.asset(
+//           'assets/images/SearchBar.png',
+//           width: 227.69,
+//           height: 49.63,
+//           errorBuilder: (context, error, stackTrace) {
+//             return Icon(Icons.search);
+//           },
+//         ),
+//         SizedBox(width: screenWidth * 0.03),
+//         Image.asset(
+//           'assets/filterIcon.png',
+//           width: screenWidth * 0.1,
+//           errorBuilder: (context, error, stackTrace) {
+//             return Icon(Icons.filter_alt);
+//           },
+//         ),
+//         SizedBox(width: screenWidth * 0.03),
+//         Image.asset(
+//           'assets/images/notifications.png',
+//           width: screenWidth * 0.1,
+//           errorBuilder: (context, error, stackTrace) {
+//             return Icon(Icons.notifications);
+//           },
+//         ),
+//       ],
+//     );
+//   }
+// }
 
 class CategoryTabs extends StatelessWidget {
   final double screenWidth;

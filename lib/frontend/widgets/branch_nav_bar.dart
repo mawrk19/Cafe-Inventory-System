@@ -24,8 +24,8 @@ class BranchNavBar extends StatelessWidget {
           children: [
             _buildNavItem(context, 'Notifications', 'assets/images/notification.png', '/BranchNotifications'),
             _buildNavItem(context, 'History', 'assets/images/history.png', '/BranchHistory'),
-            _buildBarcodeNavItem(context, 'Home', 'assets/images/home_icon.png', '/BranchHome'),
-            _buildNavItem(context, 'Category', 'assets/images/home_icon.png', '/BranchCategory'),
+            _buildNavItem(context, 'Home', 'assets/images/home_icon.png', '/BranchHome'),
+            _buildNavItem(context, 'Category', 'assets/images/hamburgerIcon.png', '/BranchCategory'),
             _buildNavItem(context, 'Orders', 'assets/images/orders_icon.png', '/BranchOrders'),
           ],
         ),
@@ -62,41 +62,6 @@ class BranchNavBar extends StatelessWidget {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBarcodeNavItem(BuildContext context, String label, String iconPath, String routeName) {
-    return GestureDetector(
-      onTap: () {
-        // Check if the current route is already the desired route
-        if (ModalRoute.of(context)?.settings.name != routeName) {
-          Navigator.pushNamed(context, routeName); // Use pushNamed instead of pushNamedAndRemoveUntil
-        }
-      },
-      child: Semantics(
-        button: true,
-        label: '$label navigation button',
-        child: Container(
-          width: 70,
-          height: 70,
-          decoration: const BoxDecoration(
-            color: Color(0xFFB0814F), // New color
-            shape: BoxShape.circle,
-            gradient: LinearGradient(
-              colors: [Color(0xFFB0814F), Color(0xFFB0814F)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-          ),
-          child: Center(
-            child: Image.asset(
-              iconPath,
-              width: 40, // Increased size
-              height: 40, // Increased size
-            ),
-          ),
         ),
       ),
     );

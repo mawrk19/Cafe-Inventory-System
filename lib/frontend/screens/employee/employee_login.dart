@@ -3,17 +3,17 @@ import 'package:kopilism/backend/services/authentication.dart';
 import 'package:kopilism/backend/services/shared_preference_service.dart';
 import 'package:kopilism/frontend/widgets/sign in/logo.dart';
 import 'package:kopilism/frontend/widgets/login/associate.dart';
-import 'package:kopilism/frontend/screens/branch/branch_home.dart'; // Updated import
+import 'package:kopilism/frontend/screens/employee/employee_dashboard.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class BranchLogin extends StatefulWidget {
-  const BranchLogin({super.key});
+class EmployeeLogin extends StatefulWidget {
+  const EmployeeLogin({super.key});
 
   @override
-  _BranchLoginState createState() => _BranchLoginState();
+  _EmployeeLoginState createState() => _EmployeeLoginState();
 }
 
-class _BranchLoginState extends State<BranchLogin> {
+class _EmployeeLoginState extends State<EmployeeLogin> {
   final AuthenticationService _authService = AuthenticationService();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -62,6 +62,7 @@ class _BranchLoginState extends State<BranchLogin> {
           // Prepare a map to store multiple values at once
           Map<String, String> dataToStore = {
             'userId': user.uid,
+            'userRole': userData['role'],
             'fullName': userData['fullName'],
             'email': userData['email'],
             // Add any other fields you need
@@ -71,11 +72,18 @@ class _BranchLoginState extends State<BranchLogin> {
           await SharedPreferencesService.saveMultiple(dataToStore);
         }
 
-        // Redirect to BranchHome
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => BranchHome()), // Updated navigation
-        );
+        // Redirect based on role
+        final userRole = prefs.getString('userRole') ?? '';
+        if (userRole == 'employee') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => EmployeeDashboard()),
+          );
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Access denied.")),
+          );
+        }
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text("Invalid username or password.")),
@@ -96,7 +104,7 @@ class _BranchLoginState extends State<BranchLogin> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Branch Log In'),
+        title: const Text('Employee Log In'),
         backgroundColor: const Color(0xFF6F4E37), // Coffee theme color
         foregroundColor: const Color(0xFFF8F8FF), // Offwhite font color
       ),

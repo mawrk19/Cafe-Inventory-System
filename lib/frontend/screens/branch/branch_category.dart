@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:kopilism/frontend/widgets/branch_nav_bar.dart'; // Import BranchNavBar
+import 'package:kopilism/frontend/widgets/branch_top_nav_bar.dart'; // Import BranchTopNavBar
+import 'package:kopilism/frontend/widgets/branch_sidebar.dart'; // Import BranchSidebar
 
 class BranchCategory extends StatefulWidget {
   const BranchCategory({Key? key}) : super(key: key);
@@ -31,31 +34,40 @@ class _BranchCategoryState extends State<BranchCategory> {
       appBar: AppBar(
         title: Text('Branch Categories'),
       ),
-      body: FutureBuilder<List<Map<String, dynamic>>>(
-        future: fetchCategoryCards(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return Center(child: Text('No categories found'));
-          } else {
-            return ListView.builder(
-              itemCount: snapshot.data!.length,
-              itemBuilder: (context, index) {
-                var category = snapshot.data![index];
-                return Card(
-                  child: ListTile(
-                    title: Text(category['name']),
-                    subtitle: Text(category['description']),
-                  ),
-                );
+      drawer: const BranchSidebar(), // Add the BranchSidebar here
+      body: Column(
+        children: [
+          const BranchTopNavBar(), // Add BranchTopNavBar here
+          Expanded(
+            child: FutureBuilder<List<Map<String, dynamic>>>(
+              future: fetchCategoryCards(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: CircularProgressIndicator());
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}'));
+                } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                  return Center(child: Text('No categories found'));
+                } else {
+                  return ListView.builder(
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      var category = snapshot.data![index];
+                      return Card(
+                        child: ListTile(
+                          title: Text(category['name']),
+                          subtitle: Text(category['description']),
+                        ),
+                      );
+                    },
+                  );
+                }
               },
-            );
-          }
-        },
+            ),
+          ),
+        ],
       ),
+      bottomNavigationBar: const BranchNavBar(), // Add BranchNavBar here
     );
   }
 }

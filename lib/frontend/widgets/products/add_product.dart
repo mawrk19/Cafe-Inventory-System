@@ -83,7 +83,14 @@ class _AddProductModalState extends State<AddProductModal> {
             children: [
               // Product Name Input
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Product Name'),
+                decoration: InputDecoration(
+                  labelText: 'Product Name',
+                  filled: true,
+                  fillColor: Color(0xFFFFFDD0), // Cream color
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0), // Pill-shaped
+                  ),
+                ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a product name';
@@ -94,12 +101,26 @@ class _AddProductModalState extends State<AddProductModal> {
               ),
               // Description Input
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Description'),
+                decoration: InputDecoration(
+                  labelText: 'Description',
+                  filled: true,
+                  fillColor: Color(0xFFFFFDD0), // Cream color
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0), // Pill-shaped
+                  ),
+                ),
                 onSaved: (value) => description = value!,
               ),
               // Price Input
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Price'),
+                decoration: InputDecoration(
+                  labelText: 'Price',
+                  filled: true,
+                  fillColor: Color(0xFFFFFDD0), // Cream color
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0), // Pill-shaped
+                  ),
+                ),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -111,7 +132,14 @@ class _AddProductModalState extends State<AddProductModal> {
               ),
               // Stock Quantity Input
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Stock Quantity'),
+                decoration: InputDecoration(
+                  labelText: 'Stock Quantity',
+                  filled: true,
+                  fillColor: Color(0xFFFFFDD0), // Cream color
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0), // Pill-shaped
+                  ),
+                ),
                 keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -123,13 +151,27 @@ class _AddProductModalState extends State<AddProductModal> {
               ),
               // Barcode Input
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Barcode'),
+                decoration: InputDecoration(
+                  labelText: 'Barcode',
+                  filled: true,
+                  fillColor: Color(0xFFFFFDD0), // Cream color
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0), // Pill-shaped
+                  ),
+                ),
                 onSaved: (value) => barcode = value!,
               ),
               // Expiration Date Input
               TextFormField(
                 controller: _expirationDateController,
-                decoration: const InputDecoration(labelText: 'Expiration Date'),
+                decoration: InputDecoration(
+                  labelText: 'Expiration Date',
+                  filled: true,
+                  fillColor: Color(0xFFFFFDD0), // Cream color
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0), // Pill-shaped
+                  ),
+                ),
                 onTap: () async {
                   final DateTime? picked = await showDatePicker(
                     context: context,
@@ -148,13 +190,27 @@ class _AddProductModalState extends State<AddProductModal> {
               ),
               // Batch ID Input
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Batch ID'),
+                decoration: InputDecoration(
+                  labelText: 'Batch ID',
+                  filled: true,
+                  fillColor: Color(0xFFFFFDD0), // Cream color
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0), // Pill-shaped
+                  ),
+                ),
                 onSaved: (value) => batchId = value!,
               ),
               // Manufacture Date Input
               TextFormField(
                 controller: _manufactureDateController,
-                decoration: const InputDecoration(labelText: 'Manufacture Date'),
+                decoration: InputDecoration(
+                  labelText: 'Manufacture Date',
+                  filled: true,
+                  fillColor: Color(0xFFFFFDD0), // Cream color
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0), // Pill-shaped
+                  ),
+                ),
                 onTap: () async {
                   final DateTime? picked = await showDatePicker(
                     context: context,
@@ -173,13 +229,27 @@ class _AddProductModalState extends State<AddProductModal> {
               ),
               // Shelf Life Input
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Shelf Life (in days)'),
+                decoration: InputDecoration(
+                  labelText: 'Shelf Life (in days)',
+                  filled: true,
+                  fillColor: Color(0xFFFFFDD0), // Cream color
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0), // Pill-shaped
+                  ),
+                ),
                 keyboardType: TextInputType.number,
                 onSaved: (value) => shelfLife = int.parse(value!),
               ),
               // Storage Conditions Input
               TextFormField(
-                decoration: const InputDecoration(labelText: 'Storage Conditions'),
+                decoration: InputDecoration(
+                  labelText: 'Storage Conditions',
+                  filled: true,
+                  fillColor: Color(0xFFFFFDD0), // Cream color
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0), // Pill-shaped
+                  ),
+                ),
                 onSaved: (value) => storageConditions = value!,
               ),
               const SizedBox(height: 16),
