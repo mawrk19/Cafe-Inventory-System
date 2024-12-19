@@ -89,10 +89,11 @@ class _AddProductModalState extends State<AddProductModal> {
                 decoration: InputDecoration(
                   labelText: 'Product Name',
                   filled: true,
-                  fillColor: Color(0xFFFFFDD0), // Cream color
+                  fillColor: Colors.offWhite, // Changed to off-white color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                   ),
+                  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
                 ),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
@@ -102,27 +103,31 @@ class _AddProductModalState extends State<AddProductModal> {
                 },
                 onSaved: (value) => name = value!,
               ),
+              const SizedBox(height: 16), // Added margin
               // Description Input
               TextFormField(
                 decoration: InputDecoration(
                   labelText: 'Description',
                   filled: true,
-                  fillColor: Color(0xFFFFFDD0), // Cream color
+                  fillColor: Colors.offWhite, // Changed to off-white color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                   ),
+                  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
                 ),
                 onSaved: (value) => description = value!,
               ),
+              const SizedBox(height: 16), // Added margin
               // Price Input
               TextFormField(
                 decoration: InputDecoration(
                   labelText: 'Price',
                   filled: true,
-                  fillColor: Color(0xFFFFFDD0), // Cream color
+                  fillColor: Colors.offWhite, // Changed to off-white color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                   ),
+                  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
                 ),
                 keyboardType: TextInputType.number,
                 validator: (value) {
@@ -133,15 +138,17 @@ class _AddProductModalState extends State<AddProductModal> {
                 },
                 onSaved: (value) => price = double.parse(value!),
               ),
+              const SizedBox(height: 16), // Added margin
               // Stock Quantity Input
               TextFormField(
                 decoration: InputDecoration(
                   labelText: 'Stock Quantity',
                   filled: true,
-                  fillColor: Color(0xFFFFFDD0), // Cream color
+                  fillColor: Colors.offWhite, // Changed to off-white color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                   ),
+                  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
                 ),
                 keyboardType: TextInputType.number,
                 validator: (value) {
@@ -152,28 +159,32 @@ class _AddProductModalState extends State<AddProductModal> {
                 },
                 onSaved: (value) => stockQuantity = int.parse(value!),
               ),
+              const SizedBox(height: 16), // Added margin
               // Barcode Input
               TextFormField(
                 decoration: InputDecoration(
                   labelText: 'Barcode',
                   filled: true,
-                  fillColor: Color(0xFFFFFDD0), // Cream color
+                  fillColor: Colors.offWhite, // Changed to off-white color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                   ),
+                  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
                 ),
                 onSaved: (value) => barcode = value!,
               ),
+              const SizedBox(height: 16), // Added margin
               // Expiration Date Input
               TextFormField(
                 controller: _expirationDateController,
                 decoration: InputDecoration(
                   labelText: 'Expiration Date',
                   filled: true,
-                  fillColor: Color(0xFFFFFDD0), // Cream color
+                  fillColor: Colors.offWhite, // Changed to off-white color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                   ),
+                  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
                 ),
                 onTap: () async {
                   final DateTime? picked = await showDatePicker(
@@ -191,28 +202,32 @@ class _AddProductModalState extends State<AddProductModal> {
                 },
                 readOnly: true,
               ),
+              const SizedBox(height: 16), // Added margin
               // Batch ID Input
               TextFormField(
                 decoration: InputDecoration(
                   labelText: 'Batch ID',
                   filled: true,
-                  fillColor: Color(0xFFFFFDD0), // Cream color
+                  fillColor: Colors.offWhite, // Changed to off-white color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                   ),
+                  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
                 ),
                 onSaved: (value) => batchId = value!,
               ),
+              const SizedBox(height: 16), // Added margin
               // Manufacture Date Input
               TextFormField(
                 controller: _manufactureDateController,
                 decoration: InputDecoration(
                   labelText: 'Manufacture Date',
                   filled: true,
-                  fillColor: Color(0xFFFFFDD0), // Cream color
+                  fillColor: Colors.offWhite, // Changed to off-white color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                   ),
+                  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
                 ),
                 onTap: () async {
                   final DateTime? picked = await showDatePicker(
@@ -230,38 +245,51 @@ class _AddProductModalState extends State<AddProductModal> {
                 },
                 readOnly: true,
               ),
+              const SizedBox(height: 16), // Added margin
               // Shelf Life Input
               TextFormField(
                 decoration: InputDecoration(
                   labelText: 'Shelf Life (in days)',
                   filled: true,
-                  fillColor: Color(0xFFFFFDD0), // Cream color
+                  fillColor: Colors.offWhite, // Changed to off-white color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                   ),
+                  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
                 ),
                 keyboardType: TextInputType.number,
                 onSaved: (value) => shelfLife = int.parse(value!),
               ),
+              const SizedBox(height: 16), // Added margin
               // Storage Conditions Input
               TextFormField(
                 decoration: InputDecoration(
                   labelText: 'Storage Conditions',
                   filled: true,
-                  fillColor: Color(0xFFFFFDD0), // Cream color
+                  fillColor: Colors.offWhite, // Changed to off-white color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                   ),
+                  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
                 ),
                 onSaved: (value) => storageConditions = value!,
               ),
-              const SizedBox(height: 16),
+              const SizedBox(height: 16), // Added margin
 
               //Add SKU Field
               TextFormField(
-                decoration: const InputDecoration(labelText: 'SKU'),
+                decoration: const InputDecoration(
+                  labelText: 'SKU',
+                  filled: true,
+                  fillColor: Colors.offWhite, // Changed to off-white color
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0), // Pill-shaped
+                  ),
+                  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
+                ),
                 onSaved: (value) => sku = value!,
               ),
+              const SizedBox(height: 16), // Added margin
               
               // Image Picker Row
               Row(
