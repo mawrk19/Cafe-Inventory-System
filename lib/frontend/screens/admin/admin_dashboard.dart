@@ -3,6 +3,9 @@ import 'package:kopilism/frontend/widgets/bottom_nav_bar.dart';
 import 'package:kopilism/frontend/widgets/dashboard/stock_chart.dart';
 import 'package:kopilism/frontend/widgets/dashboard/popular_items.dart';
 import 'package:kopilism/frontend/widgets/dashboard/low_stock_item.dart';
+import 'package:kopilism/frontend/widgets/top_nav_bar.dart'; // Add this import
+import 'package:kopilism/frontend/widgets/sidebar.dart'; // Add this import
+
 class AdminDashboard extends StatelessWidget {
   const AdminDashboard({super.key});
 
@@ -13,6 +16,8 @@ class AdminDashboard extends StatelessWidget {
     return Scaffold(
       key: scaffoldKey,
       backgroundColor: Colors.white, // Set background color to white
+      appBar: const TopNavBar(), // Add TopNavBar here
+      drawer: const Sidebar(), // Add Sidebar here
       body: SafeArea(
         child: SingleChildScrollView(
           child: Container(

@@ -4,6 +4,7 @@ import 'package:kopilism/backend/services/shared_preference_service.dart';
 import 'package:kopilism/frontend/screens/admin/products/archived_products.dart'; // Import the correct screen
 import 'package:kopilism/frontend/widgets/logout/logout_button.dart'; // Add this import
 import 'package:kopilism/backend/services/authentication.dart';
+import 'package:kopilism/frontend/screens/user_profile/edit_user_profile.dart'; // Add this import
 
 class Sidebar extends StatelessWidget {
   const Sidebar({super.key});
@@ -69,11 +70,21 @@ class Sidebar extends StatelessWidget {
                   UserAccountsDrawerHeader(
                     accountName: Text(userData['fullName']),
                     accountEmail: Text(userData['email']),
-                    currentAccountPicture: CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child: Text(
-                        userData['fullName'][0],
-                        style: const TextStyle(fontSize: 40.0),
+                    currentAccountPicture: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => EditUserProfileScreen(userData: userData),
+                          ),
+                        );
+                      },
+                      child: CircleAvatar(
+                        backgroundColor: Colors.white,
+                        child: Text(
+                          userData['fullName'][0],
+                          style: const TextStyle(fontSize: 40.0),
+                        ),
                       ),
                     ),
                     decoration: const BoxDecoration(

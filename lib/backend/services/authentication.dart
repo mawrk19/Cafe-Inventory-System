@@ -119,6 +119,22 @@ class AuthenticationService {
   }
 }
 
+  Future<void> updateUserProfile(String fullName, String email) async {
+    User? user = _auth.currentUser;
+    if (user != null) {
+      await _firestore.collection('users').doc('admin').collection('users').doc(user.uid).update({
+        'fullName': fullName,
+        'email': email,
+      });
+      await SharedPreferencesService.saveMultiple({
+        'fullName': fullName,
+        'email': email,
+      });
+    } else {
+      throw Exception('No user is currently signed in.');
+    }
+  }
+
   // Helper method to save user data in SharedPreferences
   Future<void> _saveUserDataToSharedPreferences(DocumentSnapshot userData) async {
     String userId = userData.id;
