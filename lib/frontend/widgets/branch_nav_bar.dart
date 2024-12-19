@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:kopilism/frontend/screens/branch/branch_notifications.dart';
+import 'package:kopilism/frontend/screens/branch/order_history.dart';
+import 'package:kopilism/frontend/screens/branch/branch_home.dart';
+import 'package:kopilism/frontend/screens/branch/branch_category.dart';
+import 'package:kopilism/frontend/screens/branch/branch_orders.dart';
 
 class BranchNavBar extends StatelessWidget {
   const BranchNavBar({super.key});
@@ -22,24 +27,24 @@ class BranchNavBar extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            _buildNavItem(context, 'Notifications', 'assets/images/notification.png', '/BranchNotifications'),
-            _buildNavItem(context, 'History', 'assets/images/history.png', '/BranchHistory'),
-            _buildNavItem(context, 'Home', 'assets/images/home_icon.png', '/BranchHome'),
-            _buildNavItem(context, 'Category', 'assets/images/hamburgerIcon.png', '/BranchCategory'),
-            _buildNavItem(context, 'Orders', 'assets/images/orders_icon.png', '/BranchOrders'),
+            _buildNavItem(context, 'Notifications', 'assets/images/notification.png', BranchNotifications()),
+            _buildNavItem(context, 'History', 'assets/images/history.png', OrderHistoryScreen()),
+            _buildNavItem(context, 'Home', 'assets/images/home_icon.png', BranchHome()),
+            _buildNavItem(context, 'Category', 'assets/images/hamburgerIcon.png', BranchCategory()),
+            _buildNavItem(context, 'Orders', 'assets/images/orders_icon.png', BranchOrders()),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildNavItem(BuildContext context, String label, String iconPath, String routeName) {
+  Widget _buildNavItem(BuildContext context, String label, String iconPath, Widget destination) {
     return GestureDetector(
       onTap: () {
-        // Check if the current route is already the desired route
-        if (ModalRoute.of(context)?.settings.name != routeName) {
-          Navigator.pushNamed(context, routeName); // Use pushNamed instead of pushNamedAndRemoveUntil
-        }
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => destination),
+        );
       },
       child: Semantics(
         button: true,
