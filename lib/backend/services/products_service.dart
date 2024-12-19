@@ -214,6 +214,98 @@ class FirestoreService {
     }
   }
 
+  // --- Product Field Update Functions ---
+
+  // Update product price
+  Future<void> updateProductPrice(String categoryId, String productId, double newPrice) async {
+    try {
+      await _db.collection('categories').doc(categoryId).collection('products').doc(productId).update({'price': newPrice});
+    } catch (e) {
+      throw Exception('Failed to update product price: $e');
+    }
+  }
+
+  // Update product quantity
+  Future<void> updateProductQuantity(String categoryId, String productId, int newQuantity) async {
+    try {
+      await _db.collection('categories').doc(categoryId).collection('products').doc(productId).update({'stockQuantity': newQuantity});
+    } catch (e) {
+      throw Exception('Failed to update product quantity: $e');
+    }
+  }
+
+  // Update product description
+  Future<void> updateProductDescription(String categoryId, String productId, String newDescription) async {
+    try {
+      await _db.collection('categories').doc(categoryId).collection('products').doc(productId).update({'description': newDescription});
+    } catch (e) {
+      throw Exception('Failed to update product description: $e');
+    }
+  }
+
+  // Update product barcode
+  Future<void> updateProductBarcode(String categoryId, String productId, String newBarcode) async {
+    try {
+      await _db.collection('categories').doc(categoryId).collection('products').doc(productId).update({'barcode': newBarcode});
+    } catch (e) {
+      throw Exception('Failed to update product barcode: $e');
+    }
+  }
+
+  // Update product batch ID
+  Future<void> updateProductBatchId(String categoryId, String productId, String newBatchId) async {
+    try {
+      await _db.collection('categories').doc(categoryId).collection('products').doc(productId).update({'batchId': newBatchId});
+    } catch (e) {
+      throw Exception('Failed to update product batch ID: $e');
+    }
+  }
+
+  // Update product expiration date
+  Future<void> updateProductExpirationDate(String categoryId, String productId, Timestamp newExpirationDate) async {
+    try {
+      await _db.collection('categories').doc(categoryId).collection('products').doc(productId).update({'expirationDate': newExpirationDate});
+    } catch (e) {
+      throw Exception('Failed to update product expiration date: $e');
+    }
+  }
+
+  // Update product manufacture date
+  Future<void> updateProductManufactureDate(String categoryId, String productId, Timestamp newManufactureDate) async {
+    try {
+      await _db.collection('categories').doc(categoryId).collection('products').doc(productId).update({'manufactureDate': newManufactureDate});
+    } catch (e) {
+      throw Exception('Failed to update product manufacture date: $e');
+    }
+  }
+
+  // Update product shelf life
+  Future<void> updateProductShelfLife(String categoryId, String productId, int newShelfLife) async {
+    try {
+      await _db.collection('categories').doc(categoryId).collection('products').doc(productId).update({'shelfLife': newShelfLife});
+    } catch (e) {
+      throw Exception('Failed to update product shelf life: $e');
+    }
+  }
+
+  // Update product storage conditions
+  Future<void> updateProductStorageConditions(String categoryId, String productId, String newStorageConditions) async {
+    try {
+      await _db.collection('categories').doc(categoryId).collection('products').doc(productId).update({'storageConditions': newStorageConditions});
+    } catch (e) {
+      throw Exception('Failed to update product storage conditions: $e');
+    }
+  }
+
+  // Update product SKU
+  Future<void> updateProductSku(String categoryId, String productId, String newSku) async {
+    try {
+      await _db.collection('categories').doc(categoryId).collection('products').doc(productId).update({'sku': newSku});
+    } catch (e) {
+      throw Exception('Failed to update product SKU: $e');
+    }
+  }
+
   // Add a notification
   Future<void> addNotification(String header, String message) async {
     try {

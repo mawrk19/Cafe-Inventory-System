@@ -47,6 +47,15 @@ class AuthenticationService {
     }
 
     if (!userDoc.exists) {
+      userDoc = await _firestore
+          .collection('users')
+          .doc('customers')
+          .collection('users')
+          .doc(userId)
+          .get();
+    }
+
+    if (!userDoc.exists) {
       throw Exception('User data is null');
     }
 
@@ -76,48 +85,48 @@ class AuthenticationService {
 }) async {
   try {
     // Create the user in Firebase Authentication
-    UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
-    // Hash the password for security
-    String hashedPassword = sha256.convert(utf8.encode(password)).toString();
+      // Hash the password for security
+      String hashedPassword = sha256.convert(utf8.encode(password)).toString();
 
-    // Retrieve the current admin's details from SharedPreferences
-    Map<String, String?> adminDetails = await SharedPreferencesService.getMultiple([
-      'fullName',
-      'email',
-    ]);
+      // Retrieve the current admin's details from SharedPreferences
+      Map<String, String?> adminDetails = await SharedPreferencesService.getMultiple([
+        'fullName',
+        'email',
+      ]);
 
-    String? createdByAdminName = adminDetails['fullName'];
-    String? createdByAdminEmail = adminDetails['email'];
+      String? createdByAdminName = adminDetails['fullName'];
+      String? createdByAdminEmail = adminDetails['email'];
 
-    if (createdByAdminName == null || createdByAdminEmail == null) {
-      throw Exception('Admin details not found in SharedPreferences');
+      if (createdByAdminName == null || createdByAdminEmail == null) {
+        throw Exception('Admin details not found in SharedPreferences');
+      }
+
+      // Determine the collection path based on the role
+      String collectionPath = role == 'employee' ? 'employee' : 'admin';
+
+      // Save the new user's data in Firestore
+      await _firestore.collection('users').doc(collectionPath).collection('users').doc(userCredential.user!.uid).set({
+        'fullName': fullName,
+        'email': email,
+        'password': hashedPassword,
+        'contactNumber': contactNumber,
+        'role': role,
+        'pin': pin,
+        'createdByAdminName': createdByAdminName, // Save admin name
+        'createdByAdminEmail': createdByAdminEmail, // Save admin email
+      });
+
+      // Do not save the registered user's data into SharedPreferences
+    } catch (e) {
+      print('Registration error: $e'); // Logging for debugging
+      rethrow;
     }
-
-    // Determine the collection path based on the role
-    String collectionPath = role == 'employee' ? 'employee' : 'admin';
-
-    // Save the new user's data in Firestore
-    await _firestore.collection('users').doc(collectionPath).collection('users').doc(userCredential.user!.uid).set({
-      'fullName': fullName,
-      'email': email,
-      'password': hashedPassword,
-      'contactNumber': contactNumber,
-      'role': role,
-      'pin': pin,
-      'createdByAdminName': createdByAdminName, // Save admin name
-      'createdByAdminEmail': createdByAdminEmail, // Save admin email
-    });
-
-    // Do not save the registered user's data into SharedPreferences
-  } catch (e) {
-    print('Registration error: $e'); // Logging for debugging
-    rethrow;
   }
-}
 
   Future<void> updateUserProfile(String fullName, String email) async {
     User? user = _auth.currentUser;
