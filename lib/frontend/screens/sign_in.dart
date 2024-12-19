@@ -36,7 +36,7 @@ class SignIn extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
                     ),
-                    child: const Text('Admin Login'),
+                    child: const Text('Admin'),
                   ),
                   const SizedBox(height: 10),
                   ElevatedButton(
@@ -49,7 +49,7 @@ class SignIn extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
                     ),
-                    child: const Text('Employee Login'),
+                    child: const Text('Employee'),
                   ),
                   const SizedBox(height: 10),
                   ElevatedButton(
@@ -62,7 +62,7 @@ class SignIn extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
                     ),
-                    child: const Text('Branch Login'),
+                    child: const Text('Customer Branch'),
                   ),
                 ],
               ),
