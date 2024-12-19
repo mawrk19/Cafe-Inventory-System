@@ -34,7 +34,7 @@ class _AdminProductsState extends State<AdminProducts> {
     final products = await _firestoreService.getProductsByCategory(widget.categoryId);
     if (mounted) {
       setState(() {
-        _products = products.where((product) => product['status'] == 'active').toList();
+        _products = products.where((product) => product['status'] == 'active' || product['status'] == 'available').toList();
       });
     }
   }

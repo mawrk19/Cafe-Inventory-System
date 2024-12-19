@@ -29,7 +29,7 @@ class _AddProductModalState extends State<AddProductModal> {
   DateTime manufactureDate = DateTime.now();
   int shelfLife = 0;
   String storageConditions = '';
-  String status = 'available'; // Default status
+  String status = 'active'; // Default status
   String image = 'assets/images/ProductPhoto.png'; // Default image
   String sku = ''; // Add SKU field
 
