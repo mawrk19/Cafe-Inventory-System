@@ -1,9 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kopilism/backend/services/products_service.dart';
 
 class DeletedProduct extends StatefulWidget {
-  const DeletedProduct({super.key});
+  const DeletedProduct({Key? key}) : super(key: key);
 
   @override
   _DeletedProductState createState() => _DeletedProductState();
@@ -16,7 +15,7 @@ class _DeletedProductState extends State<DeletedProduct> {
   @override
   void initState() {
     super.initState();
-    _archivedProducts = _firestoreService.getArchivedCategories();
+    _archivedProducts = _firestoreService.getAllArchivedProducts(); // Fetch all archived products
   }
 
   @override
@@ -27,9 +26,16 @@ class _DeletedProductState extends State<DeletedProduct> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(child: CircularProgressIndicator());
         } else if (snapshot.hasError) {
-          return Center(child: Text('Error: ${snapshot.error}'));
+          return Center(
+            child: Text(
+              'Error fetching archived products: ${snapshot.error}',
+              textAlign: TextAlign.center,
+            ),
+          );
         } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-          return const Center(child: Text('No archived products found.'));
+          return const Center(
+            child: Text('No archived products found.'),
+          );
         } else {
           var products = snapshot.data!;
           return ListView.builder(
@@ -43,12 +49,12 @@ class _DeletedProductState extends State<DeletedProduct> {
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      _buildButton('Add again', () {
-                        _firestoreService.updateCategory(product['id'], {'status': 'active'});
+                      _buildButton('Add Again', () {
+                        _restoreProduct(product['categoryId'], product['id']);
                       }),
                       const SizedBox(width: 10),
                       _buildButton('Remove', () {
-                        _firestoreService.deleteCategory(product['id']);
+                        _deleteProduct(product['categoryId'], product['id']);
                       }),
                     ],
                   ),
@@ -58,6 +64,44 @@ class _DeletedProductState extends State<DeletedProduct> {
           );
         }
       },
+    );
+  }
+
+  void _restoreProduct(String categoryId, String productId) async {
+    try {
+      await _firestoreService.editProduct(categoryId, productId, {'status': 'active'});
+      setState(() {
+        _archivedProducts = _firestoreService.getAllArchivedProducts();
+      });
+    } catch (e) {
+      _showErrorDialog('Failed to restore product: $e');
+    }
+  }
+
+  void _deleteProduct(String categoryId, String productId) async {
+    try {
+      await _firestoreService.deleteProduct(categoryId, productId);
+      setState(() {
+        _archivedProducts = _firestoreService.getAllArchivedProducts();
+      });
+    } catch (e) {
+      _showErrorDialog('Failed to delete product: $e');
+    }
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Error'),
+        content: Text(message),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('OK'),
+          ),
+        ],
+      ),
     );
   }
 

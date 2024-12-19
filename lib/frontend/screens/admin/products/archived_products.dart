@@ -1,31 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:kopilism/frontend/widgets/products/deleted_product.dart';
-import 'package:kopilism/frontend/widgets/top_nav_bar.dart'; // Import your custom widget
-import 'package:kopilism/frontend/widgets/bottom_nav_bar.dart'; // Import the BottomNavBar
-import 'package:kopilism/frontend/widgets/sidebar.dart'; // Import your custom Sidebar
+import 'package:kopilism/frontend/widgets/top_nav_bar.dart';
+import 'package:kopilism/frontend/widgets/bottom_nav_bar.dart';
+import 'package:kopilism/frontend/widgets/sidebar.dart';
 
 class ArchiveProductsScreen extends StatelessWidget {
-  const ArchiveProductsScreen({super.key});
+  const ArchiveProductsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: false, // Remove the back button
-        title: const TopNavBar(), // Add the TopNavBar to the appBar
+        automaticallyImplyLeading: false,
+        title: const TopNavBar(),
       ),
-      drawer: const Sidebar(), // Use your custom Sidebar
+      drawer: const Sidebar(),
       body: SingleChildScrollView(
-        child: Center( // Center content for small screens
+        child: Center(
           child: Container(
             constraints: const BoxConstraints(maxWidth: 480),
             margin: const EdgeInsets.symmetric(horizontal: 20.0),
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 180), // Adjusted padding
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 180),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                // Search Bar with Filter Icon beside it
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -46,8 +45,8 @@ class ArchiveProductsScreen extends StatelessWidget {
                         border: Border.all(color: const Color(0xFFD9D9D9)),
                       ),
                       child: Row(
-                        children: [
-                          const Expanded(
+                        children: const [
+                          Expanded(
                             child: Text(
                               'Search...',
                               style: TextStyle(
@@ -56,7 +55,7 @@ class ArchiveProductsScreen extends StatelessWidget {
                               ),
                             ),
                           ),
-                          const Icon(
+                          Icon(
                             Icons.search,
                             size: 16,
                           ),
@@ -70,7 +69,6 @@ class ArchiveProductsScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                // Header
                 Container(
                   margin: const EdgeInsets.only(top: 25, left: 12),
                   child: const Text(
@@ -85,14 +83,13 @@ class ArchiveProductsScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                // Deleted Products List
                 const DeletedProduct(),
               ],
             ),
           ),
         ),
       ),
-      bottomNavigationBar: const BottomNavBar(), // Add the BottomNavBar at the bottom of the screen
+      bottomNavigationBar: const BottomNavBar(),
     );
   }
 }

@@ -170,21 +170,18 @@ class FirestoreService {
 
   // Get all archived products
   Future<List<Map<String, dynamic>>> getAllArchivedProducts() async {
-    try {
-      QuerySnapshot snapshot = await _db
-          .collectionGroup('products')
-          .where('status', isEqualTo: 'archived')
-          .get();
-      return snapshot.docs.map((doc) {
-        return {
-          ...doc.data() as Map<String, dynamic>,
-          'id': doc.id, // Add product ID for easy reference
-        };
-      }).toList();
-    } catch (e) {
-      throw Exception('Failed to fetch archived products: $e');
-    }
+  try {
+    QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collectionGroup('products') // Use collectionGroup for subcollections
+        .where('status', isEqualTo: 'archived') // Filter on status field
+        .get();
+
+    return snapshot.docs.map((doc) => doc.data() as Map<String, dynamic>).toList();
+  } catch (e) {
+    throw Exception('Failed to fetch archived products: $e');
   }
+}
+
 
   // Edit a product
   Future<void> editProduct(String categoryId, String productId, Map<String, dynamic> data) async {
