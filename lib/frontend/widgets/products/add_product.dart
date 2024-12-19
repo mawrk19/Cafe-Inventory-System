@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:barcode_widget/barcode_widget.dart';
 import 'package:kopilism/backend/services/products_service.dart';
+
 
 class AddProductModal extends StatefulWidget {
   final String categoryId;
@@ -18,6 +20,7 @@ class AddProductModal extends StatefulWidget {
 class _AddProductModalState extends State<AddProductModal> {
   final _formKey = GlobalKey<FormState>();
   final FirestoreService _firestoreService = FirestoreService();
+  final TextEditingController _skuController = TextEditingController();
 
   String name = '';
   String description = '';
@@ -253,6 +256,13 @@ class _AddProductModalState extends State<AddProductModal> {
                 onSaved: (value) => storageConditions = value!,
               ),
               const SizedBox(height: 16),
+
+              //Add SKU Field
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'SKU'),
+                onSaved: (value) => sku = value!,
+              ),
+              
               // Image Picker Row
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
