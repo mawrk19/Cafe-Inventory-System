@@ -89,7 +89,7 @@ class _AddProductModalState extends State<AddProductModal> {
                 decoration: InputDecoration(
                   labelText: 'Product Name',
                   filled: true,
-                  fillColor: Colors.offWhite, // Changed to off-white color
+                  fillColor: Colors.white, // Changed to white color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                   ),
@@ -109,7 +109,7 @@ class _AddProductModalState extends State<AddProductModal> {
                 decoration: InputDecoration(
                   labelText: 'Description',
                   filled: true,
-                  fillColor: Colors.offWhite, // Changed to off-white color
+                  fillColor: Colors.white, // Changed to white color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                   ),
@@ -123,7 +123,7 @@ class _AddProductModalState extends State<AddProductModal> {
                 decoration: InputDecoration(
                   labelText: 'Price',
                   filled: true,
-                  fillColor: Colors.offWhite, // Changed to off-white color
+                  fillColor: Colors.white, // Changed to white color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                   ),
@@ -144,7 +144,7 @@ class _AddProductModalState extends State<AddProductModal> {
                 decoration: InputDecoration(
                   labelText: 'Stock Quantity',
                   filled: true,
-                  fillColor: Colors.offWhite, // Changed to off-white color
+                  fillColor: Colors.white, // Changed to white color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                   ),
@@ -165,7 +165,7 @@ class _AddProductModalState extends State<AddProductModal> {
                 decoration: InputDecoration(
                   labelText: 'Barcode',
                   filled: true,
-                  fillColor: Colors.offWhite, // Changed to off-white color
+                  fillColor: Colors.white, // Changed to white color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                   ),
@@ -180,7 +180,7 @@ class _AddProductModalState extends State<AddProductModal> {
                 decoration: InputDecoration(
                   labelText: 'Expiration Date',
                   filled: true,
-                  fillColor: Colors.offWhite, // Changed to off-white color
+                  fillColor: Colors.white, // Changed to white color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                   ),
@@ -208,7 +208,7 @@ class _AddProductModalState extends State<AddProductModal> {
                 decoration: InputDecoration(
                   labelText: 'Batch ID',
                   filled: true,
-                  fillColor: Colors.offWhite, // Changed to off-white color
+                  fillColor: Colors.white, // Changed to white color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                   ),
@@ -223,7 +223,7 @@ class _AddProductModalState extends State<AddProductModal> {
                 decoration: InputDecoration(
                   labelText: 'Manufacture Date',
                   filled: true,
-                  fillColor: Colors.offWhite, // Changed to off-white color
+                  fillColor: Colors.white, // Changed to white color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                   ),
@@ -251,7 +251,7 @@ class _AddProductModalState extends State<AddProductModal> {
                 decoration: InputDecoration(
                   labelText: 'Shelf Life (in days)',
                   filled: true,
-                  fillColor: Colors.offWhite, // Changed to off-white color
+                  fillColor: Colors.white, // Changed to white color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                   ),
@@ -266,7 +266,7 @@ class _AddProductModalState extends State<AddProductModal> {
                 decoration: InputDecoration(
                   labelText: 'Storage Conditions',
                   filled: true,
-                  fillColor: Colors.offWhite, // Changed to off-white color
+                  fillColor: Colors.white, // Changed to white color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                   ),
@@ -278,14 +278,14 @@ class _AddProductModalState extends State<AddProductModal> {
 
               //Add SKU Field
               TextFormField(
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'SKU',
                   filled: true,
-                  fillColor: Colors.offWhite, // Changed to off-white color
+                  fillColor: Colors.white, // Changed to white color
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                   ),
-                  contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
+                  contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
                 ),
                 onSaved: (value) => sku = value!,
               ),

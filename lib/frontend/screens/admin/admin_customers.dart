@@ -104,7 +104,7 @@ class _AdminCustomersState extends State<AdminCustomers> {
                   decoration: InputDecoration(
                     labelText: 'Full Name',
                     filled: true,
-                    fillColor: Colors.offWhite, // Changed to off-white color
+                    fillColor: Colors.white, // Changed to white color
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                     ),
@@ -117,7 +117,7 @@ class _AdminCustomersState extends State<AdminCustomers> {
                   decoration: InputDecoration(
                     labelText: 'Email',
                     filled: true,
-                    fillColor: Colors.offWhite, // Changed to off-white color
+                    fillColor: Colors.white, // Changed to white color
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                     ),
@@ -130,7 +130,7 @@ class _AdminCustomersState extends State<AdminCustomers> {
                   decoration: InputDecoration(
                     labelText: 'Password',
                     filled: true,
-                    fillColor: Colors.offWhite, // Changed to off-white color
+                    fillColor: Colors.white, // Changed to white color
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                     ),
@@ -144,7 +144,7 @@ class _AdminCustomersState extends State<AdminCustomers> {
                   decoration: InputDecoration(
                     labelText: 'Contact Number',
                     filled: true,
-                    fillColor: Colors.offWhite, // Changed to off-white color
+                    fillColor: Colors.white, // Changed to white color
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                     ),
@@ -158,7 +158,7 @@ class _AdminCustomersState extends State<AdminCustomers> {
                   decoration: InputDecoration(
                     labelText: 'Branch Number',
                     filled: true,
-                    fillColor: Colors.offWhite, // Changed to off-white color
+                    fillColor: Colors.white, // Changed to white color
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                     ),
@@ -172,7 +172,7 @@ class _AdminCustomersState extends State<AdminCustomers> {
                   decoration: InputDecoration(
                     labelText: 'Region',
                     filled: true,
-                    fillColor: Colors.offWhite, // Changed to off-white color
+                    fillColor: Colors.white, // Changed to white color
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                     ),
@@ -185,7 +185,7 @@ class _AdminCustomersState extends State<AdminCustomers> {
                   decoration: InputDecoration(
                     labelText: 'Province',
                     filled: true,
-                    fillColor: Colors.offWhite, // Changed to off-white color
+                    fillColor: Colors.white, // Changed to white color
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                     ),
@@ -198,7 +198,7 @@ class _AdminCustomersState extends State<AdminCustomers> {
                   decoration: InputDecoration(
                     labelText: 'City',
                     filled: true,
-                    fillColor: Colors.offWhite, // Changed to off-white color
+                    fillColor: Colors.white, // Changed to white color
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                     ),
@@ -211,7 +211,7 @@ class _AdminCustomersState extends State<AdminCustomers> {
                   decoration: InputDecoration(
                     labelText: 'Baranggay',
                     filled: true,
-                    fillColor: Colors.offWhite, // Changed to off-white color
+                    fillColor: Colors.white, // Changed to white color
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                     ),
@@ -224,7 +224,7 @@ class _AdminCustomersState extends State<AdminCustomers> {
                   decoration: InputDecoration(
                     labelText: 'Address',
                     filled: true,
-                    fillColor: Colors.offWhite, // Changed to off-white color
+                    fillColor: Colors.white, // Changed to white color
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                     ),
@@ -237,7 +237,7 @@ class _AdminCustomersState extends State<AdminCustomers> {
                   decoration: InputDecoration(
                     labelText: 'Owner Information',
                     filled: true,
-                    fillColor: Colors.offWhite, // Changed to off-white color
+                    fillColor: Colors.white, // Changed to white color
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                     ),

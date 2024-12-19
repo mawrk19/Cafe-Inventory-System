@@ -180,7 +180,7 @@ class _AdminCategoryState extends State<AdminCategory> {
                   decoration: InputDecoration(
                     hintText: 'Enter category name',
                     filled: true,
-                    fillColor: Colors.offWhite, // Changed to off-white color
+                    fillColor: Colors.white, // Changed to white color
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                     ),
