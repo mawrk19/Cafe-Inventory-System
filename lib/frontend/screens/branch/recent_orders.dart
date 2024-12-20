@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:kopilism/frontend/screens/branch/cart_screen.dart'; // Import the cart screen
 
 class RecentOrders extends StatelessWidget {
+  const RecentOrders({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,9 +24,9 @@ class RecentOrders extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: [
-                _buildOrderCard(context, 'Matcha', '3000'),
+                _buildOrderCard('Matcha', '3000'),
                 SizedBox(width: 20),
-                _buildOrderCard(context, 'Chocolate', '3000'),
+                _buildOrderCard('Chocolate', '3000'),
               ],
             ),
           ),
@@ -34,7 +35,7 @@ class RecentOrders extends StatelessWidget {
     );
   }
 
-  Widget _buildOrderCard(BuildContext context, String title, String price) {
+  Widget _buildOrderCard(String title, String price) {
     return Container(
       width: 150, // Fixed width for the cards
       padding: EdgeInsets.all(15),
@@ -81,20 +82,12 @@ class RecentOrders extends StatelessWidget {
               SizedBox(height: 9),
               Align(
                 alignment: Alignment.centerRight,
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => CartScreen()),
-                    );
+                child: Image.asset(
+                  'assets/images/cart_icon.png',
+                  width: 40,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Icon(Icons.shopping_cart);
                   },
-                  child: Image.asset(
-                    'assets/images/cart_icon.png',
-                    width: 40,
-                    errorBuilder: (context, error, stackTrace) {
-                      return Icon(Icons.shopping_cart);
-                    },
-                  ),
                 ),
               ),
             ],

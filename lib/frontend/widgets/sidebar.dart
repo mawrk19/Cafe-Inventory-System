@@ -12,7 +12,8 @@ class Sidebar extends StatelessWidget {
   Future<Map<String, dynamic>> _fetchUserData() async {
     try {
       // Check SharedPreferences for stored data using SharedPreferencesService
-      final prefsData = await SharedPreferencesService.getMultiple(['fullName', 'email', 'userRole']);
+      final prefsData = await SharedPreferencesService.getMultiple(
+          ['fullName', 'email', 'userRole']);
       String? fullName = prefsData['fullName'];
       String? email = prefsData['email'];
       String? role = prefsData['userRole'];
@@ -75,7 +76,8 @@ class Sidebar extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => EditUserProfileScreen(userData: userData),
+                            builder: (context) =>
+                                EditUserProfileScreen(userData: userData),
                           ),
                         );
                       },
@@ -107,9 +109,9 @@ class Sidebar extends StatelessWidget {
                   ),
                   ListTile(
                     leading: const Icon(Icons.qr_code),
-                    title: const Text('Barcode'),
+                    title: const Text('Generate Barcode'),
                     onTap: () {
-                      Navigator.pushReplacementNamed(context, '/Barcode');
+                      Navigator.pushReplacementNamed(context, '/Generate');
                     },
                   ),
                   ListTile(
@@ -140,7 +142,8 @@ class Sidebar extends StatelessWidget {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const ArchiveProductsScreen(), // Navigate to ArchivedProducts
+                          builder: (context) =>
+                              const ArchiveProductsScreen(), // Navigate to ArchivedProducts
                         ),
                       );
                     },

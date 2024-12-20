@@ -66,17 +66,21 @@ class BranchSidebar extends StatelessWidget {
               ),
             ),
           ),
-          _buildDrawerItem(context, Icons.notifications, 'Notifications', '/BranchNotifications'),
-          _buildDrawerItem(context, Icons.history, 'Order History', '/BranchHistory'),
+          _buildDrawerItem(context, Icons.notifications, 'Notifications',
+              '/BranchNotifications'),
+          _buildDrawerItem(
+              context, Icons.history, 'Order History', '/BranchHistory'),
           _buildDrawerItem(context, Icons.home, 'Home', '/BranchHome'),
-          _buildDrawerItem(context, Icons.category, 'Categories', '/BranchCategory'),
+          _buildDrawerItem(
+              context, Icons.category, 'Categories', '/BranchCategory'),
           _buildDrawerItem(context, Icons.list, 'Orders', '/BranchOrders'),
         ],
       ),
     );
   }
 
-  Widget _buildDrawerItem(BuildContext context, IconData icon, String title, String routeName) {
+  Widget _buildDrawerItem(
+      BuildContext context, IconData icon, String title, String routeName) {
     return ListTile(
       leading: Icon(icon),
       title: Text(title),
