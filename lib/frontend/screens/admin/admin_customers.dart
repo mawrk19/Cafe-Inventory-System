@@ -104,125 +104,147 @@ class _AdminCustomersState extends State<AdminCustomers> {
                   decoration: InputDecoration(
                     labelText: 'Full Name',
                     filled: true,
-                    fillColor: Color(0xFFFFFDD0), // Cream color
+                    fillColor: Colors.white, // Changed to white color
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                     ),
+                    contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
                   ),
                 ),
+                const SizedBox(height: 16), // Added margin
                 TextField(
                   controller: emailController,
                   decoration: InputDecoration(
                     labelText: 'Email',
                     filled: true,
-                    fillColor: Color(0xFFFFFDD0), // Cream color
+                    fillColor: Colors.white, // Changed to white color
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                     ),
+                    contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
                   ),
                 ),
+                const SizedBox(height: 16), // Added margin
                 TextField(
                   controller: passwordController,
                   decoration: InputDecoration(
                     labelText: 'Password',
                     filled: true,
-                    fillColor: Color(0xFFFFFDD0), // Cream color
+                    fillColor: Colors.white, // Changed to white color
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                     ),
+                    contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
                   ),
                   obscureText: true,
                 ),
+                const SizedBox(height: 16), // Added margin
                 TextField(
                   controller: contactNumberController,
                   decoration: InputDecoration(
                     labelText: 'Contact Number',
                     filled: true,
-                    fillColor: Color(0xFFFFFDD0), // Cream color
+                    fillColor: Colors.white, // Changed to white color
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                     ),
+                    contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
                   ),
                   keyboardType: TextInputType.number,
                 ),
+                const SizedBox(height: 16), // Added margin
                 TextField(
                   controller: branchNumberController,
                   decoration: InputDecoration(
                     labelText: 'Branch Number',
                     filled: true,
-                    fillColor: Color(0xFFFFFDD0), // Cream color
+                    fillColor: Colors.white, // Changed to white color
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                     ),
+                    contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
                   ),
                   keyboardType: TextInputType.number,
                 ),
+                const SizedBox(height: 16), // Added margin
                 TextField(
                   controller: regionController,
                   decoration: InputDecoration(
                     labelText: 'Region',
                     filled: true,
-                    fillColor: Color(0xFFFFFDD0), // Cream color
+                    fillColor: Colors.white, // Changed to white color
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                     ),
+                    contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
                   ),
                 ),
+                const SizedBox(height: 16), // Added margin
                 TextField(
                   controller: provinceController,
                   decoration: InputDecoration(
                     labelText: 'Province',
                     filled: true,
-                    fillColor: Color(0xFFFFFDD0), // Cream color
+                    fillColor: Colors.white, // Changed to white color
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                     ),
+                    contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
                   ),
                 ),
+                const SizedBox(height: 16), // Added margin
                 TextField(
                   controller: cityController,
                   decoration: InputDecoration(
                     labelText: 'City',
                     filled: true,
-                    fillColor: Color(0xFFFFFDD0), // Cream color
+                    fillColor: Colors.white, // Changed to white color
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                     ),
+                    contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
                   ),
                 ),
+                const SizedBox(height: 16), // Added margin
                 TextField(
                   controller: baranggayController,
                   decoration: InputDecoration(
                     labelText: 'Baranggay',
                     filled: true,
-                    fillColor: Color(0xFFFFFDD0), // Cream color
+                    fillColor: Colors.white, // Changed to white color
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                     ),
+                    contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
                   ),
                 ),
+                const SizedBox(height: 16), // Added margin
                 TextField(
                   controller: addressController,
                   decoration: InputDecoration(
                     labelText: 'Address',
                     filled: true,
-                    fillColor: Color(0xFFFFFDD0), // Cream color
+                    fillColor: Colors.white, // Changed to white color
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                     ),
+                    contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
                   ),
                 ),
+                const SizedBox(height: 16), // Added margin
                 TextField(
                   controller: ownerInformationController,
                   decoration: InputDecoration(
                     labelText: 'Owner Information',
                     filled: true,
-                    fillColor: Color(0xFFFFFDD0), // Cream color
+                    fillColor: Colors.white, // Changed to white color
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                     ),
+                    contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
                   ),
                 ),
+                const SizedBox(height: 16), // Added margin
               ],
             ),
           ),

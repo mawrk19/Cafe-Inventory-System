@@ -180,13 +180,14 @@ class _AdminCategoryState extends State<AdminCategory> {
                   decoration: InputDecoration(
                     hintText: 'Enter category name',
                     filled: true,
-                    fillColor: Color(0xFFFFFDD0), // Cream color
+                    fillColor: Colors.white, // Changed to white color
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(30.0), // Pill-shaped
                     ),
+                    contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0), // Added padding
                   ),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 16), // Added margin
                 DropdownButton<String>(
                   value: selectedImage,
                   hint: const Text('Select an image'),
@@ -225,6 +226,7 @@ class _AdminCategoryState extends State<AdminCategory> {
                     });
                   },
                 ),
+                const SizedBox(height: 16), // Added margin
                 if (selectedImage != null)
                   Padding(
                     padding: const EdgeInsets.only(top: 16),

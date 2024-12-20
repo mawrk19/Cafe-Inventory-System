@@ -25,7 +25,7 @@ class EmployeeBottomNavBar extends StatelessWidget {
             _buildNavItem(context, 'Product', 'assets/images/product_icon.png', '/EmployeeCategory'),
             _buildNavItem(context, 'Customer', 'assets/images/customer_icon.png', '/EmployeeCustomer'),
             _buildBarcodeNavItem(context, 'Barcode', 'assets/images/barcode_scanner.png', '/EmployeeBarcode'),
-            _buildNavItem(context, 'Home', 'assets/images/home_icon.png', '/Home'),
+            _buildNavItem(context, 'Home', 'assets/images/home_icon.png', '/EmployeeHome'),
             _buildNavItem(context, 'Orders', 'assets/images/orders_icon.png', '/EmployeeOrders'),
           ],
         ),
